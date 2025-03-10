@@ -2,10 +2,14 @@ package org.expr.mcdm
 
 import scala.math as math
 
-type Mat = Array[Array[Double]]
-type Vec = Array[Double]
+
 
 object Matrix:
+
+  def prettyPrint(a: Mat): String = a.map(row => row.mkString(" ")).mkString("\n")
+
+  def prettyPrint(a: Vec): String = a.mkString(" ")
+
   def zeros(n: Int): Vec = Array.fill(n)(0.0)
 
   def zeros(n: Int, m: Int): Mat = Array.fill(n, m)(0.0)
@@ -71,3 +75,26 @@ object Matrix:
     (i, j)
 
   def diagonal(a: Mat): Vec = a.zipWithIndex.map((row, i) => row(i))
+
+  def weightizeColumns(a: Mat, w: Vec): Mat = 
+    a.transpose.zip(w).map((row, weight) => row.map(value => value * weight)).transpose    
+    
+  def norm(a: Vec): Double = math.sqrt(a.map(x => x * x).sum)
+
+  def applyFunctionToColumns(a: Mat, f: Vec => Double): Vec = a.transpose.map(f)
+
+  def applyFunctionToRows(a: Mat, f: Vec => Double): Vec = a.map(f)
+
+  def multiplyRowByScalar(a: Mat, i: Int, scalar: Double): Mat =
+    a.updated(i, a(i).map(_ * scalar))
+
+  def multiplyColumnByScalar(a: Mat, j: Int, scalar: Double): Mat =
+    val at = a.transpose
+    at.updated(j, at(j).map(_ * scalar)).transpose
+
+  def size(a: Mat): (Int, Int) = (a.length, a(0).length)
+
+  def euclideanDistance(a: Vec, b: Vec): Double =
+    math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)
+
+  
