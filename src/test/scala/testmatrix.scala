@@ -1,9 +1,7 @@
-
-// For more information on writing tests, see
-// https://scalameta.org/munit/docs/getting-started.html
 import munit.Assertions as A 
 
 import org.expr.mcdm.Matrix
+
 
 class TestMatrix extends munit.FunSuite {
   test("zeros(10)") {
@@ -154,5 +152,69 @@ class TestMatrix extends munit.FunSuite {
     val diag = Matrix.diagonal(a)
     val expected = Array(1.0, 5.0, 9.0)
     A.assert(Matrix.elementwise_equal(diag, expected))
+  }
+  test("weightize columns"){
+    val a = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
+    val weights = Array(0.1, 0.2, 0.3)
+    val weighted = Matrix.weightizeColumns(a, weights)
+    val expected = Array(Array(0.1, 0.4, 0.9), Array(0.4, 1.0, 1.8), Array(0.7, 1.6, 2.7))
+    A.assert(Matrix.elementwise_equal(weighted, expected, 1e-3))
+  }
+  test("Vector norm"){
+    val a = Array(1.0, 2.0, 3.0)
+    val norm = Matrix.norm(a)
+    val expected = math.sqrt(14.0)
+    A.assertEquals(norm, expected)
+  }
+  test("Multiply Row by Scalar"){
+    val mat = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
+    val scalar = 3.0
+    val newmat = Matrix.multiplyRowByScalar(mat, 1, scalar)
+    val expected = Array(Array(1.0, 2.0, 3.0), Array(12.0, 15.0, 18.0), Array(7.0, 8.0, 9.0))
+    A.assert(Matrix.elementwise_equal(newmat, expected, 1e-6))
+  }
+  test("Multiply Column By Scalar"){
+    val mat = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
+    val scalar = 10.0
+    val newmat = Matrix.multiplyColumnByScalar(mat, 1, scalar)
+    val expected = Array(Array(1.0, 20.0, 3.0), Array(4.0, 50.0, 6.0), Array(7.0, 80.0, 9.0))
+    A.assert(Matrix.elementwise_equal(newmat, expected, 1e-4))
+  }
+  test("Matrix size"){
+    val mat = Array(Array(1.0, 2.0, 3.0, 4.0), Array(4.0, 5.0, 6.0, 7.0), Array(7.0, 8.0, 9.0, 10.0))
+    val size = Matrix.size(mat)
+    val expected = (3, 4)
+    A.assertEquals(size, expected)
+  }
+  test("Apply Function to Columns - 1 (norm)"){
+    val mat = Array(Array(1.0, 2.0, 3.0, 4.0), Array(4.0, 5.0, 6.0, 7.0), Array(7.0, 8.0, 9.0, 10.0))
+    val f = (a: Array[Double]) => math.sqrt(a.map(x => x * x).sum)
+    val result = Matrix.applyFunctionToColumns(mat, f)
+    val expected = Array(
+      math.sqrt(1 + 16 + 49),
+      math.sqrt(4 + 25 + 64),
+      math.sqrt(9 + 36 + 81),
+      math.sqrt(16 + 49 + 100)
+    )
+    A.assert(Matrix.elementwise_equal(result, expected))
+  }
+  test("Apply Function to Columns - 2 (sum)"){
+    val mat = Array(Array(1.0, 2.0, 3.0, 4.0), Array(4.0, 5.0, 6.0, 7.0), Array(7.0, 8.0, 9.0, 10.0))
+    val f = (a: Array[Double]) => a.sum
+    val result = Matrix.applyFunctionToColumns(mat, f)
+    val expected = Array(
+      1.0 + 4.0 + 7.0,
+      2.0 + 5.0 + 8.0,
+      3.0 + 6.0 + 9.0,
+      4.0 + 7.0 + 10.0
+    )
+    A.assert(Matrix.elementwise_equal(result, expected))
+  }
+  test("Apply Function to Rows"){
+    val mat = Array(Array(1.0, 2.0, 3.0, 4.0), Array(4.0, 5.0, 6.0, 7.0), Array(7.0, 8.0, 9.0, 10.0))
+    val f = (a: Array[Double]) => a.sum
+    val result = Matrix.applyFunctionToRows(mat, f)
+    val expected = Array(1.0 + 2.0 + 3.0 + 4.0, 4.0 + 5.0 + 6.0 + 7.0, 7.0 + 8.0 + 9.0 + 10.0)
+    A.assert(Matrix.elementwise_equal(result, expected))
   }
 }
