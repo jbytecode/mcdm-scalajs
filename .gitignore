@@ -5,7 +5,8 @@
 hs_err_pid*
 
 target/**
-vscode/**
-metals/**
-bsp/**
-bloop/**
+project/**
+.vscode/**
+.metals/**
+.bsp/**
+.bloop/**

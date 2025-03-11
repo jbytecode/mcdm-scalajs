@@ -1,0 +1,18 @@
+.matrixcell {
+    height: 20px;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+}
+
+input[type="button"] {
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}

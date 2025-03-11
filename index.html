@@ -2,14 +2,25 @@
 
 <head>
     <title>Scala.js</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <input type="text" id="txtname" placeholder="Enter your name" value="User"></input>
-    <div id="status">Hello</div>
+    <b>Step 1 - Generate the decision matrix content</b>
+    <br/>
+    <textarea id="textarea_decmat" 
+    placeholder="Enter and copy & paste the decision matrix content here"
+    rows="10" cols="50">
+0.3 0.4 0.5 0.6 0.7
+0.2 0.3 0.4 0.5 0.6
+0.1 0.2 0.3 0.4 0.5
+</textarea>
+<br/>
+<input id="btn_generate_decmat" type="button" value="Generate">
+<div id = "div_decmat_output">..</div>
 </body>
 
 
-<script src="./target/scala-3.5.2/mcdm-fastopt.js"></script>
+<script src="./target/scala-3.6.4/mcdm-fastopt.js"></script>
 
 </html>
