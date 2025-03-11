@@ -217,4 +217,18 @@ class TestMatrix extends munit.FunSuite {
     val expected = Array(1.0 + 2.0 + 3.0 + 4.0, 4.0 + 5.0 + 6.0 + 7.0, 7.0 + 8.0 + 9.0 + 10.0)
     A.assert(Matrix.elementwise_equal(result, expected))
   }
+  test("Append a Column Vector to Matrix"){
+    val mat = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
+    val col = Array(10.0, 11.0, 12.0)
+    val newmat = Matrix.appendcol(mat, col)
+    val expected = Array(Array(1.0, 2.0, 3.0, 10.0), Array(4.0, 5.0, 6.0, 11.0), Array(7.0, 8.0, 9.0, 12.0))
+    A.assert(Matrix.elementwise_equal(newmat, expected, 1e-6))
+  }
+  test("Append a Row Vector to Matrix"){
+    val mat = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0))
+    val row = Array(7.0, 8.0, 9.0)
+    val newmat = Matrix.appendrow(mat, row)
+    val expected = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
+    A.assert(Matrix.elementwise_equal(newmat, expected, 1e-6))
+  }
 }

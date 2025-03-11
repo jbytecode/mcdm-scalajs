@@ -94,6 +94,10 @@ object Matrix:
 
   def size(a: Mat): (Int, Int) = (a.length, a(0).length)
 
+  def appendColumnVec(a: Mat, b: Vec): Mat = a :+ b
+
+  def appendRowVec(a: Mat, b: Vec): Mat = (a.transpose :+ b).transpose
+
   def euclideanDistance(a: Vec, b: Vec): Double =
     math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)
 
