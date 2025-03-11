@@ -1,10 +1,11 @@
 package org.expr.mcdm
 
-import org.expr.mcdm.MCDMResult;
-import org.expr.mcdm.Direction;
-import org.expr.mcdm.Matrix;
-import org.expr.mcdm.Vec;
-import org.expr.mcdm.Mat;
+import org.expr.mcdm.MCDMResult
+import org.expr.mcdm.Direction
+import org.expr.mcdm.Matrix
+import org.expr.mcdm.Vec
+import org.expr.mcdm.Mat
+import org.expr.mcdm.Statistics
 
 case class TopsisResult(
     val normalizedMatrix: Array[Array[Double]],
@@ -39,12 +40,12 @@ def topsis(
     }
     val distanceToIdeal = 
       Matrix.applyFunctionToRows(weightedNormalizedMatrix, (row: Vec) =>
-        Matrix.euclideanDistance(row, ideal))
+        Statistics.euclideanDistance(row, ideal))
     
 
     val distanceToAntiIdeal =
       Matrix.applyFunctionToRows(weightedNormalizedMatrix, (row: Vec) =>
-        Matrix.euclideanDistance(row, antiIdeal))
+        Statistics.euclideanDistance(row, antiIdeal))
 
     val scores = distanceToAntiIdeal.zip(distanceToIdeal).map {
       case (danti, di) => danti / (danti + di)

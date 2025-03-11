@@ -231,4 +231,5 @@ class TestMatrix extends munit.FunSuite {
     val expected = Array(Array(1.0, 2.0, 3.0), Array(4.0, 5.0, 6.0), Array(7.0, 8.0, 9.0))
     A.assert(Matrix.elementwise_equal(newmat, expected, 1e-6))
   }
+  
 }

@@ -1,0 +1,28 @@
+package org.expr.mcdm
+
+object Statistics:
+
+    def mean(a: Vec): Double = a.sum / a.length
+
+    def variance(a: Vec) : Double =
+      val m = mean(a)
+      a.map(x => (x - m) * (x - m)).sum / (a.length - 1.0)
+    
+    def correlation(a: Vec, b: Vec): Double =
+      val ma = mean(a)
+      val mb = mean(b)
+      var va = variance(a)
+      var vb = variance(b)
+      (a.zip(b).map((x, y) => (x - ma) * (y - mb)).sum / math.sqrt(va * vb)) / (a.length - 1.0)
+
+    def correlation(a: Mat): Mat = 
+      val n = a.length
+      val m = a(0).length
+      val cor = Matrix.zeros(m, m)
+      for i <- 0 until m do
+        for j <- 0 until m do
+          cor(i)(j) = correlation(Matrix.getcolat(a, i), Matrix.getcolat(a, j))
+      cor  
+
+    def euclideanDistance(a: Vec, b: Vec): Double =
+        math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)

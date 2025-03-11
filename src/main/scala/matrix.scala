@@ -98,7 +98,5 @@ object Matrix:
 
   def appendRowVec(a: Mat, b: Vec): Mat = (a.transpose :+ b).transpose
 
-  def euclideanDistance(a: Vec, b: Vec): Double =
-    math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)
 
-  
+
