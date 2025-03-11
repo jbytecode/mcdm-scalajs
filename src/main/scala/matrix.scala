@@ -98,5 +98,20 @@ object Matrix:
 
   def appendRowVec(a: Mat, b: Vec): Mat = (a.transpose :+ b).transpose
 
-
+  def inverse(a: Array[Array[Double]]): Array[Array[Double]] =
+    val n = a.length
+    val m = a(0).length
+    val identity = Array.tabulate(n, m)((i, j) => if i == j then 1.0 else 0.0)
+    for i <- 0 until n do
+      val pivot = a(i)(i)
+      for j <- 0 until m do
+        a(i)(j) /= pivot
+        identity(i)(j) /= pivot
+      for k <- 0 until n do
+        if k != i then
+          val factor = a(k)(i)
+          for j <- 0 until m do
+            a(k)(j) -= factor * a(i)(j)
+            identity(k)(j) -= factor * identity(i)(j)
+    identity
 
