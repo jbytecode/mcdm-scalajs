@@ -336,5 +336,21 @@ class TestMatrix extends munit.FunSuite {
     val expected = Array(-1.0, 17.0, 6.0, 12.0, 10.0)
     A.assert(Matrix.elementwise_equal(values, expected))
   }
+  test("Inverse direction vector"){
+    val direction = Array(
+      Direction.Minimize, 
+      Direction.Maximize, 
+      Direction.Minimize,
+      Direction.Maximize,
+      Direction.Minimize)
+    val inv = Matrix.inversedirections(direction)
+    val expected = Array(
+      Direction.Maximize, 
+      Direction.Minimize, 
+      Direction.Maximize,
+      Direction.Minimize,
+      Direction.Maximize)
+    direction.zip(expected).foreach{case (a, b) => A.assertNotEquals(a, b)}
+  }
 
 }

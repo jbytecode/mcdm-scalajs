@@ -126,3 +126,9 @@ object Matrix:
         case Direction.Maximize => col.max
     result
 
+  def inversedirections(dirs: Array[Direction]): Array[Direction] =
+    dirs.map {
+      case Direction.Minimize => Direction.Maximize
+      case Direction.Maximize => Direction.Minimize
+    }
+
