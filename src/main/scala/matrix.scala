@@ -115,3 +115,14 @@ object Matrix:
             identity(k)(j) -= factor * identity(i)(j)
     identity
 
+  def colminmax(a: Mat, dirs: Array[Direction]): Vec =
+    val n = a(0).length
+    val result = Array.fill(n)(0.0)
+    for j <- 0 until n do
+      val col = getcolat(a, j)
+      val currentdir = dirs(j)
+      result(j) = currentdir match
+        case Direction.Minimize => col.min
+        case Direction.Maximize => col.max
+    result
+

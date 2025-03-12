@@ -1,21 +1,21 @@
 package org.expr.mcdm
 
 import org.expr.mcdm.MCDMResult
-import org.expr.mcdm.Direction
+import org.expr.mcdm.Direction._
 import org.expr.mcdm.Matrix
 import org.expr.mcdm.Vec
 import org.expr.mcdm.Mat
 import org.expr.mcdm.Statistics
 
 case class TopsisResult(
-    val normalizedMatrix: Array[Array[Double]],
-    val weightedNormalizedMatrix: Array[Array[Double]],
-    val ideal: Array[Double],
-    val antiIdeal: Array[Double],
-    val distanceToIdeal: Array[Double],
-    val distanceToAntiIdeal: Array[Double],
-    val scores: Array[Double],
-    val rankings: Array[Int],
+    val normalizedMatrix: Mat,
+    val weightedNormalizedMatrix: Mat,
+    val ideal: Vec,
+    val antiIdeal: Vec,
+    val distanceToIdeal: Vec,
+    val distanceToAntiIdeal: Vec,
+    val scores: Vec,
+    val rankings: VecInt,
     val bestIndex: Int
 ) extends MCDMResult
 
@@ -31,12 +31,12 @@ def topsis(
     val colmaxs = Matrix.colmaxs(weightedNormalizedMatrix)
     val colmins = Matrix.colmins(weightedNormalizedMatrix)
     val ideal = directions.zip(colmaxs.zip(colmins)).map {
-      case (Direction.Maximize, (max, _)) => max
-      case (Direction.Minimize, (_, min)) => min
+      case (Maximize, (max, _)) => max
+      case (Minimize, (_, min)) => min
     }
     val antiIdeal = directions.zip(colmaxs.zip(colmins)).map {
-      case (Direction.Maximize, (_, min)) => min
-      case (Direction.Minimize, (max, _)) => max
+      case (Maximize, (_, min)) => min
+      case (Minimize, (max, _)) => max
     }
     val distanceToIdeal = 
       Matrix.applyFunctionToRows(weightedNormalizedMatrix, (row: Vec) =>

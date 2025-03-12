@@ -1,6 +1,7 @@
 import munit.Assertions as A
 
 import org.expr.mcdm.Matrix
+import org.expr.mcdm.Direction
 
 class TestMatrix extends munit.FunSuite {
   test("zeros(10)") {
@@ -304,6 +305,36 @@ class TestMatrix extends munit.FunSuite {
     )
     val inv = Matrix.inverse(mat)
     A.assert(Matrix.elementwise_equal(inv, expected, 1e-6))
+  }
+  test("Column min max regarding to direction vector - 1"){
+    val mat = Array(
+      Array(1.0, 5.0, 6.0),
+      Array(-1.0, 10.0, 9.0),
+      Array(9.0, 17.0, 12.0)
+    )
+    val direction = Array(
+      Direction.Minimize, 
+      Direction.Maximize, 
+      Direction.Minimize)
+    val values = Matrix.colminmax(mat, direction)
+    val expected = Array(-1.0, 17.0, 6.0)
+    A.assert(Matrix.elementwise_equal(values, expected))
+  }
+  test("Column min max regarding to direction vector - 2"){
+    val mat = Array(
+      Array(1.0, 5.0, 6.0, 10.0, 10.0),
+      Array(-1.0, 10.0, 9.0, 11.0, 11.0),
+      Array(9.0, 17.0, 12.0, 12.0, 12.0)
+    )
+    val direction = Array(
+      Direction.Minimize, 
+      Direction.Maximize, 
+      Direction.Minimize,
+      Direction.Maximize,
+      Direction.Minimize)
+    val values = Matrix.colminmax(mat, direction)
+    val expected = Array(-1.0, 17.0, 6.0, 12.0, 10.0)
+    A.assert(Matrix.elementwise_equal(values, expected))
   }
 
 }
