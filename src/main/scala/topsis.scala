@@ -25,24 +25,21 @@ def topsis(
     directions: Array[Direction],
     normalization: NormalizationFunction = Normalization.VectorNormNormalization
 ): TopsisResult =
-  val n, m = Matrix.size(decmat)
+    
+    val n, m = Matrix.size(decmat)
+    
     val normalizedMatrix = normalization(decmat, weights, directions)
+    
     val weightedNormalizedMatrix = Matrix.weightizeColumns(normalizedMatrix, weights)
-    val colmaxs = Matrix.colmaxs(weightedNormalizedMatrix)
-    val colmins = Matrix.colmins(weightedNormalizedMatrix)
-    val ideal = directions.zip(colmaxs.zip(colmins)).map {
-      case (Maximize, (max, _)) => max
-      case (Minimize, (_, min)) => min
-    }
-    val antiIdeal = directions.zip(colmaxs.zip(colmins)).map {
-      case (Maximize, (_, min)) => min
-      case (Minimize, (max, _)) => max
-    }
+
+    val ideal = Matrix.colminmax(weightedNormalizedMatrix, directions)
+    
+    val antiIdeal = Matrix.colminmax(weightedNormalizedMatrix, Matrix.inversedirections(directions))
+    
     val distanceToIdeal = 
       Matrix.applyFunctionToRows(weightedNormalizedMatrix, (row: Vec) =>
         Statistics.euclideanDistance(row, ideal))
     
-
     val distanceToAntiIdeal =
       Matrix.applyFunctionToRows(weightedNormalizedMatrix, (row: Vec) =>
         Statistics.euclideanDistance(row, antiIdeal))
@@ -50,8 +47,11 @@ def topsis(
     val scores = distanceToAntiIdeal.zip(distanceToIdeal).map {
       case (danti, di) => danti / (danti + di)
     }
+
     val rankings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
+
     val bestIndex = rankings.head
+    
     TopsisResult(
       normalizedMatrix,
       weightedNormalizedMatrix,
