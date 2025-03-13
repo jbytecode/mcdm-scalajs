@@ -94,10 +94,6 @@ object Matrix:
 
   def size(a: Mat): (Int, Int) = (a.length, a(0).length)
 
-  def appendColumnVec(a: Mat, b: Vec): Mat = a :+ b
-
-  def appendRowVec(a: Mat, b: Vec): Mat = (a.transpose :+ b).transpose
-
   def inverse(a: Array[Array[Double]]): Array[Array[Double]] =
     val n = a.length
     val m = a(0).length
@@ -132,5 +128,3 @@ object Matrix:
       case Direction.Maximize => Direction.Minimize
     }
 
-  def weightise(a: Mat, w: Vec): Mat = 
-    a.transpose.zip(w).map((row, weight) => row.map(value => value * weight)).transpose
