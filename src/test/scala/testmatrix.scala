@@ -352,5 +352,21 @@ class TestMatrix extends munit.FunSuite {
       Direction.Maximize)
     direction.zip(expected).foreach{case (a, b) => A.assertNotEquals(a, b)}
   }
+  test("Weightise"){
+    val mat = Array(
+      Array(1.0,  5.0,  6.0,  10.0, 10.0),
+      Array(-1.0, 10.0, 9.0,  11.0, 11.0),
+      Array(9.0,  17.0, 12.0, 12.0, 12.0)
+    )
+    val weights = Array(0.1, 0.2, 0.3, 0.3, 0.1)
+    val weighted = Matrix.weightise(mat, weights)
+    val expected = Array(
+      Array( 0.1,  1.0,  1.8,  3.0,  1.0),
+      Array(-0.1,  2.0,  2.7,  3.3,  1.1),
+      Array( 0.9,  3.4,  3.6,  3.6,  1.2)
+    )
+    A.assert(Matrix.elementwise_equal(weighted, expected, 1e-3))
+  }
 
 }
+

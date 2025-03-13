@@ -132,3 +132,5 @@ object Matrix:
       case Direction.Maximize => Direction.Minimize
     }
 
+  def weightise(a: Mat, w: Vec): Mat = 
+    a.transpose.zip(w).map((row, weight) => row.map(value => value * weight)).transpose
