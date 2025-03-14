@@ -4,6 +4,8 @@ import org.expr.mcdm.Mat
 import org.expr.mcdm.Vec
 import org.expr.mcdm.Direction
 
+import scala.math
+
 object Normalization:
 
   def VectorNormNormalization(
@@ -52,3 +54,31 @@ object Normalization:
       then decmat(i)(j) / columnmaxs(j)
       else columnmins(j) / decmat(i)(j)
     )
+
+  def NullNormalization(
+      decmat: Mat,
+      weights: Vec,
+      directions: Array[Direction]
+  ): Mat =
+    decmat
+  
+  def DivideByAllNormNormalization(
+      decmat: Mat,
+      weights: Vec,
+      directions: Array[Direction]
+  ): Mat =
+
+    // return mat ./ sqrt(sum(mat .* mat))
+    val (n, m) = Matrix.size(decmat)
+
+    val matmat = Array.tabulate(n, m)((i, j) => decmat(i)(j) * decmat(i)(j))
+
+    val sumofall = matmat.flatten.sum
+
+    val sqrtsum = math.sqrt(sumofall)
+
+    Array.tabulate(n, m)((i, j) => decmat(i)(j) / sqrtsum)
+
+
+    
+

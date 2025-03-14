@@ -80,5 +80,38 @@ class TestNormalizations extends munit.FunSuite {
 
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+
+  test("Divide By All Norm Normalization"){
+      val mat = Array(
+       Array(0.0264859,  0.0565293,  0.960557,  0.765195,  0.135447),
+       Array(0.31746  ,  0.631628 ,  0.142819,  0.94584 ,  0.553917),
+       Array(0.166361 ,  0.197306 ,  0.725104,  0.334121,  0.202895))
+
+      val directions = Array(Maximize, Minimize, Maximize, Minimize, Maximize)
+
+      val result = Normalization.DivideByAllNormNormalization(mat, Array.emptyDoubleArray, directions)
+
+      val expected = Array(
+         Array(0.0132476,  0.0282746,  0.480447 ,  0.382732,  0.0677471),
+         Array(0.158786 ,  0.315925 ,  0.0714348,  0.473086,  0.277056),
+         Array(0.0832097,  0.0986878,  0.36268  ,  0.167119,  0.101483))
+
+      A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
+
+  test("Null Normalization"){
+      val mat = Array(
+       Array(0.0264859,  0.0565293,  0.960557,  0.765195,  0.135447),
+       Array(0.31746  ,  0.631628 ,  0.142819,  0.94584 ,  0.553917),
+       Array(0.166361 ,  0.197306 ,  0.725104,  0.334121,  0.202895))
+
+      val directions = Array(Maximize, Minimize, Maximize, Minimize, Maximize)
+
+      val result = Normalization.NullNormalization(mat, Array.emptyDoubleArray, directions)
+
+      val expected = mat
+
+      A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
   
 }

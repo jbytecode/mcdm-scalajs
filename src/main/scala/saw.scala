@@ -1,6 +1,7 @@
 package org.expr.mcdm
 
-import org.expr.mcdm.Direction
+import org.expr.mcdm._
+
 
 case class SawResult(
     normalizedDecisionMat: Mat,
