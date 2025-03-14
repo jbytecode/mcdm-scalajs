@@ -4,6 +4,7 @@ import scala.math as math
 import org.expr.mcdm.Matrix
 import org.expr.mcdm.Direction._
 import org.expr.mcdm.Normalization._
+import org.expr.mcdm.Normalization
 
 class TestNormalizations extends munit.FunSuite {
 
@@ -60,6 +61,24 @@ class TestNormalizations extends munit.FunSuite {
          Array(0.751333,  0.104509,  0.0536683,  0.789658,  0.778435))
 
       A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5))
+  }
+
+  test("Divide by column max min normalization"){
+    val mat = Array(
+       Array(0.0264859,  0.0565293,  0.960557,  0.765195,  0.135447),
+       Array(0.31746  ,  0.631628 ,  0.142819,  0.94584 ,  0.553917),
+       Array(0.166361 ,  0.197306 ,  0.725104,  0.334121,  0.202895))
+
+    val directions = Array(Maximize, Minimize, Maximize, Minimize, Maximize)
+
+    val result = Normalization.DivideByColumnMaxMinNormalization(mat, Array.emptyDoubleArray, directions)
+
+    val expected = Array(
+       Array(0.0834308,  1.0      ,  1.0     ,  0.436648,  0.244525),
+       Array(1.0      ,  0.0894977,  0.148684,  0.353253,  1.0),
+       Array(0.524038 ,  0.286505 ,  0.75488 ,  1.0     ,  0.366291))
+
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
   
 }

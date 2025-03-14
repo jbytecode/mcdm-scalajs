@@ -37,3 +37,18 @@ object Normalization:
       then (decmat(i)(j) - columnmins(j)) / (columnmaxs(j) - columnmins(j))
       else (columnmaxs(j) - decmat(i)(j)) / (columnmaxs(j) - columnmins(j))
     )
+
+  def DivideByColumnMaxMinNormalization(
+      decmat: Mat,
+      weights: Vec,
+      directions: Array[Direction]
+  ): Mat =
+    val (n, m) = Matrix.size(decmat)
+    val columnmins = Matrix.colmins(decmat)
+    val columnmaxs = Matrix.colmaxs(decmat)
+
+    Array.tabulate(n, m)((i, j) =>
+      if directions(j) == Direction.Maximize
+      then decmat(i)(j) / columnmaxs(j)
+      else columnmins(j) / decmat(i)(j)
+    )
