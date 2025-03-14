@@ -7,6 +7,8 @@ object Statistics:
     def variance(a: Vec) : Double =
       val m = mean(a)
       a.map(x => (x - m) * (x - m)).sum / (a.length - 1.0)
+
+    def std(a: Vec): Double = math.sqrt(variance(a))
     
     def correlation(a: Vec, b: Vec): Double =
       val ma = mean(a)

@@ -128,3 +128,6 @@ object Matrix:
       case Direction.Maximize => Direction.Minimize
     }
 
+  def subtract(a: Mat, b: Mat): Mat =
+    a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x - y))
+

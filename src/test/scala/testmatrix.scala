@@ -352,6 +352,25 @@ class TestMatrix extends munit.FunSuite {
       Direction.Maximize)
     direction.zip(expected).foreach{case (a, b) => A.assertNotEquals(a, b)}
   }
+  test("Matrix subtract"){
+    val a = Array(
+      Array(1.0, 5.0, 6.0, 10.0, 10.0),
+      Array(-1.0, 11.0, 9.0, 11.0, 11.0),
+      Array(9.0, 17.0, 12.0, 12.0, 12.0)
+    )
+    val b = Array(
+      Array(2.0, 5.0, 6.0, 10.0, 10.0),
+      Array(-1.0, 10.0, 9.0, 11.0, 11.0),
+      Array(9.0, 17.0, 12.0, 12.0, 13.0)
+    )
+    val result = Matrix.subtract(a, b)
+    val expected = Array(
+      Array(-1.0, 0.0, 0.0, 0.0, 0.0),
+      Array(0.0, 1.0, 0.0, 0.0, 0.0),
+      Array(0.0, 0.0, 0.0, 0.0, -1.0)
+    )
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
 
 }
 

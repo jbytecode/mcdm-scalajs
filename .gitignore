@@ -10,3 +10,5 @@ project/**
 .metals/**
 .bsp/**
 .bloop/**
+
+.scalafmt.conf
