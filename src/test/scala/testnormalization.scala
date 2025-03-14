@@ -19,6 +19,7 @@ class TestNormalizations extends munit.FunSuite {
     )
     A.assert(Matrix.elementwise_equal(columnnorms, expected))
   }
+
   test("Divide By Columns Sum Normalization"){
     val decmat = Array(
             Array(0.616812,  0.415094 ,  0.0168757,  0.338965 ,  0.190954),
@@ -39,6 +40,26 @@ class TestNormalizations extends munit.FunSuite {
        Array(0.269385,  0.021957,  0.28562  ,  0.0235431,  0.190145))
        
     A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5))
+  }
+  
+  test("Max Min Range Normalization"){
+      val mat = Array(
+         Array(0.868611,  0.35464 ,  0.703252,  0.764339,  0.114943),
+         Array(0.63451 ,  0.77493 ,  0.869208,  0.11187 ,  0.669837),
+         Array(0.121569,  0.158548,  0.193922,  0.296039,  0.581193),
+         Array(0.682846,  0.710512,  0.230163,  0.249112,  0.546892))
+      val directions = Array(Maximize, Minimize, Maximize, Minimize, Maximize)
+      // Weights are not used in this normalization
+      val weights = Array(0.2, 0.2, 0.2, 0.2, 0.2)
+      val normalizedMatrix = MaxMinRangeNormalization(mat, weights, directions)
+
+      val expected = Array(
+         Array(1.0     ,  0.681866,  0.754244 ,  0.0     ,  0.0),
+         Array(0.686629,  0.0     ,  1.0      ,  1.0     ,  1.0),
+         Array(0.0     ,  1.0     ,  0.0      ,  0.717735,  0.840251),
+         Array(0.751333,  0.104509,  0.0536683,  0.789658,  0.778435))
+
+      A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5))
   }
   
 }
