@@ -18,6 +18,12 @@ class TestStatistics extends munit.FunSuite {
     val expected = 2.5
     A.assertEquals(variance, expected)
   }
+  test("Standard deviation of vector"){
+    val a = Array(1.0, 2.0, 3.0, 4.0, 5.0)
+    val std = Statistics.std(a)
+    val expected = math.sqrt(2.5)
+    A.assertEquals(std, expected)
+  }
   test("Correlation of vector with itself"){
     val a = Array(1.0, 2.0, 3.0, 4.0, 5.0)
     val covariance = Statistics.correlation(a, a)
@@ -39,6 +45,19 @@ class TestStatistics extends munit.FunSuite {
       Array(1.0, 1.0, 0.880812),
       Array(0.880812, 0.880812, 1.0))
     A.assert(Matrix.elementwise_equal(corr, expected, 1e-6))
+  }
+  test("Geometric mean (with logarithmic formula)"){
+
+     val x = Array(
+       0.9995440160681826,
+       0.7608611955213163,
+       0.8967084105498316,
+       0.9955675288968396,
+       0.007713272360632573)
+     
+     val expected = 0.3497950008915474
+
+     A.assertEqualsDouble(Statistics.geomean(x), expected, 1e-6)
   }
   
 }

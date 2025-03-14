@@ -28,3 +28,5 @@ object Statistics:
 
     def euclideanDistance(a: Vec, b: Vec): Double =
         math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)
+
+    def geomean(x: Vec): Double = math.exp(x.map(math.log).sum / x.length)
