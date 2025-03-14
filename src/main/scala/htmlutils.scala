@@ -8,6 +8,25 @@ object HtmlUtils:
     val document = dom.document 
     val window = dom.window
 
+    def makeOutput(input: TopsisResult): HTMLDivElement = 
+        val div = document.createElement("div").asInstanceOf[HTMLDivElement]
+        val table1 = makeTable(input.normalizedMatrix)
+        val table2 = makeTable(input.weightedNormalizedMatrix)
+        val table3 = makeTable(Matrix.makeColumnMatrix(input.ideal))
+        val table4 = makeTable(Matrix.makeColumnMatrix(input.antiIdeal))
+        val table5 = makeTable(Matrix.makeRowMatrix(input.scores))
+        div.appendChild(document.createElement("h2")).textContent = "Normalized matrix"
+        div.appendChild(table1)
+        div.appendChild(document.createElement("h2")).textContent = "Weighted normalized matrix"
+        div.appendChild(table2)
+        div.appendChild(document.createElement("h2")).textContent = "Ideal"
+        div.appendChild(table3)
+        div.appendChild(document.createElement("h2")).textContent = "Anti-ideal"
+        div.appendChild(table4)
+        div.appendChild(document.createElement("h2")).textContent = "Scores"
+        div.appendChild(table5)
+        div
+
     def makeTable(a: Mat): dom.HTMLTableElement = 
         val table = document.createElement("table").asInstanceOf[dom.HTMLTableElement]
         a.foreach(row => 

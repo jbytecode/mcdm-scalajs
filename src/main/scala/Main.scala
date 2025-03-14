@@ -17,10 +17,20 @@ def registerEvents(): Unit =
   input.onclick = (e: dom.Event) =>
     window.console.log("Button clicked")
     val decmatoutput: HTMLDivElement = document.getElementById("div_decmat_output").asInstanceOf[HTMLDivElement]
-    val textarea : HTMLTextAreaElement = document.getElementById("textarea_decmat").asInstanceOf[HTMLTextAreaElement]
-    val textcontent = textarea.value
-    decmatoutput.innerHTML = ""
-    decmatoutput.appendChild(HtmlUtils.makeTable(HtmlUtils.parseTextToTable(textcontent)))
+    
+    val decmat = Array(
+      Array(1.0, 2.0, 3.0),
+      Array(4.0, 5.0, 6.0),
+      Array(7.0, 8.0, 9.0)
+    )
+    val weights = Array(0.3, 0.5, 0.2)
+    val directions = Array(Direction.Maximize, Direction.Maximize, Direction.Maximize)
+    val result = topsis(decmat, weights, directions)
+    val result2 = aras(decmat, weights, directions)
+    val result3 = saw(decmat, weights, directions)
+    val result4 = critic(decmat, directions)
+    val table1 = HtmlUtils.makeOutput(result)
+    decmatoutput.appendChild(table1)
 @main def hello(): Unit =
   window.console.log("Hello, world!")
   registerEvents() 

@@ -4,8 +4,9 @@
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     color: black;
-    background-color: white;
+    background-color: bisque;
 }
 
 input[type="button"] {

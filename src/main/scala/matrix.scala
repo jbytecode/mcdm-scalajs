@@ -131,3 +131,7 @@ object Matrix:
   def subtract(a: Mat, b: Mat): Mat =
     a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x - y))
 
+  def makeRowMatrix(v: Vec): Mat = v.map(x => Array(x))
+
+  def makeColumnMatrix(v: Vec): Mat = Array(v)
+
