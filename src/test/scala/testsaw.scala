@@ -31,5 +31,25 @@ class TestSaw extends munit.FunSuite {
         A.assertEquals(result.bestIndex, 3)
     }
 
+    test("Saw Example - 2"){
+        
+        val decmat = Array(
+            Array(4.0, 7.0, 3.0, 2.0, 2.0, 2.0, 2.0),
+            Array(4.0, 4.0, 6.0, 4.0, 4.0, 3.0, 7.0),
+            Array(7.0, 6.0, 4.0, 2.0, 5.0, 5.0, 3.0),
+            Array(3.0, 2.0, 5.0, 3.0, 3.0, 2.0, 5.0),
+            Array(4.0, 2.0, 2.0, 5.0, 5.0, 3.0, 6.0))
+        
+        val weights = Array(0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076)
+
+        val directions = Array.fill(7)(Direction.Maximize)
+
+        val result = saw(decmat, weights, directions)
+
+        val expectedScores = Array(0.553228, 0.713485, 0.837428, 0.514657, 0.579342)
+
+        A.assert(Matrix.elementwise_equal(result.scores, expectedScores))
+    }
+
 }    
     
