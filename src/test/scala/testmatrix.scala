@@ -306,53 +306,54 @@ class TestMatrix extends munit.FunSuite {
     val inv = Matrix.inverse(mat)
     A.assert(Matrix.elementwise_equal(inv, expected, 1e-6))
   }
-  test("Column min max regarding to direction vector - 1"){
+  test("Column min max regarding to direction vector - 1") {
     val mat = Array(
       Array(1.0, 5.0, 6.0),
       Array(-1.0, 10.0, 9.0),
       Array(9.0, 17.0, 12.0)
     )
-    val direction = Array(
-      Direction.Minimize, 
-      Direction.Maximize, 
-      Direction.Minimize)
+    val direction =
+      Array(Direction.Minimize, Direction.Maximize, Direction.Minimize)
     val values = Matrix.colminmax(mat, direction)
     val expected = Array(-1.0, 17.0, 6.0)
     A.assert(Matrix.elementwise_equal(values, expected))
   }
-  test("Column min max regarding to direction vector - 2"){
+  test("Column min max regarding to direction vector - 2") {
     val mat = Array(
       Array(1.0, 5.0, 6.0, 10.0, 10.0),
       Array(-1.0, 10.0, 9.0, 11.0, 11.0),
       Array(9.0, 17.0, 12.0, 12.0, 12.0)
     )
     val direction = Array(
-      Direction.Minimize, 
-      Direction.Maximize, 
       Direction.Minimize,
       Direction.Maximize,
-      Direction.Minimize)
+      Direction.Minimize,
+      Direction.Maximize,
+      Direction.Minimize
+    )
     val values = Matrix.colminmax(mat, direction)
     val expected = Array(-1.0, 17.0, 6.0, 12.0, 10.0)
     A.assert(Matrix.elementwise_equal(values, expected))
   }
-  test("Inverse direction vector"){
+  test("Inverse direction vector") {
     val direction = Array(
-      Direction.Minimize, 
-      Direction.Maximize, 
       Direction.Minimize,
       Direction.Maximize,
-      Direction.Minimize)
+      Direction.Minimize,
+      Direction.Maximize,
+      Direction.Minimize
+    )
     val inv = Matrix.inversedirections(direction)
     val expected = Array(
-      Direction.Maximize, 
-      Direction.Minimize, 
       Direction.Maximize,
       Direction.Minimize,
-      Direction.Maximize)
-    direction.zip(expected).foreach{case (a, b) => A.assertNotEquals(a, b)}
+      Direction.Maximize,
+      Direction.Minimize,
+      Direction.Maximize
+    )
+    direction.zip(expected).foreach { case (a, b) => A.assertNotEquals(a, b) }
   }
-  test("Matrix subtract"){
+  test("Matrix subtract") {
     val a = Array(
       Array(1.0, 5.0, 6.0, 10.0, 10.0),
       Array(-1.0, 11.0, 9.0, 11.0, 11.0),
@@ -371,6 +372,44 @@ class TestMatrix extends munit.FunSuite {
     )
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+  test("Matrix Multiplication") {
+    val Amat = Array(
+      Array(1.0, 2.0, 3.0),
+      Array(4.0, -5.0, 6.0),
+      Array(7.0, 8.0, 9.0)
+    )
+    val result = Matrix.mul(Amat, Amat)
+    val expected = Array(
+      Array(30.0, 16.0, 42.0),
+      Array(26.0, 81.0, 36.0),
+      Array(102.0, 46.0, 150.0)
+    )
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
+  test("Matrix Multiplication 4x4") {
+    val Amat = Array(
+      Array(0.413366, 0.0846592, 0.881597, 0.241684),
+      Array(0.447778, 0.339442, 0.6959, 0.666622),
+      Array(0.0650627, 0.511026, 0.797978, 0.522368),
+      Array(0.725426, 0.12043, 0.454939, 0.362997)
+    )
 
+    val Bmat = Array(
+      Array(0.875121, 0.0988522),
+      Array(0.518189, 0.178776),
+      Array(0.827807, 0.105984),
+      Array(0.659508, 0.555764)
+    )
+
+    val result = Matrix.mul(Amat, Bmat)
+
+    val expected = Array(
+      Array(1.2948, 0.283751),
+      Array(1.58347, 0.549186),
+      Array(1.32682, 0.472677),
+      Array(1.31324, 0.343197)
+    )
+
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
 }
-

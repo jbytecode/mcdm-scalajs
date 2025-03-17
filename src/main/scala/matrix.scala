@@ -2,11 +2,10 @@ package org.expr.mcdm
 
 import scala.math as math
 
-
-
 object Matrix:
 
-  def prettyPrint(a: Mat): String = a.map(row => row.mkString(" ")).mkString("\n")
+  def prettyPrint(a: Mat): String =
+    a.map(row => row.mkString(" ")).mkString("\n")
 
   def prettyPrint(a: Vec): String = a.mkString(" ")
 
@@ -76,9 +75,12 @@ object Matrix:
 
   def diagonal(a: Mat): Vec = a.zipWithIndex.map((row, i) => row(i))
 
-  def weightizeColumns(a: Mat, w: Vec): Mat = 
-    a.transpose.zip(w).map((row, weight) => row.map(value => value * weight)).transpose    
-    
+  def weightizeColumns(a: Mat, w: Vec): Mat =
+    a.transpose
+      .zip(w)
+      .map((row, weight) => row.map(value => value * weight))
+      .transpose
+
   def norm(a: Vec): Double = math.sqrt(a.map(x => x * x).sum)
 
   def applyFunctionToColumns(a: Mat, f: Vec => Double): Vec = a.transpose.map(f)
@@ -135,3 +137,12 @@ object Matrix:
 
   def makeColumnMatrix(v: Vec): Mat = Array(v)
 
+  def mul(a: Mat, b: Mat): Mat =
+    val n = a.length
+    val m = b(0).length
+    val p = b.length
+    val result = Array.fill(n, m)(0.0)
+    for i <- 0 until n do
+      for j <- 0 until m do
+        for k <- 0 until p do result(i)(j) += a(i)(k) * b(k)(j)
+    result
