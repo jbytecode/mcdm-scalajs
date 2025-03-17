@@ -146,3 +146,9 @@ object Matrix:
       for j <- 0 until m do
         for k <- 0 until p do result(i)(j) += a(i)(k) * b(k)(j)
     result
+
+  def mul(a: Mat, b: Vec): Vec = mul(a, makeRowMatrix(b)).flatten
+
+  def solve(A: Mat, b: Vec): Vec = mul(inverse(A), b)
+
+

@@ -412,4 +412,46 @@ class TestMatrix extends munit.FunSuite {
 
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+  test("Equation solve 1"){
+    val Amat = Array(Array(2.0, 4.0), Array(6.0, 5.0))
+    val bvec = Array(12.0, 60.0)
+    val expected = Array(12.857, -3.428)
+    val result = Matrix.solve(Amat, bvec)
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-3))
+  }
+  test("Equation solve 2"){
+    val Amat = Array(Array(2.0, 1.0), Array(6.0, 0.0))
+    val bvec = Array(12.0, 60.0)
+    val expected = Array(10.0, -8.0)
+    val result = Matrix.solve(Amat, bvec)
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-3))
+  }
+  test("Equation solve 3"){
+    val Amat = Array(Array(2.0, 0.0), Array(6.0, 1.0))
+    val bvec = Array(12.0, 60.0)
+    val expected = Array(6.0, 24.0)
+    val result = Matrix.solve(Amat, bvec)
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-3))
+  }
+  test("Equation solve 4"){
+    val Amat = Array(Array(4.0, 1.0), Array(5.0, 0.0))
+    val bvec = Array(12.0, 60.0)
+    val expected = Array(12.0, -36.0)
+    val result = Matrix.solve(Amat, bvec)
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-3))
+  }
+  test("Equation solve 3x3"){
+    val Amat = Array(
+      Array(2.0, 1.0, 3.0),
+      Array(1.0, 2.0, 4.0),
+      Array(2.0, 2.0, 4.0))
+
+    val b = Array(13.0, 17.0, 18.0)
+
+    val expected = Array(1.0, 2.0, 3.0)
+
+    val result = Matrix.solve(Amat, b)
+
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-3))
+  }
 }
