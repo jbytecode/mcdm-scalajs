@@ -100,16 +100,17 @@ object Matrix:
     val n = a.length
     val m = a(0).length
     val identity = Array.tabulate(n, m)((i, j) => if i == j then 1.0 else 0.0)
+    var anew = a.map(_.clone)
     for i <- 0 until n do
-      val pivot = a(i)(i)
+      val pivot = anew(i)(i)
       for j <- 0 until m do
-        a(i)(j) /= pivot
+        anew(i)(j) /= pivot
         identity(i)(j) /= pivot
       for k <- 0 until n do
         if k != i then
-          val factor = a(k)(i)
+          val factor = anew(k)(i)
           for j <- 0 until m do
-            a(k)(j) -= factor * a(i)(j)
+            anew(k)(j) -= factor * anew(i)(j)
             identity(k)(j) -= factor * identity(i)(j)
     identity
 

@@ -291,6 +291,7 @@ class TestMatrix extends munit.FunSuite {
       Array(-0.119672, 0.00983607, 0.0114754)
     )
     A.assert(Matrix.elementwise_equal(inv, expected, 1e-6))
+    A.assert(!Matrix.elementwise_equal(inv, mat, 1e-6))
   }
   test("Inverse of a matrix - 2") {
     val mat = Array(
@@ -305,6 +306,7 @@ class TestMatrix extends munit.FunSuite {
     )
     val inv = Matrix.inverse(mat)
     A.assert(Matrix.elementwise_equal(inv, expected, 1e-6))
+    A.assert(!Matrix.elementwise_equal(inv, mat, 1e-6))
   }
   test("Column min max regarding to direction vector - 1") {
     val mat = Array(
