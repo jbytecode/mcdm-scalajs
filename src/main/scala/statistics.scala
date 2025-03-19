@@ -40,3 +40,11 @@ object Statistics:
     val xty = Matrix.mul(x.transpose, Matrix.makeRowMatrix(y))
     val beta = Matrix.mul(Matrix.inverse(xtx), xty)
     beta(0)
+
+  def median(x: Vec): Double = 
+    val L = x.length
+    val sorted = x.sorted
+    L match 
+      case n if n % 2 == 0 => (sorted(n / 2 - 1) + sorted(n / 2)) / 2.0
+      case _ => sorted(L / 2)
+

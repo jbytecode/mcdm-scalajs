@@ -70,5 +70,16 @@ class TestStatistics extends munit.FunSuite {
     val expected = Array(1.0, 2.0)
     A.assert(Matrix.elementwise_equal(beta, expected, 1e-6))
   }
+  test("Median"){
+    val x = Array(1.0, 2.0, 3.0, 4.0, 5.0)
+    val median = Statistics.median(x)
+    val expected = 3.0
+    A.assertEqualsDouble(median, expected, 1e-6)
+
+    val y = Array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0).reverse
+    val median2 = Statistics.median(y)
+    val expected2 = 3.5
+    A.assertEqualsDouble(median2, expected2, 1e-6)
+  }
 
 }
