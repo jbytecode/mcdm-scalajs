@@ -39,7 +39,7 @@ object Statistics:
     val xtx = Matrix.mul(x.transpose, x)
     val xty = Matrix.mul(x.transpose, Matrix.makeRowMatrix(y))
     val beta = Matrix.mul(Matrix.inverse(xtx), xty)
-    beta(0)
+    beta.flatten
 
   def median(x: Vec): Double = 
     val L = x.length
