@@ -11,15 +11,21 @@ case class WaspasResult(
     orderings: VecInt 
 ) extends MCDMResult
 
+val defaultWaspasOptions: Map[String, Any] = Map(
+  "lambda" -> 0.5
+)
+
 def waspas(
     decisionMat: Mat,
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction = DivideByColumnMaxMinNormalization,
-    lambda: Double = 0.5
+    options: Map[String, Any] = defaultWaspasOptions
 ): WaspasResult =
 
   val (row, col) = Matrix.size(decisionMat)
+
+  val lambda = options("lambda").asInstanceOf[Double]
 
   val normalizedDecisionMat = normalization(decisionMat, weights, directions)
 

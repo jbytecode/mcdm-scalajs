@@ -15,7 +15,8 @@ def saw(
     mat: Mat, 
     weights: Vec,
     directions: Array[Direction], 
-    normalization: NormalizationFunction = Normalization.DivideByColumnMaxMinNormalization
+    normalization: NormalizationFunction = Normalization.DivideByColumnMaxMinNormalization,
+    options: Map[String, Any] = Map.empty
     ): SawResult = 
         
         val (n, p) = Matrix.size(mat)

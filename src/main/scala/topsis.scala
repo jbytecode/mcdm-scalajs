@@ -23,7 +23,8 @@ def topsis(
     decmat: Mat,
     weights: Vec,
     directions: Array[Direction],
-    normalization: NormalizationFunction = Normalization.VectorNormNormalization
+    normalization: NormalizationFunction = Normalization.VectorNormNormalization,
+    options: Map[String, Any] = Map.empty
 ): TopsisResult =
     
     val n, m = Matrix.size(decmat)

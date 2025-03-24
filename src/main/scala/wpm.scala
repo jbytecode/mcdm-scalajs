@@ -12,7 +12,8 @@ def wpm(
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnMaxMinNormalization
+      Normalization.DivideByColumnMaxMinNormalization,
+    options: Map[String, Any] = Map.empty
 ): WpmResult =
 
   val (n, p) = Matrix.size(mat)

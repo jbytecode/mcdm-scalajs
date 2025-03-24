@@ -10,12 +10,14 @@ case class ArasResult(
     bestIndex: Int
 ) extends MCDMResult
 
+
 def aras(
     decmat: Mat,
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnnsSumNormalization
+      Normalization.DivideByColumnnsSumNormalization,
+    options: Map[String, Any] = Map.empty 
 ): ArasResult =
   val (nrows, ncols) = Matrix.size(decmat)
 

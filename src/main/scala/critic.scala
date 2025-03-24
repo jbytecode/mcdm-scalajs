@@ -12,7 +12,8 @@ case class CriticResult(
 def critic(
     mat: Mat, 
     directions: Array[Direction], 
-    normalization: NormalizationFunction = Normalization.MaxMinRangeNormalization
+    normalization: NormalizationFunction = Normalization.MaxMinRangeNormalization,
+    options: Map[String, Any] = Map.empty
     ): CriticResult = 
 
         val (n, m) = Matrix.size(mat)
