@@ -20,3 +20,6 @@ enablePlugins(ScalaJSPlugin)
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
+
+// Single Threaded Tests
+Test / parallelExecution := false
