@@ -6,7 +6,9 @@ case class WaspasResult(
     normalizedDecisionMatrix: Mat,
     scoresWSM: Vec,
     scoresWPM: Vec,
-    scores: Vec
+    scores: Vec,
+    bestIndex: Int,
+    orderings: VecInt 
 ) extends MCDMResult
 
 def waspas(
@@ -40,4 +42,8 @@ def waspas(
 
   val scores = Matrix.rowsums(Matrix.mul(scoreTables, Matrix.makeRowMatrix(l)))
 
-  WaspasResult(normalizedDecisionMat, scoresWSM, scoresWPM, scores)
+  val bestIndex = scores.zipWithIndex.maxBy(_._1)._2
+
+  val orderings = scores.zipWithIndex.sortBy(_._1).map(_._2)
+
+  WaspasResult(normalizedDecisionMat, scoresWSM, scoresWPM, scores, bestIndex, orderings)

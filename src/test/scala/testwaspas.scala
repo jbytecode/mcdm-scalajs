@@ -44,6 +44,10 @@ class TestWaspas extends munit.FunSuite {
         0.7873956894790834,
         0.7674278741781709)
 
+    val expectedBestIndex = 0
+
+    val expectedOrdering = Array(2, 1, 4, 3, 0)
+
     A.assert(Matrix.elementwise_equal(result.normalizedDecisionMatrix, expectedNormalizedMatrix, 1e-5))
 
     A.assert(Matrix.elementwise_equal(result.scoresWSM, expectedScoresWSM, 1e-5))
@@ -51,6 +55,10 @@ class TestWaspas extends munit.FunSuite {
     A.assert(Matrix.elementwise_equal(result.scoresWPM, expectedScoresWPM, 1e-5))
 
     A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5))
+
+    A.assertEquals(result.bestIndex, expectedBestIndex)
+
+    expectedOrdering.zip(result.orderings).foreach { case (a, b) => A.assertEquals(a, b) }
 
   }
 }
