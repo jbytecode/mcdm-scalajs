@@ -4,6 +4,7 @@ import org.expr.mcdm.Matrix
 import org.expr.mcdm.Direction._
 import org.expr.mcdm.critic
 import org.expr.mcdm.sd
+import org.expr.mcdm.Normalization.NullNormalization
 
 class TestSd extends munit.FunSuite {
 
@@ -46,4 +47,28 @@ class TestSd extends munit.FunSuite {
     A.assert(Matrix.elementwise_equal(result.weights, expectedWeights, 1e-03))
   }
 
+  test("Sd without normalization"){
+    val decmat = Array(
+            Array(105000.0, 120000, 150000, 115000, 135000),
+            Array(105.0, 110, 120, 105, 115),
+            Array(10.0, 15, 12, 20, 15),
+            Array(4.0, 4, 3, 4, 5),
+            Array(300.0, 500, 550, 600, 400),
+            Array(10.0, 8, 12, 9, 9)).transpose
+    
+    val directions = Array(
+      Minimize,
+      Maximize,
+      Minimize,
+      Maximize,
+      Maximize,
+      Minimize
+    )
+
+    val sdresult = sd(decmat, directions, normalization = NullNormalization)
+        
+    val expectedScores = Array(0.9925358892853197, 0.00036602915026898945, 0.0002123191795668205, 3.9701435571412785e-5, 0.006760910856275223, 8.515009299808652e-5)
+
+    A.assert(Matrix.elementwise_equal(sdresult.weights, expectedScores, 1e-05))
+  }
 }
