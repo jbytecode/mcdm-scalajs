@@ -153,4 +153,9 @@ object Matrix:
 
   def solve(A: Mat, b: Vec): Vec = mul(inverse(A), b)
 
+  def elementwiseMultiply(a: Mat, b: Mat): Mat =
+    a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x * y))
+
+
+
 

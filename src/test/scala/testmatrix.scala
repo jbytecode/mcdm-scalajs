@@ -414,6 +414,25 @@ class TestMatrix extends munit.FunSuite {
 
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+  test("Elementwise matrix multiplication"){
+    val Amat = Array(
+      Array(1.0, 2.0, 3.0),
+      Array(4.0, -5.0, 6.0),
+      Array(7.0, 8.0, 9.0)
+    )
+    val Bmat = Array(
+      Array(1.0, 2.0, 3.0),
+      Array(4.0, -5.0, 6.0),
+      Array(7.0, 8.0, 9.0)
+    )
+    val result = Matrix.elementwiseMultiply(Amat, Bmat)
+    val expected = Array(
+      Array(1.0, 4.0, 9.0),
+      Array(16.0, 25.0, 36.0),
+      Array(49.0, 64.0, 81.0)
+    )
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-03))
+  }
   test("Equation solve 1"){
     val Amat = Array(Array(2.0, 4.0), Array(6.0, 5.0))
     val bvec = Array(12.0, 60.0)
