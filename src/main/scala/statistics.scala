@@ -1,5 +1,7 @@
 package org.expr.mcdm
 
+import scala.math.{log, exp}
+
 object Statistics:
 
   def mean(a: Vec): Double = a.sum / a.length
@@ -47,4 +49,5 @@ object Statistics:
     L match 
       case n if n % 2 == 0 => (sorted(n / 2 - 1) + sorted(n / 2)) / 2.0
       case _ => sorted(L / 2)
+
 
