@@ -80,5 +80,56 @@ object Normalization:
     Array.tabulate(n, m)((i, j) => decmat(i)(j) / sqrtsum)
 
 
+
+  def MarcosNormalization(
+      decmat: Mat,
+      weights: Vec,
+      directions: Array[Direction]
+  ): Mat =
+    /*
+    row, col = size(decisionMat)
+    AAI = zeros(zerotype, col)
+    AI = zeros(zerotype, col)
+    temp = [decisionMat; AI'; AAI']
+    normalizedDecisionMat = similar(temp)
+    */
+    val (row, col) = Matrix.size(decmat)
+    var AAI = Matrix.zeros(col)
+    var AI = Matrix.zeros(col)
+    var temp = Matrix.appendrow(Matrix.appendrow(decmat, AI), AAI)
+    var normalizedDecisionMat = Matrix.similar(temp)
+
+    /* 
+        @inbounds for i = 1:col
+        if fns[i] == maximum
+            AI[i] = maximum(decisionMat[:, i])
+            temp[row+1, i] = AI[i]
+            AAI[i] = minimum(decisionMat[:, i])
+            temp[row+2, i] = AAI[i]
+            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
+        elseif fns[i] == minimum
+            AI[i] = minimum(decisionMat[:, i])
+            temp[row+1, i] = AI[i]
+            AAI[i] = maximum(decisionMat[:, i])
+            temp[row+2, i] = AAI[i]
+            normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
+        end
+    end
+     */
+    for i <- 0 until col do
+      if directions(i) == Direction.Maximize then
+        AI(i) = Matrix.getcolat(decmat, i).max
+        temp(row + 0)(i) = AI(i)
+        AAI(i) = Matrix.getcolat(decmat, i).min
+        temp(row + 1)(i) = AAI(i)
+        normalizedDecisionMat = Matrix.setcolat(normalizedDecisionMat, i, Matrix.getcolat(temp, i).map(_ / AI(i)))
+      else
+        AI(i) = Matrix.getcolat(decmat, i).min
+        temp(row + 0)(i) = AI(i)
+        AAI(i) = Matrix.getcolat(decmat, i).max
+        temp(row + 1)(i) = AAI(i)
+        normalizedDecisionMat = Matrix.setcolat(normalizedDecisionMat, i, Matrix.getcolat(temp, i).map(AI(i)/_))
+
+    normalizedDecisionMat
     
 

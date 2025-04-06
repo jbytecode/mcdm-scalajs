@@ -156,6 +156,10 @@ object Matrix:
   def elementwiseMultiply(a: Mat, b: Mat): Mat =
     a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x * y))
 
+  def similar(a: Mat): Mat = 
+    val (rows, cols) = Matrix.size(a)
+    Matrix.zeros(rows, cols)
+
 
 
 

@@ -113,5 +113,30 @@ class TestNormalizations extends munit.FunSuite {
 
       A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+
+
+  test("Marcos Normalization"){
+    val mat = Array(
+       Array(0.859421,  0.647379,  0.60974   ,  0.220985),
+       Array(0.417171,  0.505196,  0.00828995,  0.505368),
+       Array(0.953921,  0.25618 ,  0.927723  ,  0.50633),
+       Array(0.832288,  0.561702,  0.618042  ,  0.376513),
+       Array(0.934752,  0.66324 ,  0.848654  ,  0.14122))
+
+    val directions = Array(Maximize, Minimize, Minimize, Maximize)
+
+    val expected = Array(
+       Array(0.900936,  0.395719,  0.0135959,   0.436445),
+       Array(0.437322,  0.50709 ,  1.0      ,   0.998101),
+       Array(1.0     ,  1.0     ,  0.0089358,   1.0),
+       Array(0.872492,  0.456078,  0.0134132,   0.743611),
+       Array(0.979906,  0.386255,  0.00976835,  0.278908),
+       Array(1.0     ,  1.0     ,  1.0      ,   1.0),
+       Array(0.437322,  0.386255,  0.0089358,   0.278908))
+
+    val result = Normalization.MarcosNormalization(mat, Array.emptyDoubleArray, directions)
+
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
   
 }
