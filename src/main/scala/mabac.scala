@@ -1,7 +1,13 @@
 package org.expr.mcdm
 
 case class MabacResult(
-    scores: Vec
+    normalizedDecisionMatrix: Mat,
+    weightedDecisionMatrix: Mat,
+    geometricMeans: Vec,
+    Q: Mat,
+    scores: Vec,
+    orderings: VecInt,
+    best: Int,
 ) extends MCDMResult
 
 def mabac(
@@ -34,5 +40,18 @@ def mabac(
     // scores[i] = sum(Q[i, :])
     val scores = Q.map(row => row.sum)
 
-    MabacResult(scores)
+    // Orderings 
+    val orderings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
+
+    val best = orderings.last
+
+    MabacResult(
+        normalizedDecisionMatrix = A,
+        weightedDecisionMatrix = wA,
+        geometricMeans = g,
+        Q = Q,
+        scores = scores,
+        orderings = orderings,
+        best = best
+    )
 
