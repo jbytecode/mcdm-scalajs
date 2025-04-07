@@ -18,11 +18,8 @@ class TestMarcos extends munit.FunSuite {
 
     val expected_scores = Array(0.684865943528, 0.672767106696, 0.662596906139, 0.661103207660)
 
-    //val result = marcos(decmat, weights, fns)
+    val result = marcos(decmat, weights, fns)
 
-    println("*****************************")
-    println("Marcos not implemented yet!")
-    println("*****************************")
-    //A.assert(Matrix.elementwise_equal(result, expected_scores, 1e-6), "Marcos scores do not match expected values")
+    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 1e-6), "Marcos scores do not match expected values")
   }
 }
