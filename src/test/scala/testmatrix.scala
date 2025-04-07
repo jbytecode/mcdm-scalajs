@@ -488,4 +488,11 @@ class TestMatrix extends munit.FunSuite {
     A.assertEquals(row1, row2)
     A.assertEquals(col1, col2)
   }
+  test("Sum Product"){
+    val u = Array(1.0, 2.0, 3.0)
+    val v = Array(4.0, 5.0, 6.0)
+    val result = Matrix.sumproduct(u, v)
+    val expected = 1.0*4 + 2*5 + 3*6
+    A.assertEquals(result, expected)
+  }
 }

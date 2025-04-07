@@ -160,6 +160,9 @@ object Matrix:
     val (rows, cols) = Matrix.size(a)
     Matrix.zeros(rows, cols)
 
+  def sumproduct(u: Vec, v: Vec): Double =
+    u.zip(v).map((x, y) => x * y).sum
+
 
 
 
