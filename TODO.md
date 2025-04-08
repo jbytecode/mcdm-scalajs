@@ -1,5 +1,6 @@
 ## Next Implementations
 
+- Entropy
 - Cocoso
 - Codas
 - Ocra
