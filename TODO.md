@@ -7,6 +7,6 @@
 - Psi
 - Cilos
 - Lopcow
-- Iconrow
+- Idocriw
 
 
