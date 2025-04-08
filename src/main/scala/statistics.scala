@@ -4,6 +4,10 @@ import scala.math.{log, exp}
 
 object Statistics:
 
+  def maximum(a: Vec): Double = a.max
+
+  def minimum(a: Vec): Double = a.min
+
   def mean(a: Vec): Double = a.sum / a.length
 
   def variance(a: Vec): Double =

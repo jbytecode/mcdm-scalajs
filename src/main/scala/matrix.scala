@@ -86,6 +86,11 @@ object Matrix:
 
   def applyFunctionToColumns(a: Mat, f: Vec => Double): Vec = a.transpose.map(f)
 
+  def applyFunctionsToColumns(a: Mat, f: Array[Vec => Double]): Vec = 
+    a.transpose
+      .zip(f)
+      .map((col, func) => func(col))
+
   def applyFunctionToRows(a: Mat, f: Vec => Double): Vec = a.map(f)
 
   def multiplyRowByScalar(a: Mat, i: Int, scalar: Double): Mat =
