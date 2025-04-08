@@ -6,20 +6,7 @@ import org.expr.mcdm.Matrix
 
 class TestEntropy extends munit.FunSuite {
   test("Entropy Example - 1") {
-    /*
-        decmat = hcat(
-        [2.0, 4, 3, 5, 4, 3],
-        [1, 1, 2, 1, 2, 2],
-        [4, 5, 6, 5, 5, 6],
-        [7, 6, 6, 7, 6, 6],
-        [6, 7, 5, 6, 7, 6],
-        [6, 7, 6, 7, 7, 6],
-        [7, 6, 8, 7, 6, 6],
-        [3000, 3500, 4000, 3000, 3000, 3500],
-    )
 
-    result = entropy(decmat)
-     */
     val decmat = Array(
       Array(2.0, 4, 3, 5, 4, 3),
       Array(1.0, 1, 2, 1, 2, 2),
