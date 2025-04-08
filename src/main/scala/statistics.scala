@@ -8,6 +8,8 @@ object Statistics:
 
   def minimum(a: Vec): Double = a.min
 
+  def sum(a: Vec): Double = a.sum
+  
   def mean(a: Vec): Double = a.sum / a.length
 
   def variance(a: Vec): Double =

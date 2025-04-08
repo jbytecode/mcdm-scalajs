@@ -3,7 +3,6 @@
 - Cocoso
 - Codas
 - Cilos
-- Lopcow
 - Idocriw
 
 
