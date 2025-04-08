@@ -37,9 +37,18 @@ object Matrix:
 
   def getrowat(a: Mat, i: Int): Vec = a(i)
 
+  def getrowsat(a: Mat, indices: Array[Int]): Mat =
+    indices.map(i => a(i))
+
+  def getcolsat(a: Mat, indices: Array[Int]): Mat = 
+    indices.map(i => a.transpose.apply(i)).transpose
+
   def getcolat(a: Mat, j: Int): Vec = a.map(row => row(j))
 
   def elementat(a: Mat, i: Int, j: Int): Double = a(i)(j)
+
+  def elementsat(a: Vec, indices: Array[Int]): Vec =
+    indices.map(i => a(i))
 
   def setrowat(a: Mat, i: Int, row: Vec): Mat = a.updated(i, row)
 
