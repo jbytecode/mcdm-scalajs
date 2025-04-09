@@ -32,7 +32,8 @@ class TestMabac extends munit.FunSuite {
 
     val expected_scores = Array(-0.31132, -0.10898, 0.20035, 0.04218, 0.34452, 0.20035)
 
-    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 0.0001))
+    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 0.0001),
+      "The scores are not equal in the Mabac example 1")
   }
 
 }

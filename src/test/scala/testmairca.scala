@@ -21,7 +21,8 @@ class TestMairca extends munit.FunSuite {
 
     val result = mairca(decmat, weights, fns)
 
-    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 0.001))
+    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 0.001),
+      "Expected scores do not match the result scores in Mairca.")
 
   }
 }

@@ -34,6 +34,7 @@ class TestEntropy extends munit.FunSuite {
     // weights are also empty
     val result = entropy(decmat, directions)
 
-    A.assert(Matrix.elementwise_equal(result.weights, expected_weights, 1e-5), "Weights are not equal in Entropy")
+    A.assert(Matrix.elementwise_equal(result.weights, expected_weights, 1e-5), 
+    "Weights are not equal in Entropy")
   }
 }

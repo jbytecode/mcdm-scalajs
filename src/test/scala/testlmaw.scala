@@ -29,6 +29,7 @@ class TestLmaw extends munit.FunSuite {
 
     A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 1e-6),
       s"Expected scores: ${Matrix.prettyPrint(expected_scores)} but got: ${Matrix.prettyPrint(result.scores)}")
+    
     A.assertEquals(result.best, expected_best_index,
       s"Expected best index: $expected_best_index but got: ${result.best}")
   }

@@ -25,7 +25,8 @@ class TestCritic extends munit.FunSuite {
 
         val expectedWeights = Array(0.16883925, 0.418444976, 0.249124763, 0.163591012)
 
-        A.assert(Matrix.elementwise_equal(result.weights, expectedWeights, 1e-5))
+        A.assert(Matrix.elementwise_equal(result.weights, expectedWeights, 1e-5), 
+            "Expected weights do not match the calculated weights in the Critic method.")
     }
 
 }

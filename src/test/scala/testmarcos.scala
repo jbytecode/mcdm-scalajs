@@ -20,6 +20,7 @@ class TestMarcos extends munit.FunSuite {
 
     val result = marcos(decmat, weights, fns)
 
-    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 1e-6), "Marcos scores do not match expected values")
+    A.assert(Matrix.elementwise_equal(result.scores, expected_scores, 1e-6), 
+    "Marcos scores do not match expected values")
   }
 }

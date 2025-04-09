@@ -61,7 +61,8 @@ class TestCopras extends munit.FunSuite {
       0.75650, 0.61430, 0.63486, 0.65542, 0.72065, 0.77680, 0.82379, 0.88253,
       1.00000);
 
-    A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5))
+    A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5),
+      "Scores do not match expected values in Copras example 1")
 
     A.assert(result.bestIndex == 37)
   }

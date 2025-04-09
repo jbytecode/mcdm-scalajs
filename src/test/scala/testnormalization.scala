@@ -18,7 +18,8 @@ class TestNormalizations extends munit.FunSuite {
       math.sqrt(2.0 * 2.0 + 5.0 * 5.0 + 8.0 * 8.0),
       math.sqrt(3.0 * 3.0 + 6.0 * 6.0 + 9.0 * 9.0)
     )
-    A.assert(Matrix.elementwise_equal(columnnorms, expected))
+    A.assert(Matrix.elementwise_equal(columnnorms, expected), 
+      "Wrong normalization in Vector Norm Normalization")
   }
 
   test("Divide By Columns Sum Normalization"){
@@ -40,7 +41,8 @@ class TestNormalizations extends munit.FunSuite {
        Array(0.251438,  0.399928,  0.257313 ,  0.242485 ,  0.248523),
        Array(0.269385,  0.021957,  0.28562  ,  0.0235431,  0.190145))
        
-    A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5))
+    A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5),
+      "Wrong normalization in Divide By Columns Sum Normalization")
   }
   
   test("Max Min Range Normalization"){
@@ -60,7 +62,8 @@ class TestNormalizations extends munit.FunSuite {
          Array(0.0     ,  1.0     ,  0.0      ,  0.717735,  0.840251),
          Array(0.751333,  0.104509,  0.0536683,  0.789658,  0.778435))
 
-      A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5))
+      A.assert(Matrix.elementwise_equal(normalizedMatrix, expected, 1e-5),
+        "Wrong normalization in Max Min Range Normalization")
   }
 
   test("Divide by column max min normalization"){
@@ -78,7 +81,8 @@ class TestNormalizations extends munit.FunSuite {
        Array(1.0      ,  0.0894977,  0.148684,  0.353253,  1.0),
        Array(0.524038 ,  0.286505 ,  0.75488 ,  1.0     ,  0.366291))
 
-    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5),
+      "Wrong normalization in Divide By Column Max Min Normalization")
   }
 
   test("Divide By All Norm Normalization"){
@@ -96,7 +100,8 @@ class TestNormalizations extends munit.FunSuite {
          Array(0.158786 ,  0.315925 ,  0.0714348,  0.473086,  0.277056),
          Array(0.0832097,  0.0986878,  0.36268  ,  0.167119,  0.101483))
 
-      A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+      A.assert(Matrix.elementwise_equal(result, expected, 1e-5),
+        "Wrong normalization in Divide By All Norm Normalization")
   }
 
   test("Null Normalization"){
@@ -111,7 +116,8 @@ class TestNormalizations extends munit.FunSuite {
 
       val expected = mat
 
-      A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+      A.assert(Matrix.elementwise_equal(result, expected, 1e-5), 
+        "Wrong normalization in Null Normalization")
   }
 
 
@@ -136,7 +142,8 @@ class TestNormalizations extends munit.FunSuite {
 
     val result = Normalization.MarcosNormalization(mat, Array.emptyDoubleArray, directions)
 
-    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5), 
+      "Wrong normalization in Marcos Normalization")
   }
   
 }

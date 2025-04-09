@@ -62,8 +62,12 @@ class TestAras extends munit.FunSuite {
         1e-5
       )
     )
-    A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5))
-    A.assert(expectedOrdering.zip(result.orderings).forall((x, y) => x == y))
+    A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5), 
+      "Scores do not match in ARAS result")
+    
+    A.assert(expectedOrdering.zip(result.orderings).forall((x, y) => x == y), 
+      "Orderings do not match in ARAS result")
+      
     A.assertEquals(result.bestIndex, 2)
   }
 }
