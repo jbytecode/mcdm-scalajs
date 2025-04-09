@@ -27,7 +27,7 @@ def cilos(
     if directions(j) == Minimize then
       val minval = Matrix.getcolat(X, j).min
       val vv =
-        Matrix.elementwiseDivide(Array.fill(m)(minval), Matrix.getcolat(X, j))
+        Matrix.elementwiseDivide(Array.fill(n)(minval), Matrix.getcolat(X, j))
       X = Matrix.setcolat(X, j, vv)
 
   val artificialdirs = Array.fill(m)(Maximize)
