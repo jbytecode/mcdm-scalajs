@@ -1,6 +1,5 @@
 ## Next Implementations
 
-- Cilos
 - Idocriw
 
 

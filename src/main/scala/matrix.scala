@@ -170,12 +170,29 @@ object Matrix:
   def elementwiseMultiply(a: Mat, b: Mat): Mat =
     a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x * y))
 
+  def elementwiseMultiply(a: Vec, b: Vec): Vec =
+    a.zip(b).map((x, y) => x * y)
+
+  def elementwiseDivide(a: Mat, b: Mat): Mat =
+    a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x / y))
+
+  def elementwiseDivide(a: Vec, b: Vec): Vec =
+    a.zip(b).map((x, y) => x / y)
+
   def similar(a: Mat): Mat = 
     val (rows, cols) = Matrix.size(a)
     Matrix.zeros(rows, cols)
 
   def sumproduct(u: Vec, v: Vec): Double =
     u.zip(v).map((x, y) => x * y).sum
+
+  def replicate(a: Mat): Mat = 
+    val (rows, cols) = Matrix.size(a)
+    val result = Matrix.zeros(rows, cols)
+    for i <- 0 until rows do
+      for j <- 0 until cols do
+        result(i)(j) = a(i)(j)
+    result
 
 
 
