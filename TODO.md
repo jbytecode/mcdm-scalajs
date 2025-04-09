@@ -1,5 +1,4 @@
 ## Next Implementations
 
-- Idocriw
 
 
