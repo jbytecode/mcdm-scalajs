@@ -8,15 +8,15 @@ import org.expr.mcdm.Mat
 import org.expr.mcdm.Statistics
 
 case class TopsisResult(
-    val normalizedMatrix: Mat,
-    val weightedNormalizedMatrix: Mat,
-    val ideal: Vec,
-    val antiIdeal: Vec,
-    val distanceToIdeal: Vec,
-    val distanceToAntiIdeal: Vec,
-    val scores: Vec,
-    val rankings: VecInt,
-    val bestIndex: Int
+    normalizedMatrix: Mat,
+    weightedNormalizedMatrix: Mat,
+    ideal: Vec,
+    antiIdeal: Vec,
+    distanceToIdeal: Vec,
+    distanceToAntiIdeal: Vec,
+    scores: Vec,
+    rankings: VecInt,
+    bestIndex: Int
 ) extends MCDMResult
 
 def topsis(

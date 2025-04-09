@@ -17,7 +17,7 @@ def idocriw(
     options: Map[String, Any] = Map.empty
 ): IdocriwResult =
 
-  val entropy_result = entropy(mat, Array.emptyDoubleArray, directions)
+  val entropy_result = entropy(mat, directions)
 
   val entropy_weight = entropy_result.weights
 

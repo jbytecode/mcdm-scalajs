@@ -8,7 +8,6 @@ case class EntropyResult(
 
 def entropy(
     decisionMat: Mat,
-    weights: Vec = Array.emptyDoubleArray,
     directions: Array[Direction],
     normalization: NormalizationFunction =
       Normalization.MaxMinRangeNormalization,
