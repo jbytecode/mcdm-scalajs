@@ -3,6 +3,13 @@ package org.expr.mcdm
 import scala.math.{pow}
 
 case class CocosoResult(
+    normalizedMat: Mat,
+    scoreMat: Mat,
+    P: Vec,
+    S: Vec,
+    kA: Vec,
+    kB: Vec,
+    kC: Vec,
     scores: Vec,
 ) extends MCDMResult
 
@@ -47,7 +54,7 @@ def cocoso(
     val lambda = options.getOrElse("lambda", 0.5).asInstanceOf[Double]
 
     val invlambda = 1 - lambda 
-    
+
     val kC = (S.map(x => lambda * x)
         .zip(P.map(x => invlambda * x))
         .map((x, y) => x + y)
@@ -67,5 +74,14 @@ def cocoso(
 
     val scores = kApluskBpluskCdiv3.zip(kAprod3).map((x, y) => x + y)
     
-    CocosoResult(scores)
+    CocosoResult(
+        normalizedMat = A,
+        scoreMat = scoreMat,
+        P = P,
+        S = S,
+        kA = kA,
+        kB = kB,
+        kC = kC,
+        scores = scores
+    )
 
