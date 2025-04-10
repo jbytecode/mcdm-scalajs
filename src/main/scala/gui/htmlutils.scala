@@ -1,8 +1,9 @@
-package org.expr.mcdm
+package org.expr.mcdm.gui
 
 import org.scalajs.dom
 import org.scalajs.dom.HTMLInputElement
 import org.scalajs.dom.HTMLDivElement
+import org.expr.mcdm.*
 
 object HtmlUtils:
     val document = dom.document 

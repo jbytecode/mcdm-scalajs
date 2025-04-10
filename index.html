@@ -6,18 +6,151 @@
 </head>
 
 <body>
-    <b>Step 1 - Generate the decision matrix content</b>
-    <br/>
-    <textarea id="textarea_decmat" 
+<fieldset>
+    <legend><button class="toggle-button">-</button>
+        Step 1 - Generate the decision matrix content
+    </legend>
+    <p>Please copy and paste your data. The first row includes criteria names. The first column
+        includes the names of the alternatives. You can separate values using commas or semicolons.
+    </p>
+    <textarea id="textarea_strdecmat" 
     placeholder="Enter and copy & paste the decision matrix content here"
     rows="10" cols="50">
-0.3 0.4 0.5 0.6 0.7
-0.2 0.3 0.4 0.5 0.6
-0.1 0.2 0.3 0.4 0.5
+  ,C1 , C2 , C3 , C4 , C5
+A1,0.3, 0.4, 0.5, 0.6, 0.7
+A2,0.2, 0.3, 0.4, 0.5, 0.6
+A3,0.1, 0.2, 0.3, 0.4, 0.5
 </textarea>
-<br/>
-<input id="btn_generate_decmat" type="button" value="Generate">
-<div id = "div_decmat_output">..</div>
+<label for="select_separator">Select the value separator</label>
+<select id="select_separator">
+    <option value="comma">Comma (,)</option>
+    <option value="semicolon">Semicolon (;)</option>
+</select>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <button class="toggle-button">-</button>
+        Step 2 - Enter weights
+    </legend>
+    <input type="checkbox" id="checkbox_use_automatic_weights" checked>Use automatic weights</input>
+    <label for="select_weight_method">Select weighting method:</label>
+    <select id="select_weight_method">
+        <option value="0">Equal weights</option>
+        <option value="1">Entropy method</option>
+        <option value="2">CRITIC method</option>
+        <option value="3">Standard deviation method (SD)</option>
+        <option value="4">Merec method</option>
+        <option value="5">Cilos method</option>
+        <option value="6">Idocriw method</option>
+    </select>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <button class="toggle-button">-</button>
+        Step 3 - Enter directions of optimization for each criterion
+    </legend>
+    <input type = "text" id = "input_criteria_directions" value = "max,max,min,max,min" />
+    <div class="error-message-container">Number of directions should match the number of criteria</div>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <button class="toggle-button">-</button>
+        Step 4 - Select MCDM methods
+    </legend>
+    <input type="checkbox" id="check_aras" checked>Aras</input>
+    <input type="checkbox" id="check_cocoso">Cocoso</input>
+    <input type="checkbox" id="check_codas">Codas</input>
+    <input type="checkbox" id="check_copras">Copras</input>
+    <input type="checkbox" id="check_edas">Edas</input>
+    <input type="checkbox" id="check_lmaw" checked>Lmaw</input>
+    <input type="checkbox" id="check_lopvow" checked>Lopcow</input>
+    <input type="checkbox" id="check_mabac" checked>Mabac</input>
+    <input type="checkbox" id="check_mairca">Mairca</input>
+    <input type="checkbox" id="check_marcos">Marcos</input>
+    <input type="checkbox" id="check_ocra">Ocra</input>
+    <input type="checkbox" id="check_piv">Piv</input>
+    <input type="checkbox" id="check_psi">Psi</input>
+    <input type="checkbox" id="check_ram">Ram</input>
+    <input type="checkbox" id="check_rov">Rov</input>
+    <input type="checkbox" id="check_saw">Saw</input>
+    <input type="checkbox" id="check_topsis">Topsis</input>
+    <input type="checkbox" id="check_waspas">Waspas</input>
+    <input type="checkbox" id="check_wpm" checked>Wpm</input>
+
+    <div class="error-message-container">At least one method should be selected</div>
+
+    <button id="button_calculate">Generate output</button>
+</fieldset>
+
+<fieldset>
+    <legend>Topsis Output</legend>
+
+    <fieldset>
+        <legend>Decision Matrix</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th>Alternatives</th>
+                    <th>C1</th>
+                    <th>C2</th>
+                    <th>C3</th>
+                    <th>C4</th>
+                    <th>C5</th>
+                </tr>
+                <tr>
+                    <td>A1</td>
+                    <td>0.3</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.6</td>
+                    <td>0.7</td>
+                </tr>
+                <tr>
+                    <td>A2</td>
+                    <td>0.2</td>
+                    <td>0.3</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.6</td>
+                </tr>
+                <tr>
+                    <td>A3</td>
+                    <td>0.1</td>
+                    <td>0.2</td>
+                    <td>0.3</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                </tr>
+            </thead>
+            <tbody id="decision-matrix-body">
+            </tbody>
+        </table>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Normalized Decision Matrix</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th>Alternatives</th>
+                    <th>C1</th>
+                    <th>C2</th>
+                    <th>C3</th>
+                    <th>C4</th>
+                    <th>C5</th>
+                </tr>
+            </thead>
+            <tbody id="normalized-decision-matrix-body">
+            </tbody>
+    </fieldset>
+
+</fieldset>
+
+
 </body>
 
 
