@@ -2,6 +2,7 @@ package org.expr.mcdm.parser
 
 import org.expr.mcdm.MCDMProblem
 import org.expr.mcdm.Direction
+import org.expr.mcdm.gui.HtmlUtils.msgbox
 
 object Parser:
 
@@ -27,12 +28,24 @@ object Parser:
         commas can be replaced with semicolons.
      */
     def parseCSV(input: String, seperator: String = ","): MCDMProblem =
+        if input == null || input.isEmpty then
+            msgbox("The input is empty.")
+            empty_mcdm_problem()
         val lines = input.split("\n").map(_.trim).filter(_.nonEmpty)
+        if lines.length < 2 then
+            msgbox("The input is not valid.")
+            empty_mcdm_problem()
         val criteria = lines.head.split(seperator).map(_.trim).filter(_.nonEmpty)
         val alternatives = lines.tail.map(_.split(seperator).head.trim).filter(_.nonEmpty)
         val data = lines.tail.map(_.split(seperator).tail.map(_.trim.toDouble)).map(_.toList.toArray).toArray
         val weights = Array.fill(criteria.length)(1.0 / criteria.length)
         val directions = Array.fill(criteria.length)("max")
+        if criteria.length != data.head.length then
+            msgbox("The number of criteria and the number of data columns do not match.")
+        if alternatives.length != data.length then
+            msgbox("The number of alternatives and the number of data rows do not match.")
+        if data.length == 0 then
+            msgbox("The data is empty.")
         MCDMProblem(alternatives, criteria, data, weights, directions)
 
     def empty_mcdm_problem(): MCDMProblem =
