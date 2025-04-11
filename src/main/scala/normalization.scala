@@ -86,36 +86,14 @@ object Normalization:
       weights: Vec,
       directions: Array[Direction]
   ): Mat =
-    /*
-    row, col = size(decisionMat)
-    AAI = zeros(zerotype, col)
-    AI = zeros(zerotype, col)
-    temp = [decisionMat; AI'; AAI']
-    normalizedDecisionMat = similar(temp)
-    */
+
     val (row, col) = Matrix.size(decmat)
     var AAI = Matrix.zeros(col)
     var AI = Matrix.zeros(col)
     var temp = Matrix.appendrow(Matrix.appendrow(decmat, AI), AAI)
     var normalizedDecisionMat = Matrix.similar(temp)
 
-    /* 
-        @inbounds for i = 1:col
-        if fns[i] == maximum
-            AI[i] = maximum(decisionMat[:, i])
-            temp[row+1, i] = AI[i]
-            AAI[i] = minimum(decisionMat[:, i])
-            temp[row+2, i] = AAI[i]
-            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
-        elseif fns[i] == minimum
-            AI[i] = minimum(decisionMat[:, i])
-            temp[row+1, i] = AI[i]
-            AAI[i] = maximum(decisionMat[:, i])
-            temp[row+2, i] = AAI[i]
-            normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
-        end
-    end
-     */
+
     for i <- 0 until col do
       if directions(i) == Direction.Maximize then
         AI(i) = Matrix.getcolat(decmat, i).max
@@ -132,4 +110,29 @@ object Normalization:
 
     normalizedDecisionMat
     
-
+  /*
+  function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
+    NormalizeMatrix = similar(mat)
+    row, col = size(mat)
+    @inbounds for i = 1:row
+        for j = 1:col
+            if fns[j] == maximum
+                NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
+            elseif fns[j] == minimum
+                NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
+            end
+        end
+    end
+    return NormalizeMatrix
+  end 
+  */
+  def InverseDivideByColumnMaxMinNormalization(mat: Mat, weights: Vec = Array.emptyDoubleArray, fns: Array[Direction]): Mat =
+    val (row, col) = Matrix.size(mat)
+    var NormalizeMatrix = Matrix.zeros(row, col)
+    for i <- 0 until row do
+      for j <- 0 until col do
+        if fns(j) == Direction.Maximize then
+          NormalizeMatrix(i)(j) = Matrix.colmins(mat)(j) / mat(i)(j)
+        else
+          NormalizeMatrix(i)(j) = mat(i)(j) / Matrix.colmaxs(mat)(j)
+    NormalizeMatrix 

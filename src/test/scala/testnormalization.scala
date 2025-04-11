@@ -145,5 +145,34 @@ class TestNormalizations extends munit.FunSuite {
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5), 
       "Wrong normalization in Marcos Normalization")
   }
+
+  test("InverseDivideByColumnMaxMinNormalization normalization"){
+
+    val decmat = Array(
+      Array(0.585045, 0.843294, 0.790536, 0.930791, 0.465402),
+      Array(0.650532, 0.186987, 0.198324, 0.617555, 0.671299),
+      Array(0.97345 , 0.979501, 0.352456, 0.932621, 0.315139),
+      Array(0.583945, 0.481464, 0.465672, 0.948473, 0.945432))
+
+    val dirs = Array(
+      Maximize,
+      Maximize,
+      Minimize,
+      Minimize,
+      Maximize
+    )
+
+    val expected_result = Array(
+      Array(0.998119, 0.221734, 1.0, 0.981357, 0.677133),
+      Array(0.897643, 1.0, 0.250873, 0.651104, 0.469446),
+      Array(0.599872, 0.1909, 0.445844, 0.983286, 1.0),
+      Array(1.0, 0.388371, 0.589059, 1.0, 0.333327)
+    )
+
+    val result = InverseDivideByColumnMaxMinNormalization(decmat, Array.emptyDoubleArray, dirs)
+
+    A.assert(Matrix.elementwise_equal(result, expected_result, 1e-5),
+      "Wrong normalization in Inverse Divide By Column Max Min Normalization")
+  }
   
 }
