@@ -5,16 +5,152 @@ import org.scalajs.dom.HTMLInputElement
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLButtonElement
 import org.scalajs.dom.HTMLTextAreaElement
-import org.w3c.dom.html.HTMLUListElement
+import org.scalajs.dom.HTMLDialogElement
+import org.scalajs.dom.HTMLSelectElement
 
+import org.expr.mcdm.gui.HtmlUtils
+import org.expr.mcdm.parser.Parser
+import org.expr.mcdm.parser.Parser.empty_mcdm_problem
 
+/*
+Mutable state objects.
+We are using the problem data as the state object.
+ */
+var problem: MCDMProblem = empty_mcdm_problem()
+
+/*
+HTML objects.
+ */
 val document = dom.document
 val window = dom.window
+val textarea_strdecmat: HTMLTextAreaElement = document
+  .getElementById("textarea_strdecmat")
+  .asInstanceOf[HTMLTextAreaElement]
+val button_generate_decmat = document
+  .getElementById("button_generate_decmat")
+  .asInstanceOf[HTMLButtonElement]
+val button_generate_weights = document
+  .getElementById("button_generate_weights")
+  .asInstanceOf[HTMLButtonElement]
+val dialog_button_ok =
+  document.getElementById("dialog_button_ok").asInstanceOf[HTMLButtonElement]
+val dialog_messenger: HTMLDialogElement =
+  document.getElementById("dialog_messenger").asInstanceOf[HTMLDialogElement]
+val select_separator: HTMLSelectElement =
+  document.getElementById("select_separator").asInstanceOf[HTMLSelectElement]
+val select_weight_method: HTMLSelectElement = document
+  .getElementById("select_weight_method")
+  .asInstanceOf[HTMLSelectElement]
+val input_criteria_directions: HTMLInputElement = document
+  .getElementById("input_criteria_directions")
+  .asInstanceOf[HTMLInputElement]
+val button_generate_directions: HTMLButtonElement = document
+  .getElementById("button_generate_directions")
+  .asInstanceOf[HTMLButtonElement]
 
-  
+/*
+Generation of the decision matrix.
+ */
+def button_generate_decmat_events(): Unit =
+  button_generate_decmat.onclick = (e: dom.MouseEvent) =>
+    val separator = select_separator.value
+    val strdecmat = textarea_strdecmat.value
+    val p = Parser.parseCSV(strdecmat, separator)
+    problem = p.copy(
+      alternatives = p.alternatives,
+      criteria = p.criteria,
+      data = p.data,
+      weights = p.weights,
+      directions = p.directions
+    )
+    val strdecmat_html = HtmlUtils.decmat2html(p)
+    dialog_button_ok.onclick = (e: dom.MouseEvent) =>
+      HtmlUtils.dialog_messenger.close()
+    HtmlUtils.msgbox(strdecmat_html)
+
+/*
+Generation of the directions.
+ */
+def button_generate_directions_events(): Unit =
+  button_generate_directions.onclick = (e: dom.MouseEvent) =>
+    val strdirections = input_criteria_directions.value
+    val directions =
+      strdirections
+        .split(",")
+        .map(_.trim)
+        .map(_.toLowerCase)
+        .filter(_.nonEmpty)
+        .filter(x => x == "min" || x == "max")
+    if directions.length != problem.criteria.length then
+      HtmlUtils.msgbox(
+        s"Invalid number of directions ($strdirections). The number of directions should be equal to the number of criteria. ${problem.criteria.length} criteria found, ${directions.length} directions found."
+      )
+      ()
+    problem.directions = directions
+    val strdirections_html = HtmlUtils.decmat2html(problem)
+    dialog_button_ok.onclick = (e: dom.MouseEvent) =>
+      HtmlUtils.dialog_messenger.close()
+    HtmlUtils.msgbox(strdirections_html)
+
+/*
+Generation of the weights.
+ */
+def button_generate_weights_events(): Unit =
+  button_generate_weights.onclick = (e: dom.MouseEvent) =>
+    val methodname = select_weight_method.value.toString() match
+      case "0" => {
+        problem.weights =
+          Array.fill(problem.criteria.length)(1.0 / problem.criteria.length)
+        "Equal weights"
+      }
+      case "1" => {
+        problem.weights = entropy(problem.data, Parser.str2directions(problem.directions)).weights
+        "Entropy weights"
+      }
+      case "2" => {
+        problem.weights = critic(problem.data, Parser.str2directions(problem.directions)).weights
+        "Critic weights"
+      }
+      case "3" => {
+        problem.weights = sd(problem.data, Parser.str2directions(problem.directions)).weights
+        "Standard deviation weights"
+      }
+      case "4" => {
+        //problem.weights = merec(problem.data, Parser.str2directions(problem.directions)).weights
+        "Merec weights"
+      }
+      case "5" => {
+        problem.weights = 
+          cilos(problem.data, Parser.str2directions(problem.directions)).weights
+        "Cilos weights"
+      }
+      case "6" => {
+        problem.weights = 
+          idocriw(problem.data, Parser.str2directions(problem.directions)).weights
+        "Idocriw weights"
+      }
+      case "7" => {
+        // Custom weights
+        problem.weights =
+          Array.fill(problem.criteria.length)(1.0 / problem.criteria.length)
+      }
+      case _ => {
+        HtmlUtils.msgbox("Invalid method name")
+        problem.weights =
+          Array.fill(problem.criteria.length)(1.0 / problem.criteria.length)
+      }
+    HtmlUtils.msgbox(
+      s"Weights generated by <b>$methodname<b><hr><br>" + HtmlUtils.decmat2html(
+        problem
+      )
+    )
+
+def register_events(): Unit =
+  button_generate_decmat_events()
+  button_generate_directions_events()
+  button_generate_weights_events()
+  window.console.log("register_events called")
 
 @main def hello(): Unit =
   window.console.log("Hello, world!")
-
-
-
+  register_events()

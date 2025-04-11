@@ -6,6 +6,16 @@
 </head>
 
 <body>
+
+
+<dialog id="dialog_messenger">
+    <div id = "dialog_div_content">
+        Message Content
+    </div>
+    <hr/>
+    <button id="dialog_button_ok">OK</button>
+</dialog>
+
 <fieldset>
     <legend><button class="toggle-button">-</button>
         Step 1 - Generate the decision matrix content
@@ -15,25 +25,41 @@
     </p>
     <textarea id="textarea_strdecmat" 
     placeholder="Enter and copy & paste the decision matrix content here"
-    rows="10" cols="50">
-  ,C1 , C2 , C3 , C4 , C5
+    rows="6" cols="40">
+  C1 , C2 , C3 , C4 , C5
 A1,0.3, 0.4, 0.5, 0.6, 0.7
 A2,0.2, 0.3, 0.4, 0.5, 0.6
 A3,0.1, 0.2, 0.3, 0.4, 0.5
 </textarea>
 <label for="select_separator">Select the value separator</label>
 <select id="select_separator">
-    <option value="comma">Comma (,)</option>
-    <option value="semicolon">Semicolon (;)</option>
+    <option value=",">Comma (,)</option>
+    <option value=";">Semicolon (;)</option>
 </select>
+<button id="button_generate_decmat">Generate Decision Matrix</button>
 </fieldset>
+
 
 <fieldset>
     <legend>
         <button class="toggle-button">-</button>
-        Step 2 - Enter weights
+        Step 2 - Enter directions of optimization for each criterion
     </legend>
-    <input type="checkbox" id="checkbox_use_automatic_weights" checked>Use automatic weights</input>
+    <input type = "text" id = "input_criteria_directions" value = "max,max,min,max,min" />
+    <hr/>
+    <button id="button_generate_directions">Generate Directions</button>
+    <p>
+        Directions of optimization for each criterion. Use comma between directions.
+    </p>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>
+        <button class="toggle-button">-</button>
+        Step 3 - Enter weights
+    </legend>
     <label for="select_weight_method">Select weighting method:</label>
     <select id="select_weight_method">
         <option value="0">Equal weights</option>
@@ -43,17 +69,12 @@ A3,0.1, 0.2, 0.3, 0.4, 0.5
         <option value="4">Merec method</option>
         <option value="5">Cilos method</option>
         <option value="6">Idocriw method</option>
+        <option value="7">Custom weights</option>
     </select>
+    <button id="button_generate_weights">Generate Weights</button>
 </fieldset>
 
-<fieldset>
-    <legend>
-        <button class="toggle-button">-</button>
-        Step 3 - Enter directions of optimization for each criterion
-    </legend>
-    <input type = "text" id = "input_criteria_directions" value = "max,max,min,max,min" />
-    <div class="error-message-container">Number of directions should match the number of criteria</div>
-</fieldset>
+
 
 <fieldset>
     <legend>
