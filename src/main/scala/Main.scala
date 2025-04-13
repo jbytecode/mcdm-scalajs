@@ -169,6 +169,8 @@ def button_generate_evaluate_events(): Unit =
         ()
       case Right(problem) =>
         evaluate(problem)
+        //window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight)
 
 def evaluate(problem: MCDMProblem): Unit =
     var methodsnames = Array.empty[String]
