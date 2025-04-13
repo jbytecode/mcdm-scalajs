@@ -7,8 +7,7 @@ case class SawResult(
     normalizedDecisionMat: Mat,
     weightedNormalizedDecMat: Mat,
     scores: Vec,
-    orderings: VecInt,
-    bestIndex: Int
+    ranks: Vec
 ) extends MCDMResult
 
 def saw(
@@ -27,14 +26,11 @@ def saw(
 
         val scores = Matrix.rowsums(weightedNormalizedDecMat)
 
-        val orderings = scores.zipWithIndex.sortBy(_._1).map(_._2)
-
-        val bestIndex = orderings.last
+        val ranks = ranksfromscores(scores)
         
         SawResult(
             normalizedDecisionMat,
             weightedNormalizedDecMat,
             scores,
-            orderings,
-            bestIndex
+            ranks
         )

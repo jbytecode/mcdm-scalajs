@@ -8,9 +8,8 @@ case class CoprasResult(
     Q: Vec,
     Z: Double,
     maxQ: Double,
-    rankings: VecInt,
-    bestIndex: Int,
     scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 def copras(
@@ -47,8 +46,7 @@ def copras(
     val maxQ = Q.max
     val scores = Q.map(x => x / maxQ)
 
-    val rankings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
-    val bestIndex = rankings.head
+    val ranks = ranksfromscores(scores)
 
     CoprasResult(
         normalizedMat,
@@ -58,7 +56,6 @@ def copras(
         Q,
         Z,
         maxQ,
-        rankings,
-        bestIndex,
-        scores
+        scores,
+        ranks
     )

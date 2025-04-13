@@ -8,8 +8,7 @@ case class LmawResult (
     N: Mat,
     a: Vec,
     scores: Vec,
-    orderings: VecInt,
-    best: Int
+    ranks: Vec
 ) extends MCDMResult
 
 def lmaw(
@@ -47,9 +46,7 @@ def lmaw(
 
     val scores = Q.map(row => row.sum)
 
-    val orderings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
-
-    val best = orderings.head
+    val ranks = ranksfromscores(scores)
 
     LmawResult(
         A,
@@ -57,6 +54,5 @@ def lmaw(
         N,
         a,
         scores,
-        orderings,
-        best
+        ranks
     )

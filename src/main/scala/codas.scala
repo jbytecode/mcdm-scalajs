@@ -11,7 +11,8 @@ case class CodasResult(
     EA: Mat,
     TA: Mat,
     RA: Mat,
-    scores: Vec
+    scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 def codas(
@@ -89,6 +90,8 @@ def codas(
             .zip(Matrix.getrowat(TA, i))
             .map { case ((ea, ra), ta) => ea + (ra * ta) }
             .sum
+
+    val ranks = ranksfromscores(scores)
     
 
     CodasResult(
@@ -100,5 +103,6 @@ def codas(
         EA = EA,
         TA = TA,
         RA = RA,
-        scores = scores
+        scores = scores,
+        ranks = ranks
     )

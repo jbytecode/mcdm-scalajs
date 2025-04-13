@@ -6,8 +6,7 @@ case class MabacResult(
     geometricMeans: Vec,
     Q: Mat,
     scores: Vec,
-    orderings: VecInt,
-    best: Int,
+    ranks: Vec
 ) extends MCDMResult
 
 def mabac(
@@ -40,10 +39,8 @@ def mabac(
     // scores[i] = sum(Q[i, :])
     val scores = Q.map(row => row.sum)
 
-    // Orderings 
-    val orderings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
-
-    val best = orderings.last
+    // Ranks 
+    val ranks = ranksfromscores(scores)
 
     MabacResult(
         normalizedDecisionMatrix = A,
@@ -51,7 +48,6 @@ def mabac(
         geometricMeans = g,
         Q = Q,
         scores = scores,
-        orderings = orderings,
-        best = best
+        ranks = ranks
     )
 

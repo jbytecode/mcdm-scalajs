@@ -12,8 +12,7 @@ case class EdasResult(
     NSP: Vec,
     NSN: Vec,
     scores: Vec,
-    orderings: VecInt,
-    bestIndex: Int,
+    ranks: Vec
 ) extends MCDMResult
 
 def edas(
@@ -59,8 +58,7 @@ def edas(
 
 
     val scores = NSP.zip(NSN).map((x, y) => (x + y) / 2.0)
-    val orderings = scores.zipWithIndex.sortBy(_._1).map(_._2)
-    val bestIndex = orderings.last
+    val ranks = ranksfromscores(scores)
 
     EdasResult(
         PDAMatrix,
@@ -72,6 +70,5 @@ def edas(
         NSP,
         NSN,
         scores,
-        orderings,
-        bestIndex
+        ranks
     )

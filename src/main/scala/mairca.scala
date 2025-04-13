@@ -7,8 +7,7 @@ case class MaircaResult(
     A: Mat,
     S: Mat,
     scores: Vec,
-    orderings: VecInt,
-    bestIndex: Int,
+    ranks: Vec
 ) extends MCDMResult
 
 def mairca(
@@ -36,15 +35,15 @@ def mairca(
 
     val scores = S.map(row => row.sum)
 
-    val orderings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
 
-    val bestIndex = orderings.last
+    // In Mairca, the ranks are calculated based on the sorted order of the scores
+    // smallest score is the best
+    val ranks = ranksfromscores(scores, reverse = false)
 
     MaircaResult(
         T = T,
         A = A,
         S = S,
         scores = scores,
-        orderings = orderings,
-        bestIndex = bestIndex,
+        ranks = ranks
     )

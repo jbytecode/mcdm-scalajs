@@ -3,7 +3,8 @@ package org.expr.mcdm
 import org.expr.mcdm.Direction.{Minimize, Maximize}
 
 case class PivResult(
-    scores: Vec
+    scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 def piv(
@@ -39,6 +40,13 @@ def piv(
     // di values are scores
     val di = Matrix.rowsums(finalmat)
 
+    // ranks from scores
+    // Ranks are calculated from the scores
+    // by default, they are in descending order
+    // The smallest score gets rank 1
+    val ranks = ranksfromscores(di, reverse = false)
+
     PivResult(
-        di
+        di,
+        ranks
     )

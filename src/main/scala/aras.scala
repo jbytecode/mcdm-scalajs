@@ -6,8 +6,7 @@ case class ArasResult(
     normalizedMat: Mat,
     optimality_degrees: Vec,
     scores: Vec,
-    orderings: VecInt,
-    bestIndex: Int
+    ranks: Vec
 ) extends MCDMResult
 
 
@@ -45,8 +44,7 @@ def aras(
   for i <- 0 until nrows do
     utilityDegrees(i) = optimalityDegrees(i) / optimalityDegrees(nrows)
 
-  val orderings = utilityDegrees.zipWithIndex.sortBy(-_._1).map(_._2)
-  val bestIndex = orderings.last
+  val ranks = ranksfromscores(utilityDegrees)
 
   ArasResult(
     referenceRow,
@@ -54,6 +52,5 @@ def aras(
     normalized,
     optimalityDegrees,
     utilityDegrees,
-    orderings,
-    bestIndex
+    ranks,
   )

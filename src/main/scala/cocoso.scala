@@ -11,6 +11,7 @@ case class CocosoResult(
     kB: Vec,
     kC: Vec,
     scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 
@@ -73,6 +74,8 @@ def cocoso(
     val kAprod3 = kAprod.map(x => math.pow(x, 1.0 / 3.0))
 
     val scores = kApluskBpluskCdiv3.zip(kAprod3).map((x, y) => x + y)
+
+    val ranks = ranksfromscores(scores)
     
     CocosoResult(
         normalizedMat = A,
@@ -82,6 +85,7 @@ def cocoso(
         kA = kA,
         kB = kB,
         kC = kC,
-        scores = scores
+        scores = scores,
+        ranks
     )
 

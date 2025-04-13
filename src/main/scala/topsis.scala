@@ -15,8 +15,7 @@ case class TopsisResult(
     distanceToIdeal: Vec,
     distanceToAntiIdeal: Vec,
     scores: Vec,
-    rankings: VecInt,
-    bestIndex: Int
+    ranks: Vec
 ) extends MCDMResult
 
 def topsis(
@@ -49,9 +48,7 @@ def topsis(
       case (danti, di) => danti / (danti + di)
     }
 
-    val rankings = scores.zipWithIndex.sortBy(-_._1).map(_._2)
-
-    val bestIndex = rankings.head
+    val ranks = ranksfromscores(scores)
     
     TopsisResult(
       normalizedMatrix,
@@ -61,7 +58,6 @@ def topsis(
       distanceToIdeal,
       distanceToAntiIdeal,
       scores,
-      rankings,
-      bestIndex
+      ranks
     )
     

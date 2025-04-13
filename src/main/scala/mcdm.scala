@@ -20,3 +20,9 @@ case class MCDMProblem(
   var weights: Array[Double],
   var directions: Array[String]
 ) 
+
+def ranksfromscores(scores: Vec, reverse: Boolean = true): Vec = 
+  if reverse then 
+    scores.zipWithIndex.sortBy(_._1).map(_._2).map(_.toDouble + 1).reverse
+  else
+    scores.zipWithIndex.sortBy(_._1).map(_._2).map(_.toDouble + 1)

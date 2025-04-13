@@ -6,7 +6,8 @@ case class RovResult(
     normalizedMat: Mat,
     uplus: Vec,
     uminus: Vec,
-    scores: Vec
+    scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 
@@ -52,10 +53,15 @@ def rov(
     for i <- 0 until n do 
         u(i) = (uminus(i) + uplus(i)) / 2.0
 
+    val scores = u
+
+    val ranks = ranksfromscores(scores)
+
          
     RovResult(
         normalizedMat,
         uplus,
         uminus,
-        scores = u
+        scores = u,
+        ranks = ranks
     )

@@ -8,7 +8,8 @@ case class OcraResult(
     O1: Vec,
     I2: Vec,
     O2: Vec,
-    scores: Vec
+    scores: Vec,
+    ranks: Vec
     ) extends MCDMResult 
 
 
@@ -45,10 +46,13 @@ def ocra(
 
     val scores = i2o2.map(x => x - i2o2.min)
 
+    val ranks = ranksfromscores(scores)
+
     OcraResult(
         I1 = I1,
         O1 = O1,
         I2 = I2,
         O2 = O2,
-        scores = scores
+        scores = scores,
+        ranks = ranks
     )

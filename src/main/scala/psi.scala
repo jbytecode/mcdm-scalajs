@@ -6,7 +6,8 @@ case class PsiResult(
     phis: Vec,
     sum_phis: Double,
     psis: Vec,
-    scores: Vec
+    scores: Vec,
+    ranks: Vec
 ) extends MCDMResult
 
 
@@ -43,11 +44,14 @@ def psi(
 
     val scores = Is
 
+    val ranks = ranksfromscores(scores)
+
     PsiResult(
         normalizedDecisionMat,
         pvs,
         phis,
         sum_phis,
         psis,
-        scores
+        scores,
+        ranks
     )

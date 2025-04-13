@@ -8,8 +8,7 @@ case class MarcosResult(
   fKPlus: Vec,
   fKMinus: Vec,
   scores: Vec,
-  orderings: VecInt,
-  bestIndex: Int
+  ranks: Vec,
 ) extends MCDMResult 
 
 def marcos(
@@ -46,12 +45,7 @@ def marcos(
       (KPlus(i) + KMinus(i)) /
         ((1 + (1 - fKPlus(i)) / fKPlus(i)) + ((1 - fKMinus(i)) / fKMinus(i)))
 
-  val orderings = scores.zipWithIndex
-    .sortBy(-_._1)
-    .map(_._2)
-    .toArray
-
-  val bestIndex = orderings.last
+  val ranks = ranksfromscores(scores)
 
   MarcosResult(
     normalizedDecmat,
@@ -61,6 +55,5 @@ def marcos(
     fKPlus,
     fKMinus,
     scores,
-    orderings,
-    bestIndex
+    ranks
   )
