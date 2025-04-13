@@ -1,5 +1,3 @@
 ## Next Implementations
 
-- Merec
-- Moosra
 
