@@ -9,6 +9,15 @@ case class MoosraResult(
     ranks: Vec,
 ) extends MCDMResult
 
+def emptyMoosraResult(decmat: Mat): MoosraResult =
+    val (rows, cols) = Matrix.size(decmat)
+    MoosraResult(
+        normalizedDecisionMat = Matrix.zeros(rows, cols),
+        weightedNormalizedMatrix = Matrix.zeros(rows, cols),
+        scores = Matrix.zeros(rows),
+        ranks = Matrix.zeros(rows),
+    )
+
 def moosra(
     decisionMat: Mat,
     weights: Vec = Array.emptyDoubleArray,

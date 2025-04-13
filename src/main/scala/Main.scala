@@ -285,7 +285,17 @@ def button_generate_evaluate_events(): Unit =
       scores = Matrix.appendcol(scores, marcosresult.scores)
       ranks = Matrix.appendcol(ranks, marcosresult.ranks)
     if check_moosra.checked then
-      msgbox("Moosra is not implemented yet")
+      val moosraresultLeftRight = moosra(problem.data, problem.weights, Parser.str2directions(problem.directions))
+      val moosraresult = moosraresultLeftRight match
+        case Left(value) => {
+          msgbox("Error in Moosra: " + value)
+          emptyMoosraResult(problem.data)
+        }
+        case Right(value) => value
+
+      methodsnames = methodsnames.appended("Moosra")
+      scores = Matrix.appendcol(scores, moosraresult.scores)
+      ranks = Matrix.appendcol(ranks, moosraresult.ranks)
     if check_ocra.checked then
       val ocrarresult = ocra(problem.data, problem.weights, Parser.str2directions(problem.directions))
       methodsnames = methodsnames.appended("Ocra")
