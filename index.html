@@ -98,7 +98,7 @@ A3,0.1, 0.2, 0.3, 0.4, 0.5
             </td>
             <td>
                 <label for="check_cocoso">Cocoso</label>
-                <input type="checkbox" id="check_cocoso" checked></input>
+                <input type="checkbox" id="check_cocoso"></input>
             </td>
             <td>
                 <label for="check_codas">Codas</label>
@@ -106,7 +106,7 @@ A3,0.1, 0.2, 0.3, 0.4, 0.5
             </td>
             <td>
                 <label for="check_copras">Copras</label>
-                <input type="checkbox" id="check_copras"></input>
+                <input type="checkbox" id="check_copras" checked></input>
             </td>
             <td>
                 <label for="check_edas">Edas</label>
@@ -184,7 +184,10 @@ A3,0.1, 0.2, 0.3, 0.4, 0.5
 </fieldset>
 
 <fieldset>
-    <legend>The final decision matrix</legend>
+    <legend>
+        <button class="toggle-button" id="button_showhide_finaldecmat">-</button>
+        The final decision matrix
+    </legend>
     <div id="div_final_decmat">
         The decision matrix is empty. Please 
         <ol>
