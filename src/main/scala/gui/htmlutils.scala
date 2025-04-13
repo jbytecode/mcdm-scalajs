@@ -20,6 +20,23 @@ object HtmlUtils:
             dialog_messenger.close()
         dialog_messenger.showModal()
 
+    def scorematrixtohtml(problem: MCDMProblem, methodnames: Array[String], scores: Mat): String = 
+        val sb = new StringBuilder
+        sb.append("<table>")
+        sb.append("<tr>")
+        sb.append("<th>Alternatives</th>")
+        for (i <- methodnames.indices) 
+            sb.append(s"<th>${methodnames(i)}</th>")
+        sb.append("</tr>")
+        for (i <- problem.alternatives.indices) 
+            sb.append("<tr>")
+            sb.append(s"<td>${problem.alternatives(i)}</td>")
+            for (j <- methodnames.indices) 
+                sb.append(s"<td>${scores(i)(j)}</td>")
+            sb.append("</tr>")
+        sb.append("</table>")
+        sb.toString()
+
 
     def decmat2html(problem: MCDMProblem): String = 
         if problem == null then 
