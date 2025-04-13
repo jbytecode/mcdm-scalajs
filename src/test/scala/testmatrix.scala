@@ -374,6 +374,13 @@ class TestMatrix extends munit.FunSuite {
     )
     A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
   }
+  test("Vector subtraction"){
+    val a = Array(1.0, 5.0, 6.0, 10.0, 10.0)
+    val b = Array(2.0, 5.0, 6.0, 10.0, 10.0)
+    val result = Matrix.subtract(a, b)
+    val expected = Array(-1.0, 0.0, 0.0, 0.0, 0.0)
+    A.assert(Matrix.elementwise_equal(result, expected, 1e-5))
+  }
   test("Matrix Multiplication") {
     val Amat = Array(
       Array(1.0, 2.0, 3.0),
