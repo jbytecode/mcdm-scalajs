@@ -26,6 +26,26 @@ HTML objects.
  */
 val document = dom.document
 val window = dom.window
+val div_step1: HTMLDivElement =
+  document.getElementById("div_step1").asInstanceOf[HTMLDivElement]
+val div_step2: HTMLDivElement =
+  document.getElementById("div_step2").asInstanceOf[HTMLDivElement]
+val div_step3: HTMLDivElement =
+  document.getElementById("div_step3").asInstanceOf[HTMLDivElement]
+val div_step4: HTMLDivElement =
+  document.getElementById("div_step4").asInstanceOf[HTMLDivElement]
+val button_showhide_step1 = document
+  .getElementById("button_showhide_step1")
+  .asInstanceOf[HTMLButtonElement]
+val button_showhide_step2 = document
+  .getElementById("button_showhide_step2")
+  .asInstanceOf[HTMLButtonElement]
+val button_showhide_step3 = document
+  .getElementById("button_showhide_step3")
+  .asInstanceOf[HTMLButtonElement]
+val button_showhide_step4 = document
+  .getElementById("button_showhide_step4")
+  .asInstanceOf[HTMLButtonElement]
 val textarea_strdecmat: HTMLTextAreaElement = document
   .getElementById("textarea_strdecmat")
   .asInstanceOf[HTMLTextAreaElement]
@@ -230,6 +250,23 @@ def button_generate_weights_events(): Unit =
     div_final_decmat.innerHTML = strproblem
     
 
+def fieldset_showhide_events(): Unit = 
+  def showhide(div: HTMLDivElement, button: HTMLButtonElement): Unit =
+    button.onclick = (e: dom.MouseEvent) =>
+      if div.style.display == "none" then
+        div.style.display = "block"
+        button.innerText = "-"
+      else
+        div.style.display = "none"
+        button.innerText = "+"
+
+  showhide(div_step1, button_showhide_step1)
+  showhide(div_step2, button_showhide_step2)  
+  showhide(div_step3, button_showhide_step3)
+  showhide(div_step4, button_showhide_step4)
+  
+
+ 
 
 /* 
 MCDM Results.
@@ -353,6 +390,7 @@ def register_events(): Unit =
   button_generate_directions_events()
   button_generate_weights_events()
   button_generate_evaluate_events()
+  fieldset_showhide_events()
   window.console.log("register_events called")
 
 @main def hello(): Unit =
