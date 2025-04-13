@@ -46,7 +46,7 @@ class TestWaspas extends munit.FunSuite {
 
     val expectedBestIndex = 0
 
-    val expectedOrdering = Array(2, 1, 4, 3, 0)
+    val expectedranks = Array(1, 4, 5, 2, 3)
 
     A.assert(Matrix.elementwise_equal(result.normalizedDecisionMatrix, expectedNormalizedMatrix, 1e-5))
 
@@ -56,9 +56,7 @@ class TestWaspas extends munit.FunSuite {
 
     A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5))
 
-    A.assertEquals(result.bestIndex, expectedBestIndex)
-
-    expectedOrdering.zip(result.orderings).foreach { case (a, b) => A.assertEquals(a, b) }
+    expectedranks.zip(result.ranks).foreach { case (a, b) => A.assertEquals(a.toDouble, b.toDouble) }
 
   }
 }

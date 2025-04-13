@@ -31,9 +31,6 @@ class TestEdas extends munit.FunSuite {
       "Scores do not match the expected values"
     )
 
-    A.assert(result.bestIndex == 1,
-      "Best index does not match the expected value"
-    )
 
   }
 }

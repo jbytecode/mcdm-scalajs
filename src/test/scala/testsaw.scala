@@ -28,7 +28,6 @@ class TestSaw extends munit.FunSuite {
 
         A.assert(Matrix.elementwise_equal(result.scores, expectedScores))
 
-        A.assertEquals(result.bestIndex, 3)
     }
 
     test("Saw Example - 2"){

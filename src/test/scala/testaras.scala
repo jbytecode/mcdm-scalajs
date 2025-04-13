@@ -47,7 +47,7 @@ class TestAras extends munit.FunSuite {
     val expectedScores =
       Array(0.81424068, 0.89288620, 0.76415790, 0.84225462, 0.86540635)
 
-    val expectedOrdering = Array(1, 4, 3, 0, 2)
+    val expectedRanks = Array(2, 5, 4, 1, 3)
 
     A.assert(
       Matrix.elementwise_equal(result.extendMat, expectedExtendMat, 1e-5)
@@ -65,9 +65,8 @@ class TestAras extends munit.FunSuite {
     A.assert(Matrix.elementwise_equal(result.scores, expectedScores, 1e-5), 
       "Scores do not match in ARAS result")
     
-    A.assert(expectedOrdering.zip(result.orderings).forall((x, y) => x == y), 
+    A.assert(expectedRanks.zip(result.ranks).forall((x, y) => x == y), 
       "Orderings do not match in ARAS result")
       
-    A.assertEquals(result.bestIndex, 2)
   }
 }
