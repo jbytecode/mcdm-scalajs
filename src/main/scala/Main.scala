@@ -159,11 +159,18 @@ def fieldset_showhide_events(): Unit =
   showhide(div_step4, button_showhide_step4)
   showhide(div_final_decmat, button_showhide_finaldecmat)
 
-/*
-MCDM Results.
- */
+
+
 def button_generate_evaluate_events(): Unit =
   button_evaluate.onclick = (e: dom.MouseEvent) =>
+    HtmlUtils.checkProblemIntegrity(problem) match
+      case Left(error) =>
+        msgbox("Error: " + error + ". Please generate the problem in step 1.")
+        ()
+      case Right(problem) =>
+        evaluate(problem)
+
+def evaluate(problem: MCDMProblem): Unit =
     var methodsnames = Array.empty[String]
     var scores = Matrix.zeros(0, problem.alternatives.length)
     var ranks = Matrix.zeros(0, problem.alternatives.length)

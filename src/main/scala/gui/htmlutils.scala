@@ -20,6 +20,9 @@ object HtmlUtils:
             dialog_messenger.close()
         dialog_messenger.showModal()
 
+    def roundToNDigits(x: Double, n: Int = 6): Double = 
+        s"%.${n}f".format(x).toDouble
+
     def scorematrixtohtml(problem: MCDMProblem, methodnames: Array[String], scores: Mat): String = 
         val sb = new StringBuilder
         sb.append("<table>")
@@ -32,28 +35,12 @@ object HtmlUtils:
             sb.append("<tr>")
             sb.append(s"<td>${problem.alternatives(i)}</td>")
             for (j <- methodnames.indices) 
-                sb.append(s"<td>${scores(i)(j)}</td>")
+                sb.append(s"<td>${roundToNDigits(scores(i)(j))}</td>")
             sb.append("</tr>")
         sb.append("</table>")
         sb.toString()
 
-
-    def decmat2html(problem: MCDMProblem): String = 
-        if problem == null then 
-            return "<p>Problem is null</p>"
-        if problem.alternatives.isEmpty then
-            return "<p>Problem has no alternatives</p>"
-        if problem.criteria.isEmpty then
-            return "<p>Problem has no criteria</p>"
-        if problem.data.isEmpty then
-            return "<p>Problem has no data</p>"
-        if problem.directions.isEmpty then
-            return "<p>Problem has no directions</p>"
-        if problem.weights.isEmpty then
-            return "<p>Problem has no weights</p>"
-        if problem.data(0).isEmpty then
-            return "<p>Problem has no data and/or problem is not parsed correctly. Did you select the right separator?</p>"
-
+    def prepareTable(problem: MCDMProblem): String = 
         val sb = new StringBuilder
         sb.append("<table>")
         sb.append("<tr>")
@@ -65,12 +52,12 @@ object HtmlUtils:
             sb.append("<tr>")
             sb.append(s"<td>${problem.alternatives(i)}</td>")
             for (j <- problem.criteria.indices) 
-                sb.append(s"<td>${problem.data(i)(j)}</td>")
+                sb.append(s"<td>${roundToNDigits(problem.data(i)(j))}</td>")
             sb.append("</tr>")
         sb.append("<tr>")
         sb.append("<th>Weights</th>")
         for (i <- problem.criteria.indices) 
-            sb.append(s"<td>${problem.weights(i)}</td>")
+            sb.append(s"<td>${roundToNDigits(problem.weights(i))}</td>")
         sb.append("</tr>")
         sb.append("<tr>")
         sb.append("<th>Directions</th>")
@@ -78,5 +65,25 @@ object HtmlUtils:
             sb.append(s"<td>${problem.directions(i)}</td>")
         sb.append("</tr>")
         sb.append("</table>")
-        
         sb.toString()
+
+    def checkProblemIntegrity(problem: MCDMProblem): Either[String, MCDMProblem] = 
+        problem match 
+            case null => Left("Problem is null")
+            case _ if problem.alternatives.isEmpty => Left("Problem has no alternatives")
+            case _ if problem.criteria.isEmpty => Left("Problem has no criteria")
+            case _ if problem.data.isEmpty => Left("Problem has no data")
+            case _ if problem.directions.isEmpty => Left("Problem has no directions")
+            case _ if problem.weights.isEmpty => Left("Problem has no weights")
+            case _ if problem.data(0).isEmpty => Left("Problem has no data and/or problem is not parsed correctly. Did you select the right separator?")
+            case _ => Right(problem)
+
+    def decmat2html(inproblem: MCDMProblem): String = 
+        val integrity = checkProblemIntegrity(inproblem)
+        integrity match 
+            case Left(msg) => 
+                msgbox(msg)
+                msg
+            case Right(problem) => 
+                prepareTable(problem)
+
