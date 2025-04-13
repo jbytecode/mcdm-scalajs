@@ -1,6 +1,6 @@
 import munit.Assertions as A
 
-//import org.expr.mcdm.merec
+import org.expr.mcdm.merec
 import org.expr.mcdm.Direction.{Maximize, Minimize}
 import org.expr.mcdm.Matrix
 
@@ -23,14 +23,15 @@ class TestMerec extends munit.FunSuite {
       0.009120377734419302
     )
 
-    println(Console.RED + "Warning: This method (Merec) is not implemented yet" + Console.RESET)
-    println("********************************")
-    println("********************************")
-    println("MEREC TESTS are ready but the method is not implemented yet")
-    println("********************************")
-    println("********************************")
+    val result = merec(decmat, fns)
 
-    A.assert(true)
+    A.assert(
+      Matrix.elementwise_equal(
+        result.weights,
+        expected_weights,
+        0.0001
+      )
+    )
 
   }
 }
