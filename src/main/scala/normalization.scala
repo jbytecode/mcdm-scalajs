@@ -136,3 +136,4 @@ object Normalization:
         else
           NormalizeMatrix(i)(j) = mat(i)(j) / Matrix.colmaxs(mat)(j)
     NormalizeMatrix 
+
