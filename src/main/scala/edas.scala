@@ -2,6 +2,8 @@ package org.expr.mcdm
 
 import scala.math.max 
 
+import org.expr.mcdm.Direction.{Minimize, Maximize}
+
 case class EdasResult(
     PDAMatrix: Mat,
     NDAMatrix: Mat,
@@ -26,26 +28,18 @@ def edas(
 
     val (row, col) = Matrix.size(decmat)
 
-    var PDAMatrix = Matrix.zeros(row, col)
+    val AV = Array.range(0, col).map(i => Statistics.mean(Matrix.getcolat(decmat, i)))
 
-    var NDAMatrix = Matrix.zeros(row, col)
+    val PDAMatrix = Array.tabulate(row, col)((i, j) => directions(j) match
+        case Maximize => max(0.0, decmat(i)(j) - AV(j)) / AV(j)
+        case Minimize => max(0.0, AV(j) - decmat(i)(j)) / AV(j)
+    )
 
-    var AV = Matrix.zeros(col)
-
-
-    for i <- 0 until col do
-        AV(i) = Statistics.mean(Matrix.getcolat(decmat, i))
-        for j <- 0 until row do
-            if directions(i) == Direction.Maximize then
-                PDAMatrix(j)(i) = max(0.0, decmat(j)(i) - AV(i)) / AV(i)
-                NDAMatrix(j)(i) = max(0.0, AV(i) - decmat(j)(i)) / AV(i)
-            else
-                PDAMatrix(j)(i) = Math.max(0.0, AV(i) - decmat(j)(i)) / AV(i)
-                NDAMatrix(j)(i) = Math.max(0.0, decmat(j)(i) - AV(i)) / AV(i)
-           
+    val NDAMatrix = Array.tabulate(row, col)((i, j) => directions(j) match
+        case Maximize => max(0.0, AV(j) - decmat(i)(j)) / AV(j)
+        case Minimize => max(0.0, decmat(i)(j) - AV(j)) / AV(j)
+    )
     
-
-
     val weightedPDAMatrix = Matrix.weightizeColumns(PDAMatrix, weights)
 
     val weightedNDAMatrix = Matrix.weightizeColumns(NDAMatrix, weights)
