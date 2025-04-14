@@ -42,17 +42,18 @@ def ram(
           siplus(i) += weighted_normalized_decmat(i)(j)
           
        
-    // squarevals = (2.0 .+ siplus).^(1.0 ./ (2.0 .+ siminus))
     val siplus2 = siplus.map(x => x + 2)
+
     val siminus2 = siminus.map(x => x + 2)
     
-    
-    // Scores are squarevals
     val squarevals = siplus2.zip(siminus2).map((x, y) => Math.pow(x, 1.0 / y))
+
     val scores = squarevals
 
     val mmin = squarevals.min
+
     val mmax = squarevals.max
+    
     val norRI = squarevals.map(x => (x - mmin) / (mmax - mmin))
 
     val ranks = ranksfromscores(scores)

@@ -26,24 +26,17 @@ def marcos(
 
   val S = normalizedDecmat.map(row => Matrix.sumproduct(weights, row))
 
-  // KPlus = S[1:row] ./ S[row+1]
-  // S.slice(0, 4) takes S(0), S(1), S(2), S(3)
   val KPlus = S.slice(0, row).map(x => x / S(row))
 
-  // KMinus = S[1:row] ./ S[row+2]
   val KMinus = S.slice(0, row).map(x => x / S(row + 1))
 
-  // fKPlus = KPlus ./ (KPlus .+ KMinus)
   val fKPlus = KPlus.zip(KMinus).map((x, y) => x / (x + y))
 
-  // fKMinus = KMinus ./ (KPlus .+ KMinus)
   val fKMinus = KMinus.zip(KPlus).map((x, y) => x / (x + y))
 
-  var scores = Matrix.zeros(row)
-  for i <- 0 until row do
-    scores(i) =
-      (KPlus(i) + KMinus(i)) /
-        ((1 + (1 - fKPlus(i)) / fKPlus(i)) + ((1 - fKMinus(i)) / fKMinus(i)))
+  val scores = Array.range(0, row).map(i =>
+    (KPlus(i) + KMinus(i)) /
+      ((1 + (1 - fKPlus(i)) / fKPlus(i)) + ((1 - fKMinus(i)) / fKMinus(i))))
 
   val ranks = ranksfromscores(scores)
 

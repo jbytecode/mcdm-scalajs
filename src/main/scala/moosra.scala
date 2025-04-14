@@ -41,22 +41,6 @@ def moosra(
 
     val scores = Matrix.zeros(row)
 
-    /* 
-        for i = 1:row
-        positive = 0.0
-        negative = 0.0
-        for j = 1:col
-            if fns[j] == maximum
-                positive += weightedNormalizedMatrix[i, j]
-            elseif fns[j] == minimum
-                negative += weightedNormalizedMatrix[i, j]
-            else
-                error("fns[i] is not a proper function (direction of optimization)")
-            end
-        end
-        scores[i] = positive / negative
-    end
-     */
     for i <- 0 until row do
         var positive = 0.0
         var negative = 0.0

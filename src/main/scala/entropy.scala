@@ -16,25 +16,13 @@ def entropy(
 
     val (row, col) = Matrix.size(decisionMat)
 
-    val normalizedDM = Matrix.similar(decisionMat)
-
-
     val colsumnormmat = Matrix.colsums(decisionMat)
 
-    for i <- 0 until col do
-        for j <- 0 until row do
-            normalizedDM(j)(i) = decisionMat(j)(i) / colsumnormmat(i)
+    val normalizedDM = Array.tabulate(row, col)((j, i) => decisionMat(j)(i) / colsumnormmat(i))
 
-    val logMat = Matrix.zeros(row, col)
+    val logMat = Array.tabulate(row, col)((i, j) => normalizedDM(i)(j) * log(normalizedDM(i)(j)))
 
-    for i <- 0 until row do
-        for j <- 0 until col do
-            logMat(i)(j) = normalizedDM(i)(j) * log(normalizedDM(i)(j))
-
-    val e = Matrix.zeros(col)
-
-    for i <- 0 until col do
-        e(i) = 1.0 - Matrix.getcolat(logMat, i).sum / -log(row)
+    val e = Array.range(0, col).map(i => 1.0 - Matrix.getcolat(logMat, i).sum / -log(row))
 
     val esum = e.filter(x => !x.isNaN).sum
 

@@ -27,6 +27,7 @@ def edas(
     val (row, col) = Matrix.size(decmat)
 
     var PDAMatrix = Matrix.zeros(row, col)
+
     var NDAMatrix = Matrix.zeros(row, col)
 
     var AV = Matrix.zeros(col)
@@ -46,18 +47,22 @@ def edas(
 
 
     val weightedPDAMatrix = Matrix.weightizeColumns(PDAMatrix, weights)
+
     val weightedNDAMatrix = Matrix.weightizeColumns(NDAMatrix, weights)
 
 
     val SP = weightedPDAMatrix.map(row => row.sum)
+
     val SN = weightedNDAMatrix.map(row => row.sum)
 
 
     val NSP = SP.map(_ / SP.max)
+
     val NSN = SN.map(x => 1.0 - x / SN.max)
 
 
     val scores = NSP.zip(NSN).map((x, y) => (x + y) / 2.0)
+    
     val ranks = ranksfromscores(scores)
 
     EdasResult(

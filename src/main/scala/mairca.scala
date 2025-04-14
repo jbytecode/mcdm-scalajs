@@ -21,13 +21,7 @@ def mairca(
 
     val (row, col) = Matrix.size(decmat)
 
-    var T = Matrix.zeros(row, col)
-
-    for (i <- 0 until col) {
-        for (j <- 0 until row) {
-            T(j)(i) = weights(i) * (1.0 / row)
-        }
-    }
+    val T = Array.tabulate(row, col)((i, j) => weights(j) * (1.0 / row))
 
     val A = Matrix.elementwiseMultiply(normalization(decmat, weights, directions), T)
 

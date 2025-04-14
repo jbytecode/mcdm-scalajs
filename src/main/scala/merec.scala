@@ -47,9 +47,9 @@ def merec(
 
 
     val E = Matrix.zeros(col)
-
     for j <- 0 until col do
         E(j) = E(j) + abs(Matrix.subtract(Matrix.getcolat(S_, j), S).sum)
+
 
 
     val w = E.map(_ / E.sum)

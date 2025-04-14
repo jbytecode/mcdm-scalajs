@@ -28,8 +28,6 @@ def rov(
 
     val uminus = Matrix.zeros(n)
 
-    val u = Matrix.zeros(n)
-
     val maxindices = directions.zipWithIndex.filter(_._1 == Maximize).map(_._2)
 
     val minindices = directions.zipWithIndex.filter(_._1 == Minimize).map(_._2)
@@ -49,9 +47,7 @@ def rov(
                     Matrix.elementsat(weights, minindices))
 
 
-    // U values are scores
-    for i <- 0 until n do 
-        u(i) = (uminus(i) + uplus(i)) / 2.0
+    val u = Array.range(0, n).map(i => (uminus(i) + uplus(i)) / 2.0)
 
     val scores = u
 

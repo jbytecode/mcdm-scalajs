@@ -27,10 +27,7 @@ def psi(
 
     val normalizedDecisionMat = normalization(decisionMat, weights, directions)
 
-    val pvs = Matrix.zeros(row)
-    for i <- 0 until row do
-        pvs(i) = PV(Matrix.getrowat(normalizedDecisionMat, i))
-
+    val pvs = Array.range(0, row).map(i => PV(Matrix.getrowat(normalizedDecisionMat, i)))
 
     val phis = pvs.map(x => 1 - x)
 
@@ -38,9 +35,7 @@ def psi(
 
     val psis = phis.map(x => x / sum_phis)
 
-    val Is = Matrix.zeros(row)
-    for i <- 0 until row do
-        Is(i) = psis(i) * Matrix.getrowat(normalizedDecisionMat, i).sum
+    val Is = Array.range(0, row).map(i => psis(i) * Matrix.getrowat(normalizedDecisionMat, i).sum)
 
     val scores = Is
 
