@@ -33,10 +33,7 @@ def cocoso(
     for i <- 0 until col do
         scoreMat = Matrix.setcolat(scoreMat, i, Matrix.getcolat(A, i).map(x => pow(x, weights(i))))
 
-    val P = Matrix.zeros(row)
-
-    for i <- 0 until row do
-        P(i) = Matrix.getrowat(scoreMat, i).sum
+    val P = Matrix.rowsums(scoreMat)
     
     val S = Matrix.weightizeColumns(A, weights).map(row => row.sum)
 

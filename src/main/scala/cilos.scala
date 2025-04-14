@@ -38,8 +38,7 @@ def cilos(
   for j <- 0 until m do
     highestvaluerows(j) = Matrix.whichmax(Matrix.getcolat(normalizedmatrix, j))
 
-  val columnmax = Matrix.zeros(m)
-  for j <- 0 until m do columnmax(j) = Matrix.getcolat(normalizedmatrix, j).max
+  val columnmax = Matrix.colmaxs(normalizedmatrix)
 
   for i <- 0 until m do
     A(i) = Matrix.getrowat(normalizedmatrix, highestvaluerows(i).toInt)

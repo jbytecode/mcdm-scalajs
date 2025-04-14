@@ -27,60 +27,25 @@ def codas(
 
     val A = normalization(decmat, weights, directions)
 
-    val wA = Matrix.zeros(nrows, ncols)
-
-    for i <- 0 until ncols do
-        for j <- 0 until nrows do
-            wA(j)(i) = A(j)(i) * weights(i)
-
+    val wA = Array.tabulate(nrows, ncols)( (i, j) => A(i)(j) * weights(j))
     
     val wAmin = Matrix.colmins(wA)
 
+    val E = Array.tabulate(nrows, ncols)( (i, j) => pow(wA(i)(j) - wAmin(j), 2))
 
-    val E = Matrix.zeros(nrows, ncols)
+    val Euc = Matrix.rowsums(E).map(sqrt)
 
-    for i <- 0 until nrows do
-        for j <- 0 until ncols do
-            E(i)(j) = pow(wA(i)(j) - wAmin(j), 2)
+    val T = Array.tabulate(nrows, ncols)( (i, j) => abs(wA(i)(j) - wAmin(j)))
 
-
-    val Euc = Matrix.zeros(nrows)
-
-    for i <- 0 until nrows do
-        Euc(i) = sqrt(Matrix.getrowat(E, i).sum)
-
-
-    val T = Matrix.zeros(nrows, ncols)
-
-    for i <- 0 until nrows do
-        for j <- 0 until ncols do
-            T(i)(j) = abs(wA(i)(j) - wAmin(j))
-
-
-    val Tax = Matrix.zeros(nrows)
-
-    for i <- 0 until nrows do
-        Tax(i) = Matrix.getrowat(T, i).sum
-
-
-    val EA = Matrix.zeros(nrows, nrows)
-
-    val TA = Matrix.zeros(nrows, nrows)
-
-    val RA = Matrix.zeros(nrows, nrows)
-
+    val Tax = Matrix.rowsums(T)
 
     val tau = options.getOrElse("tau", 0.02).asInstanceOf[Double]
 
-    for i <- 0 until nrows do
-        for j <- 0 until nrows do
-            EA(i)(j) = Euc(i) - Euc(j)
-            TA(i)(j) = Tax(i) - Tax(j)
-            if abs(Euc(i) - Euc(j)) < tau then
-                RA(i)(j) = 0
-            else
-                RA(i)(j) = 1
-    
+    val EA = Array.tabulate(nrows, nrows)( (i, j) => Euc(i) - Euc(j))
+
+    val TA = Array.tabulate(nrows, nrows)( (i, j) => Tax(i) - Tax(j))
+
+    val RA = Array.tabulate(nrows, nrows)( (i, j) => if abs(Euc(i) - Euc(j)) < tau then 0.0 else 1.0)
 
     val scores = Matrix.zeros(nrows)
 
