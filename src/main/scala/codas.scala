@@ -47,14 +47,13 @@ def codas(
 
     val RA = Array.tabulate(nrows, nrows)( (i, j) => if abs(Euc(i) - Euc(j)) < tau then 0.0 else 1.0)
 
-    val scores = Matrix.zeros(nrows)
-
-    for i <- 0 until nrows do
-        scores(i) = Matrix.getrowat(EA, i)
+    val scores = Array.tabulate(nrows)( i => 
+        Matrix.getrowat(EA, i)
             .zip(Matrix.getrowat(RA, i))
             .zip(Matrix.getrowat(TA, i))
             .map { case ((ea, ra), ta) => ea + (ra * ta) }
             .sum
+    )
 
     val ranks = ranksfromscores(scores)
     

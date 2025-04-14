@@ -28,24 +28,18 @@ def cocoso(
 
     val A = normalization(decmat, weights, directions)
 
-    var scoreMat = Matrix.zeros(row, col)
-
-    for i <- 0 until col do
-        scoreMat = Matrix.setcolat(scoreMat, i, Matrix.getcolat(A, i).map(x => pow(x, weights(i))))
+    val scoreMat = Array.tabulate(row, col)( (i, j) => pow(A(i)(j), weights(j)) )
 
     val P = Matrix.rowsums(scoreMat)
     
     val S = Matrix.weightizeColumns(A, weights).map(row => row.sum)
 
-    val scoreTable = Matrix.zeros(row, 2)
-    for i <- 0 until row do
-        scoreTable(i) = Array(S(i), P(i))
-
+    val scoreTable = Array.tabulate(row, 2)( (i, j) => if j == 0 then S(i) else P(i) )
 
     val kA = S.zip(P).map((x, y) => x + y).map(x => x / scoreTable.flatten.sum)
 
-    val kB = (S.map(x => x / Statistics.minimum(S))
-        .zip(P.map(x => x / Statistics.minimum(P)))
+    val kB = (S.map(x => x / S.min)
+        .zip(P.map(x => x / P.min))
         .map((x, y) => x + y))
 
 
