@@ -8,6 +8,9 @@ import scala.math
 
 object Normalization:
 
+  /* 
+  Vector Norm Normalization
+   */
   def VectorNormNormalization(
       decmat: Mat,
       weights: Vec,
@@ -17,43 +20,64 @@ object Normalization:
     val columnnorms = Matrix.applyFunctionToColumns(decmat, Matrix.norm)
     Array.tabulate(n, m)((i, j) => decmat(i)(j) / columnnorms(j))
 
+
+
   def DivideByColumnnsSumNormalization(
       decmat: Mat,
       weights: Vec,
       directions: Array[Direction]
   ): Mat =
+
     val (n, m) = Matrix.size(decmat)
+
     val columnsums = Matrix.colsums(decmat)
+
     Array.tabulate(n, m)((i, j) => decmat(i)(j) / columnsums(j))
+
+
+
 
   def MaxMinRangeNormalization(
       decmat: Mat,
       weights: Vec,
       directions: Array[Direction]
   ): Mat =
+
     val (n, m) = Matrix.size(decmat)
+
     val columnmins = Matrix.colmins(decmat)
+
     val columnmaxs = Matrix.colmaxs(decmat)
+
     Array.tabulate(n, m)((i, j) =>
       if directions(j) == Direction.Maximize
       then (decmat(i)(j) - columnmins(j)) / (columnmaxs(j) - columnmins(j))
       else (columnmaxs(j) - decmat(i)(j)) / (columnmaxs(j) - columnmins(j))
     )
 
+
+
+
+
   def DivideByColumnMaxMinNormalization(
       decmat: Mat,
       weights: Vec,
       directions: Array[Direction]
   ): Mat =
+
     val (n, m) = Matrix.size(decmat)
+
     val columnmins = Matrix.colmins(decmat)
+
     val columnmaxs = Matrix.colmaxs(decmat)
 
     Array.tabulate(n, m)((i, j) =>
-      if directions(j) == Direction.Maximize
-      then decmat(i)(j) / columnmaxs(j)
-      else columnmins(j) / decmat(i)(j)
+      directions(j) match
+        case Direction.Maximize => decmat(i)(j) / columnmaxs(j)
+        case Direction.Minimize => columnmins(j) / decmat(i)(j)
     )
+
+
 
   def NullNormalization(
       decmat: Mat,
@@ -62,13 +86,14 @@ object Normalization:
   ): Mat =
     decmat
   
+
+
   def DivideByAllNormNormalization(
       decmat: Mat,
       weights: Vec,
       directions: Array[Direction]
   ): Mat =
 
-    // return mat ./ sqrt(sum(mat .* mat))
     val (n, m) = Matrix.size(decmat)
 
     val matmat = Array.tabulate(n, m)((i, j) => decmat(i)(j) * decmat(i)(j))
@@ -88,9 +113,9 @@ object Normalization:
   ): Mat =
 
     val (row, col) = Matrix.size(decmat)
-    var AAI = Matrix.zeros(col)
-    var AI = Matrix.zeros(col)
-    var temp = Matrix.appendrow(Matrix.appendrow(decmat, AI), AAI)
+    val AAI = Matrix.zeros(col)
+    val AI = Matrix.zeros(col)
+    val temp = Matrix.appendrow(Matrix.appendrow(decmat, AI), AAI)
     var normalizedDecisionMat = Matrix.similar(temp)
 
 
@@ -110,30 +135,17 @@ object Normalization:
 
     normalizedDecisionMat
     
-  /*
-  function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
-    NormalizeMatrix = similar(mat)
-    row, col = size(mat)
-    @inbounds for i = 1:row
-        for j = 1:col
-            if fns[j] == maximum
-                NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
-            elseif fns[j] == minimum
-                NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
-            end
-        end
-    end
-    return NormalizeMatrix
-  end 
-  */
+
+    
+
   def InverseDivideByColumnMaxMinNormalization(mat: Mat, weights: Vec = Array.emptyDoubleArray, fns: Array[Direction]): Mat =
+    
     val (row, col) = Matrix.size(mat)
-    var NormalizeMatrix = Matrix.zeros(row, col)
-    for i <- 0 until row do
-      for j <- 0 until col do
-        if fns(j) == Direction.Maximize then
-          NormalizeMatrix(i)(j) = Matrix.colmins(mat)(j) / mat(i)(j)
-        else
-          NormalizeMatrix(i)(j) = mat(i)(j) / Matrix.colmaxs(mat)(j)
-    NormalizeMatrix 
+    
+    Array.tabulate(row, col)((i, j) =>
+      if fns(j) == Direction.Maximize then
+        Matrix.colmins(mat)(j) / mat(i)(j)
+      else
+        mat(i)(j) / Matrix.colmaxs(mat)(j)
+    )
 
