@@ -24,26 +24,27 @@ def copras(
     val (nrows, ncols) = Matrix.size(decmat)
 
     val normalizedMat = normalization(decmat, weights, directions)
+
     val weightedNormalizedMat = Matrix.weightizeColumns(normalizedMat, weights)
 
     var sPlus = Matrix.zeros(nrows)
+    
     var sMinus = Matrix.zeros(nrows)
 
     for row <- 0 until nrows do
         for col <- 0 until ncols do
             if directions(col) == Direction.Maximize then
-                sPlus(row) = sPlus(row) + Matrix.elementat(weightedNormalizedMat, row, col)
+                sPlus(row) = sPlus(row) + weightedNormalizedMat(row)(col)
             else if directions(col) == Direction.Minimize then
-                sMinus(row) = sMinus(row) + Matrix.elementat(weightedNormalizedMat, row, col)
+                sMinus(row) = sMinus(row) + weightedNormalizedMat(row)(col)
 
 
-    var Q = Matrix.zeros(nrows)
     var Z = sMinus.map(x => 1.0 / x).sum
 
-    for row <- 0 until nrows do
-        Q(row) = sPlus(row) + (sMinus.sum / (sMinus(row) * Z))
+    val Q = Array.range(0, nrows).map(i => sPlus(i) + (sMinus.sum / (sMinus(i) * Z)))
 
     val maxQ = Q.max
+
     val scores = Q.map(x => x / maxQ)
 
     val ranks = ranksfromscores(scores)
