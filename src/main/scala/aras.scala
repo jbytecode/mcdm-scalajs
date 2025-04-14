@@ -1,5 +1,7 @@
 package org.expr.mcdm
 
+import org.expr.mcdm.Direction.{Minimize, Maximize}
+
 case class ArasResult(
     referenceRow: Vec,
     extendMat: Mat,
@@ -9,14 +11,13 @@ case class ArasResult(
     ranks: Vec
 ) extends MCDMResult
 
-
 def aras(
     decmat: Mat,
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction =
       Normalization.DivideByColumnnsSumNormalization,
-    options: Map[String, Any] = Map.empty 
+    options: Map[String, Any] = Map.empty
 ): ArasResult =
   val (nrows, ncols) = Matrix.size(decmat)
 
@@ -28,21 +29,22 @@ def aras(
     .zip(directions)
     .map((col, dir) =>
       dir match
-        case Direction.Minimize => col.map(value => 1.0 / value)
-        case Direction.Maximize => col
+        case Minimize => col.map(value => 1.0 / value)
+        case Maximize => col
     )
     .transpose
 
   val normalized = normalization(extendMat, weights, directions)
 
-  var optimalityDegrees = Array.fill(nrows + 1)(0.0)
-  for i <- 0 until (nrows + 1) do
-    optimalityDegrees(i) =
+  val optimalityDegrees = Array
+    .range(0, nrows + 1)
+    .map(i =>
       weights.zip(Matrix.getrowat(normalized, i)).map((w, x) => w * x).sum
+    )
 
-  var utilityDegrees = Array.fill(nrows)(0.0)
-  for i <- 0 until nrows do
-    utilityDegrees(i) = optimalityDegrees(i) / optimalityDegrees(nrows)
+  val utilityDegrees = Array
+    .range(0, nrows)
+    .map(i => optimalityDegrees(i) / optimalityDegrees(nrows))
 
   val ranks = ranksfromscores(utilityDegrees)
 
@@ -52,5 +54,5 @@ def aras(
     normalized,
     optimalityDegrees,
     utilityDegrees,
-    ranks,
+    ranks
   )
