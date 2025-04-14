@@ -30,11 +30,7 @@ object Statistics:
   def correlation(a: Mat): Mat =
     val n = a.length
     val m = a(0).length
-    val cor = Matrix.zeros(m, m)
-    for i <- 0 until m do
-      for j <- 0 until m do
-        cor(i)(j) = correlation(Matrix.getcolat(a, i), Matrix.getcolat(a, j))
-    cor
+    Array.tabulate(m, m)((i, j) => correlation(Matrix.getcolat(a, i), Matrix.getcolat(a, j)))
 
   def euclideanDistance(a: Vec, b: Vec): Double =
     math.sqrt(a.zip(b).map((x, y) => (x - y) * (x - y)).sum)
