@@ -37,7 +37,7 @@ def waspas(
   val scoresWSM =
     Matrix.rowsums(Matrix.weightizeColumns(normalizedDecisionMat, weights))
 
-  var scoreTables = Matrix.zeros(row, 2)
+  val scoreTables = Matrix.zeros(row, 2)
   for (i <- 0 until row) {
     scoreTables(i)(0) = scoresWSM(i)
     scoreTables(i)(1) = scoresWPM(i)

@@ -20,14 +20,12 @@ def lopcow(
 
     val normalizedMat = normalization(decmat, Array.emptyDoubleArray, directions)
 
-    val PV = Matrix.zeros(col)
-
-    for i <- 0 until col do
-        PV(i) = 
-            val colat = Matrix.getcolat(normalizedMat, i)
-            val colatsquared = colat.map(x => x * x)
-            log(sqrt(sum(colatsquared) / row) / Statistics.std(colat)) * 100
-
+    val PV = Array.tabulate(col)(i =>
+        val colat = Matrix.getcolat(normalizedMat, i)
+        val colatsquared = colat.map(x => x * x)
+        log(sqrt(sum(colatsquared) / row) / Statistics.std(colat)) * 100
+    )
+    
     val weights = PV.map(x => x / sum(PV))
 
 

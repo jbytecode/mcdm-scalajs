@@ -26,6 +26,7 @@ def piv(
       case Maximize => Statistics.maximum
       case Minimize => Statistics.minimum
     }
+    
     val desiredvalues = Matrix.applyFunctionsToColumns(weighted_norm_mat, dirfunctions)
 
     val finalmat = Array.tabulate(nrow, ncol) { (i, j) =>
