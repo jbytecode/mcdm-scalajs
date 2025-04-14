@@ -30,17 +30,14 @@ def ram(
       Matrix.weightizeColumns(normalized_decmat, weights)
 
     var siplus = Matrix.zeros(n)
-
     var siminus = Matrix.zeros(n)
-
-    
     for i <- 0 until n do
       for j <- 0 until m do
         if directions(j) == Minimize then
           siminus(i) += weighted_normalized_decmat(i)(j)
           else  
           siplus(i) += weighted_normalized_decmat(i)(j)
-          
+      
        
     val siplus2 = siplus.map(x => x + 2)
 

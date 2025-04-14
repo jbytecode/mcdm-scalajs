@@ -28,15 +28,12 @@ def piv(
     }
     val desiredvalues = Matrix.applyFunctionsToColumns(weighted_norm_mat, dirfunctions)
 
-    var finalmat = Matrix.zeros(nrow, ncol)
-
-    for i <- 0 until nrow do
-      for j <- 0 until ncol do
-        if directions(j) == Maximize then
-          finalmat(i)(j) = desiredvalues(j) - weighted_norm_mat(i)(j)
-        else if directions(j) == Minimize then
-          finalmat(i)(j) = weighted_norm_mat(i)(j) - desiredvalues(j)
-
+    val finalmat = Array.tabulate(nrow, ncol) { (i, j) =>
+      directions(j) match
+        case Maximize => desiredvalues(j) - weighted_norm_mat(i)(j)
+        case Minimize => weighted_norm_mat(i)(j) - desiredvalues(j)
+      }
+    
     // di values are scores
     val di = Matrix.rowsums(finalmat)
 
