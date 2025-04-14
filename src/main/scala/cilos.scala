@@ -19,10 +19,6 @@ def cilos(
 
   var X = Matrix.replicate(decmat)
 
-  val A = Matrix.zeros(m, m)
-
-  val P = Matrix.zeros(m, m)
-
   for j <- 0 until m do
     if directions(j) == Minimize then
       val minval = Matrix.getcolat(X, j).min
@@ -31,23 +27,27 @@ def cilos(
       X = Matrix.setcolat(X, j, vv)
 
   val artificialdirs = Array.fill(m)(Maximize)
+
   val normalizedmatrix =
     normalization(X, Array.emptyDoubleArray, artificialdirs)
 
-  val highestvaluerows = Matrix.zeros(m)
-  for j <- 0 until m do
-    highestvaluerows(j) = Matrix.whichmax(Matrix.getcolat(normalizedmatrix, j))
+  val highestvaluerows = Array.range(0, m).map { j =>
+    Matrix.whichmax(Matrix.getcolat(normalizedmatrix, j))
+  }
 
   val columnmax = Matrix.colmaxs(normalizedmatrix)
 
-  for i <- 0 until m do
-    A(i) = Matrix.getrowat(normalizedmatrix, highestvaluerows(i).toInt)
+  val A = Array.tabulate(m, m)((i, j) =>
+    Matrix.getrowat(normalizedmatrix, highestvaluerows(i).toInt)(j)
+  )
 
-  for i <- 0 until m do
-    for j <- 0 until m do P(i)(j) = (columnmax(j) - A(i)(j)) / columnmax(j)
+  val P =
+    Array.tabulate(m, m)((i, j) => (columnmax(j) - A(i)(j)) / columnmax(j))
 
-  val Fm = Matrix.replicate(P)
-  for i <- 0 until m do Fm(i)(i) = -Matrix.getcolat(P, i).sum
+  val Fm = Array.tabulate(m, m)((i, j) =>
+    if (i == j) -Matrix.getcolat(P, i).sum
+    else P(i)(j)
+  )
 
   val Xmat = Matrix.appendrow(Fm, Matrix.ones(m))
 
