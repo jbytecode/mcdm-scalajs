@@ -39,6 +39,8 @@ object DomObjects:
   val button_generate_weights = document
     .getElementById("button_generate_weights")
     .asInstanceOf[HTMLButtonElement]
+  val dialog_div_content: HTMLDivElement =
+    document.getElementById("dialog_div_content").asInstanceOf[HTMLDivElement]
   val dialog_button_ok =
     document.getElementById("dialog_button_ok").asInstanceOf[HTMLButtonElement]
   val dialog_messenger: HTMLDialogElement =
