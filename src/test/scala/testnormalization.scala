@@ -33,7 +33,7 @@ class TestNormalizations extends munit.FunSuite {
 
     val directions = Array(Maximize, Maximize, Minimize, Minimize, Maximize)
 
-    val normalizedMatrix = DivideByColumnnsSumNormalization(decmat, weights, directions)
+    val normalizedMatrix = DivideByColumnsSumNormalization(decmat, weights, directions)
 
     val expected = Array(
        Array(0.189978,  0.30804 ,  0.0141531,  0.230674 ,  0.124567),

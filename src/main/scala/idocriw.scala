@@ -13,7 +13,7 @@ def idocriw(
     mat: Mat,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnnsSumNormalization,
+      Normalization.DivideByColumnsSumNormalization,
     options: Map[String, Any] = Map.empty
 ): IdocriwResult =
 

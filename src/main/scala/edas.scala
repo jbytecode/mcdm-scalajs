@@ -22,7 +22,7 @@ def edas(
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnnsSumNormalization,
+      Normalization.DivideByColumnsSumNormalization,
     options: Map[String, Any] = Map.empty 
 ): EdasResult =
 

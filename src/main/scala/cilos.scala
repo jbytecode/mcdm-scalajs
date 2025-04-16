@@ -11,7 +11,7 @@ def cilos(
     decmat: Mat,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnnsSumNormalization,
+      Normalization.DivideByColumnsSumNormalization,
     options: Map[String, Any] = Map.empty
 ): CilosResult =
 

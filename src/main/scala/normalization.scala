@@ -22,7 +22,7 @@ object Normalization:
 
 
 
-  def DivideByColumnnsSumNormalization(
+  def DivideByColumnsSumNormalization(
       decmat: Mat,
       weights: Vec,
       directions: Array[Direction]

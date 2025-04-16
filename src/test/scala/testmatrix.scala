@@ -36,7 +36,7 @@ class TestMatrix extends munit.FunSuite {
     val expected = Array.fill(4, 5)(100.0)
     A.assert(Matrix.elementwise_equal(filled, expected, 1e-6))
   }
-  test("idendity(5)") {
+  test("identity(5)") {
     val id5 = Matrix.identity(5)
     val expected = Array.tabulate(5, 5)((i, j) => if i == j then 1.0 else 0.0)
     A.assert(Matrix.elementwise_equal(id5, expected, 1e-6))

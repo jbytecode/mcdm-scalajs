@@ -16,7 +16,7 @@ def aras(
     weights: Vec,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByColumnnsSumNormalization,
+      Normalization.DivideByColumnsSumNormalization,
     options: Map[String, Any] = Map.empty
 ): ArasResult =
   val (nrows, ncols) = Matrix.size(decmat)

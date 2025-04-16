@@ -27,7 +27,7 @@ object Parser:
         the first row may and may not include a comma at the front of the first criteria name.
         commas can be replaced with semicolons.
      */
-    def parseCSV(input: String, seperator: String = ","): MCDMProblem =
+    def parseCSV(input: String, separator: String = ","): MCDMProblem =
         if input == null || input.isEmpty then
             msgbox("The input is empty.")
             empty_mcdm_problem()
@@ -35,9 +35,9 @@ object Parser:
         if lines.length < 2 then
             msgbox("The input is not valid.")
             empty_mcdm_problem()
-        val criteria = lines.head.split(seperator).map(_.trim).filter(_.nonEmpty)
-        val alternatives = lines.tail.map(_.split(seperator).head.trim).filter(_.nonEmpty)
-        val data = lines.tail.map(_.split(seperator).tail.map(_.trim.toDouble)).map(_.toList.toArray).toArray
+        val criteria = lines.head.split(separator).map(_.trim).filter(_.nonEmpty)
+        val alternatives = lines.tail.map(_.split(separator).head.trim).filter(_.nonEmpty)
+        val data = lines.tail.map(_.split(separator).tail.map(_.trim.toDouble)).map(_.toList.toArray).toArray
         val weights = Array.fill(criteria.length)(1.0 / criteria.length)
         val directions = Array.fill(criteria.length)("max")
         if criteria.length != data.head.length then
