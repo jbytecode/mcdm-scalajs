@@ -351,6 +351,14 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Wpm")
       scores = Matrix.appendcol(scores, wpmresult.scores)
       ranks = Matrix.appendcol(ranks, wpmresult.ranks)
+    if check_nds.checked then
+      val ndsresult = nds(
+        problem.data,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Nds")
+      scores = Matrix.appendcol(scores, ndsresult.scores)
+      ranks = Matrix.appendcol(ranks, ndsresult.scores.reverse.map(_ + 1))
 
     val resultstr = HtmlUtils.scorematrixtohtml(problem, methodsnames, scores)
     div_output_scores.innerHTML = resultstr

@@ -128,3 +128,6 @@ object DomObjects:
   val check_wpm = document
     .getElementById("check_wpm")
     .asInstanceOf[HTMLInputElement]
+  val check_nds = document
+    .getElementById("check_nds")
+    .asInstanceOf[HTMLInputElement]
