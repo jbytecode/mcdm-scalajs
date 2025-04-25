@@ -502,4 +502,19 @@ class TestMatrix extends munit.FunSuite {
     val expected = 1.0*4 + 2*5 + 3*6
     A.assertEquals(result, expected)
   }
+  test("Replicate"){
+    val Amat = Array(
+      Array(2.0, 1.0, 3.0),
+      Array(1.0, 2.0, 4.0),
+      Array(2.0, 2.0, 4.0))
+
+    val b = Matrix.replicate(Amat)
+
+    val (row1, col1) = Matrix.size(Amat)
+    val (row2, col2) = Matrix.size(b)
+    A.assertEquals(row1, row2)
+    A.assertEquals(col1, col2)
+
+    A.assert(Matrix.elementwise_equal(Amat, b, 1e-6))
+  }
 }
