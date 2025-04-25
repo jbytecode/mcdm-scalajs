@@ -38,8 +38,6 @@ object Statistics:
   def geomean(x: Vec): Double = math.exp(x.map(math.log).sum / x.length)
 
   def linearregression(x: Mat, y: Vec): Vec =
-    val n = x.length
-    val m = x(0).length
     val xtx = Matrix.mul(x.transpose, x)
     val xty = Matrix.mul(x.transpose, Matrix.makeRowMatrix(y))
     val beta = Matrix.mul(Matrix.inverse(xtx), xty)
