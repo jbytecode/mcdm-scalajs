@@ -130,15 +130,11 @@ object Matrix:
     identity
 
   def colminmax(a: Mat, dirs: Array[Direction]): Vec =
-    val n = a(0).length
-    val result = Array.fill(n)(0.0)
-    for j <- 0 until n do
-      val col = getcolat(a, j)
-      val currentdir = dirs(j)
-      result(j) = currentdir match
-        case Direction.Minimize => col.min
-        case Direction.Maximize => col.max
-    result
+    Array.tabulate(a(0).length){ (colindex) =>
+      dirs(colindex) match
+        case Direction.Minimize => Matrix.getcolat(a, colindex).min
+        case Direction.Maximize => Matrix.getcolat(a, colindex).max
+    }
 
   def inversedirections(dirs: Array[Direction]): Array[Direction] =
     dirs.map {
@@ -160,11 +156,9 @@ object Matrix:
     val n = a.length
     val m = b(0).length
     val p = b.length
-    val result = Array.fill(n, m)(0.0)
-    for i <- 0 until n do
-      for j <- 0 until m do
-        for k <- 0 until p do result(i)(j) += a(i)(k) * b(k)(j)
-    result
+    Array.tabulate(n, m) { (i, j) =>
+      (0 until p).map(k => a(i)(k) * b(k)(j)).sum
+    }
 
   def mul(a: Mat, b: Vec): Vec = mul(a, makeRowMatrix(b)).flatten
 
@@ -191,11 +185,9 @@ object Matrix:
 
   def replicate(a: Mat): Mat = 
     val (rows, cols) = Matrix.size(a)
-    val result = Matrix.zeros(rows, cols)
-    for i <- 0 until rows do
-      for j <- 0 until cols do
-        result(i)(j) = a(i)(j)
-    result
+    Array.tabulate(rows, cols) { (i, j) =>
+      a(i)(j)
+    }
 
 
 

@@ -28,8 +28,7 @@ object Statistics:
     )) / (a.length - 1.0)
 
   def correlation(a: Mat): Mat =
-    val n = a.length
-    val m = a(0).length
+    val (n, m) = Matrix.size(a)
     Array.tabulate(m, m)((i, j) => correlation(Matrix.getcolat(a, i), Matrix.getcolat(a, j)))
 
   def euclideanDistance(a: Vec, b: Vec): Double =
