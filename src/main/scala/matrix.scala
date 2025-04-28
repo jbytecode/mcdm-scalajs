@@ -1,6 +1,7 @@
 package org.expr.mcdm
 
 import scala.math as math
+import scala.collection.AbstractSeq
 
 object Matrix:
 
