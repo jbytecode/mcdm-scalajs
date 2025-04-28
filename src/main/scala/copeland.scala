@@ -3,6 +3,7 @@ package org.expr.mcdm
 import org.expr.mcdm.Direction.{Maximize, Minimize}
 
 case class CopelandResult(
+    scores: Vec,
     ranks: Vec
 )
 
@@ -28,6 +29,10 @@ def winloss_scores(dommat: Array[Array[Int]]): Array[Array[Int]] =
 def copeland(rankmatrix: Array[Array[Int]]): CopelandResult =
 
   val winloses = winloss_scores(dominance_scores(rankmatrix))
-  val scores = Array.tabulate(winloses.length)(i => winloses(i).sum)
-  val ranks = ranksfromscores(scores.map(_.toDouble))
-  CopelandResult(ranks)
+  val scores = Array.tabulate(winloses.length)(i => winloses(i).sum.toDouble)
+  val ranks = ranksfromscores(scores)
+
+  CopelandResult(
+    scores = scores,
+    ranks = ranks
+  )
