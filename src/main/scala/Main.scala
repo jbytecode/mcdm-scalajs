@@ -359,6 +359,14 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Nds")
       scores = Matrix.appendcol(scores, ndsresult.scores)
       ranks = Matrix.appendcol(ranks, ndsresult.scores.reverse.map(_ + 1))
+    if check_copeland.checked then
+      if scores.length == 0 then
+        HtmlUtils.msgbox("At least one method should be selected for perform Copeland.")
+      else
+        val copelandresult = copeland(ranks)
+        methodsnames = methodsnames.appended("Copeland")
+        scores = Matrix.appendcol(scores, copelandresult.scores)
+        ranks = Matrix.appendcol(ranks, copelandresult.ranks)
 
     val resultstr = HtmlUtils.scorematrixtohtml(problem, methodsnames, scores)
     div_output_scores.innerHTML = resultstr

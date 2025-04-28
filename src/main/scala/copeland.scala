@@ -7,7 +7,7 @@ case class CopelandResult(
     ranks: Vec
 )
 
-def level_of_dominance(v1: Array[Int], v2: Array[Int]): Int =
+def level_of_dominance(v1: Vec, v2: Vec): Int =
   var lod = 0
   val n = v1.length
   for (i <- 0 until n)
@@ -16,20 +16,21 @@ def level_of_dominance(v1: Array[Int], v2: Array[Int]): Int =
 
   lod
 
-def dominance_scores(ordering_mat: Array[Array[Int]]): Array[Array[Int]] =
+def dominance_scores(ordering_mat: Mat): Mat =
   val n = ordering_mat.length
   Array.tabulate(n, n)((i, j) =>
     level_of_dominance(ordering_mat(i), ordering_mat(j))
   )
 
-def winloss_scores(dommat: Array[Array[Int]]): Array[Array[Int]] =
+def winloss_scores(dommat: Mat): Mat =
   val n = dommat.length
-  Array.tabulate(n, n)((i, j) => (dommat(i)(j) - dommat(j)(i)).sign.toInt)
+  Array.tabulate(n, n)((i, j) => (dommat(i)(j) - dommat(j)(i)).sign)
 
-def copeland(rankmatrix: Array[Array[Int]]): CopelandResult =
+
+def copeland(rankmatrix: Mat): CopelandResult =
 
   val winloses = winloss_scores(dominance_scores(rankmatrix))
-  val scores = Array.tabulate(winloses.length)(i => winloses(i).sum.toDouble)
+  val scores = Array.tabulate(winloses.length)(i => winloses(i).sum)
   val ranks = ranksfromscores(scores)
 
   CopelandResult(

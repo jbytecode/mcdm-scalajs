@@ -131,3 +131,6 @@ object DomObjects:
   val check_nds = document
     .getElementById("check_nds")
     .asInstanceOf[HTMLInputElement]
+  val check_copeland = document
+    .getElementById("check_copeland")
+    .asInstanceOf[HTMLInputElement]
