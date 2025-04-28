@@ -8,21 +8,19 @@ case class CopelandResult(
 )
 
 def level_of_dominance(v1: Vec, v2: Vec): Int =
-  var lod = 0
-  val n = v1.length
-  for (i <- 0 until n)
-    if (v1(i) < v2(i))
-      lod += 1
+  v1.zip(v2).filter((a, b) => a < b).length
 
-  lod
 
 def dominance_scores(ordering_mat: Mat): Mat =
+
   val n = ordering_mat.length
   Array.tabulate(n, n)((i, j) =>
     level_of_dominance(ordering_mat(i), ordering_mat(j))
   )
 
+  
 def winloss_scores(dommat: Mat): Mat =
+
   val n = dommat.length
   Array.tabulate(n, n)((i, j) => (dommat(i)(j) - dommat(j)(i)).sign)
 
