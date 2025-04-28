@@ -17,10 +17,10 @@ object Matrix:
   def ones(n: Int): Vec = Array.fill(n)(1.0)
 
   def ones(n: Int, m: Int): Mat = Array.fill(n, m)(1.0)
-
-  def elementwise_equal(a: Vec, b: Vec, eps: Double = 1e-6): Boolean =
+ 
+  def elementwise_equal[A](a: Array[A], b: Array[A], eps: Double = 1e-6)(implicit num: Numeric[A]): Boolean =
     if a.length != b.length then false
-    else a.zip(b).forall((x, y) => math.abs(x - y) < eps)
+    else a.zip(b).forall((x: A, y: A) => math.abs(num.toDouble(num.minus(x, y))) < eps)
 
   def elementwise_equal(a: Mat, b: Mat, eps: Double): Boolean =
     a.zip(b).forall((x, y) => elementwise_equal(x, y, eps))
