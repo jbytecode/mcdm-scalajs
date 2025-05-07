@@ -9,7 +9,7 @@ Multiple-criteria decision making tools in Scalajs
 # Features
 
 - Single page application 
-- More than 20 MCDM methods 
+- More than 25 MCDM methods 
 - Automatic weighting tools as well as custom weighting
 - After loading the page no need for internet connection
 - Works well in mobile devices
@@ -20,4 +20,45 @@ Multiple-criteria decision making tools in Scalajs
 - Compiled to Javascript using Scala.js
 - No external dependencies
 
+# Methods implemented
+
+- Aras
+- Cocoso
+- Codas
+- Copras
+- Edas
+- Lmaw
+- Mabac
+- Mairca
+- Marcos
+- Moosra
+- Ocra
+- Piv
+- Psi
+- Ram
+- Rov
+- Saw
+- Topsis
+- Waspas
+- Wpm
+- Nds
+- Copeland
+
+# Weighting methods 
+
+- Equal weights
+- Entropy
+- Critic
+- Sd
+- Merec
+- Cilos
+- Idocriw
+- Lopcow
+- Custom Weights
+
+
+# Output
+
+- Scores
+- Rankings
 
