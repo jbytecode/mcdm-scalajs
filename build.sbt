@@ -11,7 +11,7 @@ lazy val root = project
 
 
     libraryDependencies ++= Seq(
-      "org.scalameta" %%% "munit" % "1.0.4" % Test,
+      "org.scalameta" %%% "munit" % "1.1.1" % Test,
       "org.scala-js" %%% "scalajs-dom" % "2.8.0")
   )
 
