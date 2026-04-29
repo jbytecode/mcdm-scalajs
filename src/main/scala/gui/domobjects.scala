@@ -7,130 +7,53 @@ object DomObjects:
 
   val document = dom.document
   val window = dom.window
-  val div_step1: HTMLDivElement =
-    document.getElementById("div_step1").asInstanceOf[HTMLDivElement]
-  val div_step2: HTMLDivElement =
-    document.getElementById("div_step2").asInstanceOf[HTMLDivElement]
-  val div_step3: HTMLDivElement =
-    document.getElementById("div_step3").asInstanceOf[HTMLDivElement]
-  val div_step4: HTMLDivElement =
-    document.getElementById("div_step4").asInstanceOf[HTMLDivElement]
-  val button_showhide_step1 = document
-    .getElementById("button_showhide_step1")
-    .asInstanceOf[HTMLButtonElement]
-  val button_showhide_step2 = document
-    .getElementById("button_showhide_step2")
-    .asInstanceOf[HTMLButtonElement]
-  val button_showhide_step3 = document
-    .getElementById("button_showhide_step3")
-    .asInstanceOf[HTMLButtonElement]
-  val button_showhide_step4 = document
-    .getElementById("button_showhide_step4")
-    .asInstanceOf[HTMLButtonElement]
-  val button_showhide_finaldecmat = document
-    .getElementById("button_showhide_finaldecmat")
-    .asInstanceOf[HTMLButtonElement]
-  val textarea_strdecmat: HTMLTextAreaElement = document
-    .getElementById("textarea_strdecmat")
-    .asInstanceOf[HTMLTextAreaElement]
-  val button_generate_decmat = document
-    .getElementById("button_generate_decmat")
-    .asInstanceOf[HTMLButtonElement]
-  val button_generate_weights = document
-    .getElementById("button_generate_weights")
-    .asInstanceOf[HTMLButtonElement]
-  val dialog_div_content: HTMLDivElement =
-    document.getElementById("dialog_div_content").asInstanceOf[HTMLDivElement]
-  val dialog_button_ok =
-    document.getElementById("dialog_button_ok").asInstanceOf[HTMLButtonElement]
-  val dialog_messenger: HTMLDialogElement =
-    document.getElementById("dialog_messenger").asInstanceOf[HTMLDialogElement]
-  val select_separator: HTMLSelectElement =
-    document.getElementById("select_separator").asInstanceOf[HTMLSelectElement]
-  val select_weight_method: HTMLSelectElement = document
-    .getElementById("select_weight_method")
-    .asInstanceOf[HTMLSelectElement]
-  val input_criteria_directions: HTMLInputElement = document
-    .getElementById("input_criteria_directions")
-    .asInstanceOf[HTMLInputElement]
-  val button_generate_directions: HTMLButtonElement = document
-    .getElementById("button_generate_directions")
-    .asInstanceOf[HTMLButtonElement]
-  val button_evaluate: HTMLButtonElement = document
-    .getElementById("button_evaluate")
-    .asInstanceOf[HTMLButtonElement]
-  val div_output_scores: HTMLDivElement = document
-    .getElementById("div_output_scores")
-    .asInstanceOf[HTMLDivElement]
-  val div_output_ranks: HTMLDivElement = document
-    .getElementById("div_output_ranks")
-    .asInstanceOf[HTMLDivElement]
-  val div_final_decmat: HTMLDivElement = document
-    .getElementById("div_final_decmat")
-    .asInstanceOf[HTMLDivElement]
-  val check_aras = document
-    .getElementById("check_aras")
-    .asInstanceOf[HTMLInputElement]
-  val check_cocoso = document
-    .getElementById("check_cocoso")
-    .asInstanceOf[HTMLInputElement]
-  val check_codas = document
-    .getElementById("check_codas")
-    .asInstanceOf[HTMLInputElement]
-  val check_copras = document
-    .getElementById("check_copras")
-    .asInstanceOf[HTMLInputElement]
-  val check_edas = document
-    .getElementById("check_edas")
-    .asInstanceOf[HTMLInputElement]
-  val check_lmaw = document
-    .getElementById("check_lmaw")
-    .asInstanceOf[HTMLInputElement]
-  val check_lopcow = document
-    .getElementById("check_lopcow")
-    .asInstanceOf[HTMLInputElement]
-  val check_mabac = document
-    .getElementById("check_mabac")
-    .asInstanceOf[HTMLInputElement]
-  val check_mairca = document
-    .getElementById("check_mairca")
-    .asInstanceOf[HTMLInputElement]
-  val check_marcos = document
-    .getElementById("check_marcos")
-    .asInstanceOf[HTMLInputElement]
-  val check_moosra = document
-    .getElementById("check_moosra")
-    .asInstanceOf[HTMLInputElement]
-  val check_ocra = document
-    .getElementById("check_ocra")
-    .asInstanceOf[HTMLInputElement]
-  val check_piv = document
-    .getElementById("check_piv")
-    .asInstanceOf[HTMLInputElement]
-  val check_psi = document
-    .getElementById("check_psi")
-    .asInstanceOf[HTMLInputElement]
-  val check_ram = document
-    .getElementById("check_ram")
-    .asInstanceOf[HTMLInputElement]
-  val check_rov = document
-    .getElementById("check_rov")
-    .asInstanceOf[HTMLInputElement]
-  val check_saw = document
-    .getElementById("check_saw")
-    .asInstanceOf[HTMLInputElement]
-  val check_topsis = document
-    .getElementById("check_topsis")
-    .asInstanceOf[HTMLInputElement]
-  val check_waspas = document
-    .getElementById("check_waspas")
-    .asInstanceOf[HTMLInputElement]
-  val check_wpm = document
-    .getElementById("check_wpm")
-    .asInstanceOf[HTMLInputElement]
-  val check_nds = document
-    .getElementById("check_nds")
-    .asInstanceOf[HTMLInputElement]
-  val check_copeland = document
-    .getElementById("check_copeland")
-    .asInstanceOf[HTMLInputElement]
+
+  def getElt[T](id: String): T =
+    document.getElementById(id).asInstanceOf[T]
+    
+  val div_step1 = getElt[HTMLDivElement]("div_step1")
+  val div_step2 = getElt[HTMLDivElement]("div_step2")
+  val div_step3 = getElt[HTMLDivElement]("div_step3")
+  val div_step4 = getElt[HTMLDivElement]("div_step4")
+  val button_showhide_step1 = getElt[HTMLButtonElement]("button_showhide_step1")
+  val button_showhide_step2 = getElt[HTMLButtonElement]("button_showhide_step2")
+  val button_showhide_step3 = getElt[HTMLButtonElement]("button_showhide_step3")
+  val button_showhide_step4 = getElt[HTMLButtonElement]("button_showhide_step4")
+  val button_showhide_finaldecmat = getElt[HTMLButtonElement]("button_showhide_finaldecmat")
+  val textarea_strdecmat = getElt[HTMLTextAreaElement]("textarea_strdecmat")
+  val button_generate_decmat = getElt[HTMLButtonElement]("button_generate_decmat")
+  val button_generate_weights = getElt[HTMLButtonElement]("button_generate_weights")
+  val dialog_div_content = getElt[HTMLDivElement]("dialog_div_content")
+  val dialog_button_ok = getElt[HTMLButtonElement]("dialog_button_ok")
+  val dialog_messenger = getElt[HTMLDialogElement]("dialog_messenger")
+  val select_separator = getElt[HTMLSelectElement]("select_separator")
+  val select_weight_method = getElt[HTMLSelectElement]("select_weight_method")
+  val input_criteria_directions = getElt[HTMLInputElement]("input_criteria_directions")
+  val button_generate_directions = getElt[HTMLButtonElement]("button_generate_directions")
+  val button_evaluate = getElt[HTMLButtonElement]("button_evaluate")
+  val div_output_scores = getElt[HTMLDivElement]("div_output_scores")
+  val div_output_ranks = getElt[HTMLDivElement]("div_output_ranks")
+  val div_final_decmat = getElt[HTMLDivElement]("div_final_decmat")
+  val check_aras = getElt[HTMLInputElement]("check_aras")
+  val check_cocoso = getElt[HTMLInputElement]("check_cocoso")
+  val check_codas = getElt[HTMLInputElement]("check_codas")
+  val check_copras = getElt[HTMLInputElement]("check_copras")
+  val check_edas = getElt[HTMLInputElement]("check_edas")
+  val check_lmaw = getElt[HTMLInputElement]("check_lmaw")
+  val check_lopcow = getElt[HTMLInputElement]("check_lopcow")
+  val check_mabac = getElt[HTMLInputElement]("check_mabac")
+  val check_mairca = getElt[HTMLInputElement]("check_mairca")
+  val check_marcos = getElt[HTMLInputElement]("check_marcos")
+  val check_moosra = getElt[HTMLInputElement]("check_moosra")
+  val check_ocra = getElt[HTMLInputElement]("check_ocra")
+  val check_piv = getElt[HTMLInputElement]("check_piv")
+  val check_psi = getElt[HTMLInputElement]("check_psi")
+  val check_ram = getElt[HTMLInputElement]("check_ram")
+  val check_rov = getElt[HTMLInputElement]("check_rov")
+  val check_saw = getElt[HTMLInputElement]("check_saw")
+  val check_topsis = getElt[HTMLInputElement]("check_topsis")
+  val check_waspas = getElt[HTMLInputElement]("check_waspas")
+  val check_wpm = getElt[HTMLInputElement]("check_wpm")
+  val check_nds = getElt[HTMLInputElement]("check_nds")
+  val check_copeland = getElt[HTMLInputElement]("check_copeland")
+

@@ -9,6 +9,7 @@ import org.scalajs.dom.HTMLDialogElement
 import org.scalajs.dom.HTMLSelectElement
 
 import org.expr.mcdm.gui.HtmlUtils
+import org.expr.mcdm.gui.DomObjects
 import org.expr.mcdm.gui.DomObjects._
 import org.expr.mcdm.parser.Parser
 import org.expr.mcdm.parser.Parser.empty_mcdm_problem
@@ -38,8 +39,8 @@ def button_generate_decmat_events(): Unit =
     )
     val strdecmat_html = HtmlUtils.decmat2html(p)
     div_final_decmat.innerHTML = strdecmat_html
-    dialog_button_ok.onclick = (e: dom.MouseEvent) =>
-      HtmlUtils.dialog_messenger.close()
+    DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) =>
+      DomObjects.dialog_messenger.close()
     HtmlUtils.msgbox(strdecmat_html)
 
 /*
@@ -63,8 +64,8 @@ def button_generate_directions_events(): Unit =
     problem.directions = directions
     val strdirections_html = HtmlUtils.decmat2html(problem)
     div_final_decmat.innerHTML = strdirections_html
-    dialog_button_ok.onclick = (e: dom.MouseEvent) =>
-      HtmlUtils.dialog_messenger.close()
+    DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) =>
+      DomObjects.dialog_messenger.close()
     HtmlUtils.msgbox(strdirections_html)
 
 /*

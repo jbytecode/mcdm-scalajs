@@ -12,15 +12,13 @@ import org.expr.mcdm.gui.DomObjects
 object HtmlUtils:
     val document = dom.document 
     val window = dom.window
-    val dialog_messenger: HTMLDialogElement = document.getElementById("dialog_messenger").asInstanceOf[HTMLDialogElement]
+    
    
     def msgbox(msg: String): Unit = 
-        val divcontent = document.getElementById("dialog_div_content").asInstanceOf[HTMLDivElement]
-        val dialog_button_ok = document.getElementById("dialog_button_ok").asInstanceOf[HTMLInputElement]
-        divcontent.innerHTML = msg
-        dialog_button_ok.onclick = (e: dom.MouseEvent) => 
-            dialog_messenger.close()
-        dialog_messenger.showModal()
+        DomObjects.dialog_div_content.innerHTML = msg
+        DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) => 
+            DomObjects.dialog_messenger.close()
+        DomObjects.dialog_messenger.showModal()
 
     def roundToNDigits(x: Double, n: Int = 6): Double = 
         s"%.${n}f".format(x).toDouble
@@ -112,8 +110,10 @@ object HtmlUtils:
             for (i <- p.criteria.indices) 
                 val input = document.getElementById(s"customweight${i}").asInstanceOf[HTMLInputElement]
                 p.weights(i) = input.value.toDouble
-            dialog_messenger.close()
+            DomObjects.dialog_messenger.close()
             val strproblem = HtmlUtils.decmat2html(problem)
             DomObjects.div_final_decmat.innerHTML = strproblem
-        dialog_messenger.showModal()
+            DomObjects.dialog_messenger.close()
+            DomObjects.dialog_messenger.showModal()
+        
 
