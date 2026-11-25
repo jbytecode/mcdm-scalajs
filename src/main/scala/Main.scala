@@ -192,6 +192,15 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Codas")
       scores = Matrix.appendcol(scores, codasresult.scores)
       ranks = Matrix.appendcol(ranks, codasresult.ranks)
+    if check_cradis.checked then
+      val cradisresult = cradis(
+        problem.data,
+        problem.weights,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Cradis")
+      scores = Matrix.appendcol(scores, cradisresult.scores)
+      ranks = Matrix.appendcol(ranks, cradisresult.ranks)
     if check_copras.checked then
       val coprasresult = copras(
         problem.data,

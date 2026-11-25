@@ -37,6 +37,7 @@ object DomObjects:
   val check_aras = getElt[HTMLInputElement]("check_aras")
   val check_cocoso = getElt[HTMLInputElement]("check_cocoso")
   val check_codas = getElt[HTMLInputElement]("check_codas")
+  val check_cradis = getElt[HTMLInputElement]("check_cradis")
   val check_copras = getElt[HTMLInputElement]("check_copras")
   val check_edas = getElt[HTMLInputElement]("check_edas")
   val check_lmaw = getElt[HTMLInputElement]("check_lmaw")

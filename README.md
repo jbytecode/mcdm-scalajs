@@ -26,6 +26,7 @@ Multiple-criteria decision making tools in Scalajs
 - Cocoso
 - Codas
 - Copras
+- Cradis
 - Edas
 - Lmaw
 - Mabac
