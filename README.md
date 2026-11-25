@@ -29,6 +29,7 @@ Multiple-criteria decision making tools in Scalajs
 - Cradis
 - Edas
 - Ervd
+- Fuca
 - Lmaw
 - Mabac
 - Mairca
