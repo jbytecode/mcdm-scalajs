@@ -325,6 +325,15 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Saw")
       scores = Matrix.appendcol(scores, sawresult.scores)
       ranks = Matrix.appendcol(ranks, sawresult.ranks)
+    if check_spotis.checked then
+      val spotisresult = spotis(
+        problem.data,
+        problem.weights,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Spotis")
+      scores = Matrix.appendcol(scores, spotisresult.scores)
+      ranks = Matrix.appendcol(ranks, spotisresult.ranks)
     if check_topsis.checked then
       val topsisresult = topsis(
         problem.data,

@@ -39,6 +39,7 @@ Multiple-criteria decision making tools in Scalajs
 - Ram
 - Rov
 - Saw
+- Spotis
 - Topsis
 - Waspas
 - Wpm

@@ -52,6 +52,7 @@ object DomObjects:
   val check_ram = getElt[HTMLInputElement]("check_ram")
   val check_rov = getElt[HTMLInputElement]("check_rov")
   val check_saw = getElt[HTMLInputElement]("check_saw")
+  val check_spotis = getElt[HTMLInputElement]("check_spotis")
   val check_topsis = getElt[HTMLInputElement]("check_topsis")
   val check_waspas = getElt[HTMLInputElement]("check_waspas")
   val check_wpm = getElt[HTMLInputElement]("check_wpm")
