@@ -27,7 +27,9 @@ def psi(
 
     val normalizedDecisionMat = normalization(decisionMat, weights, directions)
 
-    val pvs = Array.range(0, row).map(i => PV(Matrix.getrowat(normalizedDecisionMat, i)))
+    // Preference variation is computed for each criterion (column),
+    // as defined by Maniya and Bhatt (2010).
+    val pvs = Array.range(0, col).map(j => PV(Matrix.getcolat(normalizedDecisionMat, j)))
 
     val phis = pvs.map(x => 1 - x)
 
@@ -35,7 +37,7 @@ def psi(
 
     val psis = phis.map(x => x / sum_phis)
 
-    val Is = Array.range(0, row).map(i => psis(i) * Matrix.getrowat(normalizedDecisionMat, i).sum)
+    val Is = Array.range(0, row).map(i => Matrix.sumproduct(Matrix.getrowat(normalizedDecisionMat, i), psis))
 
     val scores = Is
 
