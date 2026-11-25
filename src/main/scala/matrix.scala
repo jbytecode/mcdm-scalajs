@@ -171,6 +171,12 @@ object Matrix:
   def elementwiseMultiply(a: Vec, b: Vec): Vec =
     a.zip(b).map((x, y) => x * y)
 
+  def elementwiseAdd(a: Mat, b: Mat): Mat =
+    a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x + y))
+
+  def elementwiseAdd(a: Vec, b: Vec): Vec =
+    a.zip(b).map((x, y) => x + y)
+
   def elementwiseDivide(a: Mat, b: Mat): Mat =
     a.zip(b).map((rowa, rowb) => rowa.zip(rowb).map((x, y) => x / y))
 
@@ -183,6 +189,8 @@ object Matrix:
 
   def sumproduct(u: Vec, v: Vec): Double =
     u.zip(v).map((x, y) => x * y).sum
+
+  def globalSum(a: Mat): Double = a.map(_.sum).sum
 
   def replicate(a: Mat): Mat = 
     val (rows, cols) = Matrix.size(a)

@@ -440,6 +440,29 @@ class TestMatrix extends munit.FunSuite {
     )
     A.assert(Matrix.elementwise_equal(result, expected, 1e-03))
   }
+  test("Elementwise vector addition"){
+    val result = Matrix.elementwiseAdd(Array(1.0, 2.0), Array(3.0, 4.0))
+
+    A.assert(Matrix.elementwise_equal(result, Array(4.0, 6.0)))
+  }
+  test("Elementwise matrix addition"){
+    val result = Matrix.elementwiseAdd(
+      Array(Array(1.0, 2.0), Array(3.0, 4.0)),
+      Array(Array(4.0, 3.0), Array(2.0, 1.0))
+    )
+
+    A.assert(Matrix.elementwise_equal(
+      result,
+      Array(Array(5.0, 5.0), Array(5.0, 5.0)),
+      1e-6
+    ))
+  }
+  test("Global sum"){
+    A.assertEquals(
+      Matrix.globalSum(Array(Array(1.0, 2.0), Array(3.0, 4.0))),
+      10.0
+    )
+  }
   test("Equation solve 1"){
     val Amat = Array(Array(2.0, 4.0), Array(6.0, 5.0))
     val bvec = Array(12.0, 60.0)
