@@ -1,0 +1,21 @@
+{
+  "title": "Easy Online MCDM: multiple-criteria decision making tools in Scala.js",
+  "upload_type": "software",
+  "description": "A single-page browser application that implements 21 ranking and 7 objective weighting methods for multiple-criteria decision making. Written in Scala and compiled to one JavaScript file with Scala.js; runs offline after the page loads. Ported from the Julia package JMcDM.",
+  "creators": [
+    {
+      "name": "Satman, Mehmet Hakan",
+      "orcid": "0000-0002-9402-1982",
+      "affiliation": "Istanbul University"
+    }
+  ],
+  "license": "MIT",
+  "keywords": ["multiple-criteria decision making", "MCDM", "Scala.js", "decision support", "browser application"],
+  "related_identifiers": [
+    {
+      "identifier": "10.21105/joss.03430",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    }
+  ]
+}

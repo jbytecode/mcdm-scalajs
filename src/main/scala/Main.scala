@@ -359,7 +359,7 @@ def evaluate(problem: MCDMProblem): Unit =
       )
       methodsnames = methodsnames.appended("Nds")
       scores = Matrix.appendcol(scores, ndsresult.scores)
-      ranks = Matrix.appendcol(ranks, ndsresult.scores.reverse.map(_ + 1))
+      ranks = Matrix.appendcol(ranks, ranksfromscores(ndsresult.scores))
     if check_copeland.checked then
       if scores.length == 0 then
         HtmlUtils.msgbox("At least one method should be selected for perform Copeland.")

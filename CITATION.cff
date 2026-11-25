@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+title: "Easy Online MCDM: multiple-criteria decision making tools in Scala.js"
+type: software
+authors:
+  - family-names: Satman
+    given-names: Mehmet Hakan
+    orcid: "https://orcid.org/0000-0002-9402-1982"
+    affiliation: "Department of Econometrics, Faculty of Economics, Istanbul University"
+version: 1.1.0
+license: MIT
+repository-code: "https://github.com/jbytecode/mcdm-scalajs"
+url: "https://jbytecode.github.io/mcdm/"
+keywords:
+  - multiple-criteria decision making
+  - MCDM
+  - Scala.js
+  - decision support
+  - browser application
+references:
+  - type: article
+    title: "JMcDM: A Julia package for multiple-criteria decision-making tools"
+    authors:
+      - family-names: Satman
+        given-names: Mehmet Hakan
+      - family-names: Yıldırım
+        given-names: Bahadır Fatih
+      - family-names: Kuruca
+        given-names: Ersagun
+    journal: "Journal of Open Source Software"
+    volume: 6
+    issue: 65
+    start: 3430
+    year: 2021
+    doi: "10.21105/joss.03430"

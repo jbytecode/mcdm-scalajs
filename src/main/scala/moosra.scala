@@ -23,7 +23,7 @@ def moosra(
     weights: Vec = Array.emptyDoubleArray,
     directions: Array[Direction],
     normalization: NormalizationFunction =
-      Normalization.DivideByAllNormNormalization,
+      Normalization.VectorNormNormalization,
     options: Map[String, Any] = Map.empty
 ): Either[String, MoosraResult] =
 

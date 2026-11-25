@@ -21,8 +21,8 @@ case class MCDMProblem(
   var directions: Array[String]
 ) 
 
-def ranksfromscores(scores: Vec, reverse: Boolean = true): Vec = 
-  if reverse then 
-    scores.zipWithIndex.sortBy(_._1).map(_._2).map(_.toDouble + 1).reverse
-  else
-    scores.zipWithIndex.sortBy(_._1).map(_._2).map(_.toDouble + 1)
+def ranksfromscores(scores: Vec, reverse: Boolean = true): Vec =
+  // Rank of each alternative in input order: 1 + the number of alternatives with a
+  // strictly better score, so tied scores share a rank (1 = best).
+  // reverse = true: a higher score is better; reverse = false: a lower score is better.
+  scores.map(s => 1.0 + scores.count(t => if reverse then t > s else t < s))
