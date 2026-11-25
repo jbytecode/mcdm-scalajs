@@ -6,6 +6,7 @@ hs_err_pid*
 
 target/**
 project/**
+!project/build.properties
 .vscode/**
 .metals/**
 .bsp/**
