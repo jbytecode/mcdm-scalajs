@@ -35,6 +35,7 @@ object DomObjects:
   val div_output_ranks = getElt[HTMLDivElement]("div_output_ranks")
   val div_final_decmat = getElt[HTMLDivElement]("div_final_decmat")
   val check_aras = getElt[HTMLInputElement]("check_aras")
+  val check_aroman = getElt[HTMLInputElement]("check_aroman")
   val check_cocoso = getElt[HTMLInputElement]("check_cocoso")
   val check_codas = getElt[HTMLInputElement]("check_codas")
   val check_cradis = getElt[HTMLInputElement]("check_cradis")

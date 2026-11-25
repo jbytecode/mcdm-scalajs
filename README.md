@@ -23,6 +23,7 @@ Multiple-criteria decision making tools in Scalajs
 # Methods implemented
 
 - Aras
+- Aroman
 - Cocoso
 - Codas
 - Copras

@@ -174,6 +174,15 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Aras")
       scores = Matrix.appendcol(scores, arasresult.scores)
       ranks = Matrix.appendcol(ranks, arasresult.ranks)
+    if check_aroman.checked then
+      val aromanresult = aroman(
+        problem.data,
+        problem.weights,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Aroman")
+      scores = Matrix.appendcol(scores, aromanresult.scores)
+      ranks = Matrix.appendcol(ranks, aromanresult.ranks)
     if check_cocoso.checked then
       val cocosoresult = cocoso(
         problem.data,
