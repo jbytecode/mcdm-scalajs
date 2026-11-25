@@ -141,11 +141,15 @@ object Normalization:
   def InverseDivideByColumnMaxMinNormalization(mat: Mat, weights: Vec = Array.emptyDoubleArray, fns: Array[Direction]): Mat =
     
     val (row, col) = Matrix.size(mat)
-    
+
+    // Column minima and maxima are computed once, not once per cell
+    val columnmins = Matrix.colmins(mat)
+    val columnmaxs = Matrix.colmaxs(mat)
+
     Array.tabulate(row, col)((i, j) =>
       if fns(j) == Direction.Maximize then
-        Matrix.colmins(mat)(j) / mat(i)(j)
+        columnmins(j) / mat(i)(j)
       else
-        mat(i)(j) / Matrix.colmaxs(mat)(j)
+        mat(i)(j) / columnmaxs(j)
     )
 

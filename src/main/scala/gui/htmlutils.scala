@@ -106,14 +106,19 @@ object HtmlUtils:
                         0.0
                     }
 
-        DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) => 
-            for (i <- p.criteria.indices) 
-                val input = document.getElementById(s"customweight${i}").asInstanceOf[HTMLInputElement]
-                p.weights(i) = input.value.toDouble
-            DomObjects.dialog_messenger.close()
-            val strproblem = HtmlUtils.decmat2html(problem)
-            DomObjects.div_final_decmat.innerHTML = strproblem
-            DomObjects.dialog_messenger.close()
-            DomObjects.dialog_messenger.showModal()
+        DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) =>
+            val inputs = p.criteria.indices.map(i => document.getElementById(s"customweight${i}").asInstanceOf[HTMLInputElement])
+            val values = inputs.map(_.value.trim.toDoubleOption.filter(x => !x.isNaN && !x.isInfinite && x >= 0))
+            if values.exists(_.isEmpty) then
+                // Keep the dialog open and mark the invalid entries
+                inputs.zip(values).foreach((input, v) => if v.isEmpty then input.style.backgroundColor = "red")
+            else
+                for (i <- p.criteria.indices)
+                    p.weights(i) = values(i).get
+                DomObjects.dialog_messenger.close()
+                val strproblem = HtmlUtils.decmat2html(problem)
+                DomObjects.div_final_decmat.innerHTML = strproblem
+                DomObjects.dialog_messenger.close()
+                DomObjects.dialog_messenger.showModal()
         
 
