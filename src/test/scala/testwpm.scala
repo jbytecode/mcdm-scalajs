@@ -26,7 +26,8 @@ class TestWpm extends munit.FunSuite {
 
     val expectedBestIndex = 0
 
-    val expectedranks = Array(1, 4, 5, 3, 2)
+    // Rank of each alternative (1 = best)
+    val expectedranks = Array(1, 5, 4, 2, 3)
 
     A.assert(
       Matrix.elementwise_equal(result.scores, expectedScores, 1e-5)
