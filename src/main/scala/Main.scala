@@ -219,6 +219,15 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Edas")
       scores = Matrix.appendcol(scores, edasresult.scores)
       ranks = Matrix.appendcol(ranks, edasresult.ranks)
+    if check_ervd.checked then
+      val ervdresult = ervd(
+        problem.data,
+        problem.weights,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Ervd")
+      scores = Matrix.appendcol(scores, ervdresult.scores)
+      ranks = Matrix.appendcol(ranks, ervdresult.ranks)
     if check_lmaw.checked then
       val lmawresult = lmaw(
         problem.data,
