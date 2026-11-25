@@ -376,4 +376,5 @@ def register_events(): Unit =
 @main def hello(): Unit =
   window.console.log("Triggered main entry point. Registering events...")
   register_events()
+  document.getElementById("pFullInfo").innerHTML = org.expr.mcdm.MetaInformation.fullInfo
   window.console.log("Events registered.")
