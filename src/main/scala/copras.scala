@@ -41,7 +41,10 @@ def copras(
 
     var Z = sMinus.map(x => 1.0 / x).sum
 
-    val Q = Array.range(0, nrows).map(i => sPlus(i) + (sMinus.sum / (sMinus(i) * Z)))
+    // Without cost criteria the cost term is absent and Q = S+ (Podvezko 2011).
+    val hasCost = directions.contains(Direction.Minimize)
+    val Q = Array.range(0, nrows).map(i =>
+      if hasCost then sPlus(i) + (sMinus.sum / (sMinus(i) * Z)) else sPlus(i))
 
     val maxQ = Q.max
 

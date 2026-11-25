@@ -65,4 +65,19 @@ class TestCopras extends munit.FunSuite {
       "Scores do not match expected values in Copras example 1")
 
   }
+
+  test("Copras with benefit criteria only: Q = S+ (Podvezko 2011)") {
+    // Sum normalization, weighted; without cost criteria Q is the weighted sum S+.
+    val decmat = Array(
+      Array(2.0, 4.0),
+      Array(3.0, 1.0),
+      Array(5.0, 5.0)
+    )
+    val w = Array(0.6, 0.4)
+    val fns = Array(Maximize, Maximize)
+    val splus = Array(0.6 * 2 / 10 + 0.4 * 4 / 10, 0.6 * 3 / 10 + 0.4 * 1 / 10, 0.6 * 5 / 10 + 0.4 * 5 / 10)
+    val expected = splus.map(_ / splus.max)
+    val result = copras(decmat, w, fns)
+    A.assert(Matrix.elementwise_equal(result.scores, expected, 1e-12))
+  }
 }
