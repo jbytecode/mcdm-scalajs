@@ -37,6 +37,7 @@ Multiple-criteria decision making tools in Scalajs
 - Piv
 - Psi
 - Ram
+- Rim
 - Rov
 - Saw
 - Spotis

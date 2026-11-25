@@ -307,6 +307,15 @@ def evaluate(problem: MCDMProblem): Unit =
       methodsnames = methodsnames.appended("Ram")
       scores = Matrix.appendcol(scores, ramresult.scores)
       ranks = Matrix.appendcol(ranks, ramresult.ranks)
+    if check_rim.checked then
+      val rimresult = rim(
+        problem.data,
+        problem.weights,
+        Parser.str2directions(problem.directions)
+      )
+      methodsnames = methodsnames.appended("Rim")
+      scores = Matrix.appendcol(scores, rimresult.scores)
+      ranks = Matrix.appendcol(ranks, rimresult.ranks)
     if check_rov.checked then
       val rovresult = rov(
         problem.data,
