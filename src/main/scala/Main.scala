@@ -114,15 +114,20 @@ def button_generate_weights_events(): Unit =
         "Lopcow weights"
       }
       case "8" => {
+        problem.weights =
+          gini(problem.data, Parser.str2directions(problem.directions)).weights
+        "Gini weights"
+      }
+      case "9" => {
         // Custom weights
-        "8"
+        "9"
       }
       case _ => {
         HtmlUtils.msgbox("Invalid method name")
         problem.weights =
           Array.fill(problem.criteria.length)(1.0 / problem.criteria.length)
       }
-    if methodname == "8" then 
+    if methodname == "9" then 
       HtmlUtils.askforcustomweights(problem)
     else
       val strproblem = HtmlUtils.decmat2html(problem)

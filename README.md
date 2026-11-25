@@ -60,6 +60,7 @@ Multiple-criteria decision making tools in Scalajs
 - Cilos
 - Idocriw
 - Lopcow
+- Gini
 - Custom Weights
 
 
