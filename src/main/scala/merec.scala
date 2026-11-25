@@ -20,28 +20,23 @@ def merec(
   val NormalizeMatrix =
     normalization(decmat, Array.emptyDoubleArray, directions)
 
-  val S = Array
+  // Sum of |log| over each row, computed once per row (it was recomputed for every cell)
+  val rowlogsums = Array
     .range(0, row)
     .map(i =>
-      log(
-        1 + (
-          Matrix
-            .getrowat(NormalizeMatrix, i)
-            .map(log)
-            .map(abs)
-            .sum / col
-        )
-      )
+      Matrix
+        .getrowat(NormalizeMatrix, i)
+        .map(log)
+        .map(abs)
+        .sum
     )
+
+  val S = rowlogsums.map(s => log(1 + (s / col)))
 
   val S_ = Array.tabulate(row, col)((i, j) =>
     log(
       1 + (
-        (Matrix
-          .getrowat(NormalizeMatrix, i)
-          .map(log)
-          .map(abs)
-          .sum - abs(log(NormalizeMatrix(i)(j)))) / col
+        (rowlogsums(i) - abs(log(NormalizeMatrix(i)(j)))) / col
       )
     )
   )
