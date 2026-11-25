@@ -15,4 +15,9 @@ class TestRanks extends munit.FunSuite {
     val scores = Array(0.3, 0.9, 0.5)
     A.assert(Matrix.elementwise_equal(ranksfromscores(scores, reverse = false), Array(1.0, 3, 2), 1e-12))
   }
+
+  test("ranksfromscores gives tied scores the same rank") {
+    val scores = Array(0.0, 2.0, 0.0, 1.0)
+    A.assert(Matrix.elementwise_equal(ranksfromscores(scores), Array(3.0, 1, 3, 2), 1e-12))
+  }
 }
