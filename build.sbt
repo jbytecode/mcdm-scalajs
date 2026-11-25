@@ -1,11 +1,11 @@
-val scala3Version = "3.8.3"
+val scala3Version = "3.10.1"
 
 
 lazy val root = project
   .in(file("."))
   .settings(
     name := "mcdm",
-    version := "0.1.0",
+    version := "0.1.1",
 
     scalaVersion := scala3Version,
 
