@@ -29,19 +29,17 @@ def button_generate_decmat_events(): Unit =
   button_generate_decmat.onclick = (e: dom.MouseEvent) =>
     val separator = select_separator.value
     val strdecmat = textarea_strdecmat.value
-    val p = Parser.parseCSV(strdecmat, separator)
-    problem = p.copy(
-      alternatives = p.alternatives,
-      criteria = p.criteria,
-      data = p.data,
-      weights = p.weights,
-      directions = p.directions
-    )
-    val strdecmat_html = HtmlUtils.decmat2html(p)
-    div_final_decmat.innerHTML = strdecmat_html
     DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) =>
       DomObjects.dialog_messenger.close()
-    HtmlUtils.msgbox(strdecmat_html)
+    Parser.validateCSV(strdecmat, separator) match
+      case Left(message) =>
+        // Keep the previous problem; tell the user what is wrong
+        HtmlUtils.msgbox(message)
+      case Right(p) =>
+        problem = p
+        val strdecmat_html = HtmlUtils.decmat2html(p)
+        div_final_decmat.innerHTML = strdecmat_html
+        HtmlUtils.msgbox(strdecmat_html)
 
 /*
 Generation of the directions.
@@ -49,24 +47,17 @@ Generation of the directions.
 def button_generate_directions_events(): Unit =
   button_generate_directions.onclick = (e: dom.MouseEvent) =>
     val strdirections = input_criteria_directions.value
-    val directions =
-      strdirections
-        .split(",")
-        .map(_.trim)
-        .map(_.toLowerCase)
-        .filter(_.nonEmpty)
-        .filter(x => x == "min" || x == "max")
-    if directions.length != problem.criteria.length then
-      HtmlUtils.msgbox(
-        s"Invalid number of directions ($strdirections). The number of directions should be equal to the number of criteria. ${problem.criteria.length} criteria found, ${directions.length} directions found."
-      )
-      ()
-    problem.directions = directions
-    val strdirections_html = HtmlUtils.decmat2html(problem)
-    div_final_decmat.innerHTML = strdirections_html
     DomObjects.dialog_button_ok.onclick = (e: dom.MouseEvent) =>
       DomObjects.dialog_messenger.close()
-    HtmlUtils.msgbox(strdirections_html)
+    Parser.validateDirections(strdirections, problem.criteria.length) match
+      case Left(message) =>
+        // Keep the previous directions; tell the user what is wrong
+        HtmlUtils.msgbox(message)
+      case Right(directions) =>
+        problem.directions = directions
+        val strdirections_html = HtmlUtils.decmat2html(problem)
+        div_final_decmat.innerHTML = strdirections_html
+        HtmlUtils.msgbox(strdirections_html)
 
 /*
 Generation of the weights.
