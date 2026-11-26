@@ -5,7 +5,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "mcdm",
-    version := "0.1.2",
+    version := "0.1.3",
 
     scalaVersion := scala3Version,
 
